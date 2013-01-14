@@ -300,7 +300,6 @@ TB_MANUALWIRE_WITH_INSTANCE_VAR(iconManager, _iconManager)
 - (id)initWithWindow:(NSWindow *)window {
     self = [super initWithWindow:window];
     if (self) {
-//        _iconManager = [[TBContext sharedContext] beanWithClass:[QMIconManager class]];
         [[TBContext sharedContext] autowireSeed:self];
     }
 

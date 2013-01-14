@@ -24,26 +24,7 @@ TB_BEAN
 
 @synthesize iconCodes = _iconCodes;
 
-- (id)init {
-    if ((self = [super init])) {
-        NSURL *path = [[NSBundle bundleForClass:self.class] URLForResource:@"IconsFreeMindToQmind" withExtension:@"plist"];
-        NSDictionary *plistDict = [[NSDictionary alloc] initWithContentsOfURL:path];
-
-        _conversionDict = [plistDict objectForKey:@"FreeMindIconCodeToUnicode"];
-
-        NSMutableArray *tempIconArray = [[NSMutableArray alloc] init];
-        [[_conversionDict allKeys] enumerateObjectsUsingBlock:^(NSString *key, NSUInteger index, BOOL *stop) {
-            if ([[_conversionDict[key] objectForKey:@"supported"] boolValue] == YES) {
-                [tempIconArray addObject:key];
-            }
-        }];
-        [tempIconArray sortUsingSelector:@selector(compare:)];
-        _iconCodes = [[NSArray alloc] initWithArray:tempIconArray];
-    }
-
-    return self;
-}
-
+#pragma mark Public
 - (id)iconRepresentationForCode:(NSString *)iconCode {
     NSDictionary *iconDesc = [_conversionDict objectForKey:iconCode];
 
@@ -91,6 +72,27 @@ TB_BEAN
     }
     
     return QMIconKindNone;
+}
+
+#pragma mark NSObject
+- (id)init {
+    if ((self = [super init])) {
+        NSURL *path = [[NSBundle bundleForClass:self.class] URLForResource:@"IconsFreeMindToQmind" withExtension:@"plist"];
+        NSDictionary *plistDict = [[NSDictionary alloc] initWithContentsOfURL:path];
+
+        _conversionDict = [plistDict objectForKey:@"FreeMindIconCodeToUnicode"];
+
+        NSMutableArray *tempIconArray = [[NSMutableArray alloc] init];
+        [[_conversionDict allKeys] enumerateObjectsUsingBlock:^(NSString *key, NSUInteger index, BOOL *stop) {
+            if ([[_conversionDict[key] objectForKey:@"supported"] boolValue] == YES) {
+                [tempIconArray addObject:key];
+            }
+        }];
+        [tempIconArray sortUsingSelector:@selector(compare:)];
+        _iconCodes = [[NSArray alloc] initWithArray:tempIconArray];
+    }
+
+    return self;
 }
 
 @end
