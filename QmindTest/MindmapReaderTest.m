@@ -1,5 +1,5 @@
-#import "QMRootNode.h"
 #import "QMBaseTestCase.h"
+#import "QMRootNode.h"
 #import "QMMindmapReader.h"
 
 @interface MindmapReaderTest : QMBaseTestCase

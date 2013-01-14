@@ -63,7 +63,7 @@ TB_BEAN
 
         // This is the root node
         _rootNode = [[QMRootNode alloc] initWithAttributes:attributeDict];
-        _proxyRoot = [[QMProxyNode alloc] initAsRootNode:_rootNode mindmapReader:self];
+        _proxyRoot = [[QMProxyNode alloc] initAsRootNode:_rootNode];
 
         [parser setDelegate:_proxyRoot];
 

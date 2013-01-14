@@ -6,9 +6,9 @@
  * See LICENSE
  */
 
+#import <TBCacao/TBCacao.h>
 #import "QMFontConverter.h"
 #import <Qkit/Qkit.h>
-#import <TBCacao/TBCacao.h>
 #import "QMAppSettings.h"
 
 static NSString * const qNameKey = @"NAME";
@@ -21,12 +21,14 @@ static NSString * const qDefaultSerifFondName = @"Serif";
 static NSString * const qTimesFontName = @"Times";
 
 @implementation QMFontConverter {
-    NSFont *_defaultFont;
-
+    __weak QMAppSettings *_settings;
     NSFontManager *_fontManager;
+
+    NSFont *_defaultFont;
 }
 
 TB_BEAN
+TB_AUTOWIRE_WITH_INSTANCE_VAR(settings, _settings)
 
 #pragma mark Public
 - (NSFont *)fontFromFontAttrDict:(NSDictionary *)fontAttrDict {
@@ -94,27 +96,10 @@ TB_BEAN
     return attrDict;
 }
 
-#pragma mark NSObject
-- (id)init {
-    if ((self = [super init])) {
-        _fontManager = [NSFontManager sharedFontManager];
-        _defaultFont = [[QMAppSettings sharedSettings] settingForKey:qSettingDefaultFont];
-    }
-
-    return self;
-}
-
-#pragma mark Static
-+ (QMFontConverter *)sharedConverter {
-    static QMFontConverter *_instance = nil;
-
-    @synchronized (self) {
-        if (_instance == nil) {
-            _instance = [[self alloc] init];
-        }
-    }
-
-    return _instance;
+#pragma mark TBInitializingBean
+- (void)postConstruct {
+    _fontManager = [NSFontManager sharedFontManager];
+    _defaultFont = [_settings settingForKey:qSettingDefaultFont];
 }
 
 @end

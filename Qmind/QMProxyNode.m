@@ -6,6 +6,7 @@
  * See LICENSE
  */
 
+#import <TBCacao/TBCacao.h>
 #import "QMProxyNode.h"
 #import "QMNode.h"
 #import "QMMindmapReader.h"
@@ -13,13 +14,14 @@
 #import "QMRootNode.h"
 
 @implementation QMProxyNode {
+    __weak QMFontConverter *_fontConverter;
+    __weak QMMindmapReader *_reader;
+
     __weak QMProxyNode *_parent;
     NSMutableArray *_children;
 
     id _node;
     NSXMLElement *_unsupportedXmlElement;
-
-    __weak QMMindmapReader *_reader;
 }
 
 #pragma mark NSXMLParserDelegate
@@ -49,7 +51,7 @@
             [_node addObjectInChildren:childNode];
         }
 
-        QMProxyNode *proxyNode = [[QMProxyNode alloc] initWithParent:self node:childNode mindmapReader:_reader];
+        QMProxyNode *proxyNode = [[QMProxyNode alloc] initWithParent:self node:childNode];
         [_children addObject:proxyNode];
 
         [parser setDelegate:proxyNode];
@@ -68,7 +70,7 @@
     }
 
     if ([elementName isEqualToString:@"font"]) {
-        [_node setFont:[[QMFontConverter sharedConverter] fontFromFontAttrDict:attributeDict]];
+        [_node setFont:[_fontConverter fontFromFontAttrDict:attributeDict]];
 
         return;
     }
@@ -76,9 +78,7 @@
     NSXMLElement *xmlElement = [[NSXMLElement alloc] initWithName:elementName];
     [xmlElement setAttributesWithDictionary:attributeDict];
 
-    QMProxyNode *proxyNode = [[QMProxyNode alloc] initAsUnsupportedXmlElement:xmlElement
-                                                                   withParent:self
-                                                                mindmapReader:_reader];
+    QMProxyNode *proxyNode = [[QMProxyNode alloc] initAsUnsupportedXmlElement:xmlElement withParent:self];
 
     [_children addObject:proxyNode];
 
@@ -139,46 +139,47 @@
 }
 
 - (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError {
-
     log4Warn(@"An error occurred: %@", parseError);
-
 }
 
 #pragma mark Initializer
-- (id)initWithParent:(QMProxyNode *)parent node:(QMNode *)node mindmapReader:(QMMindmapReader *)reader {
+- (id)initWithParent:(QMProxyNode *)parent node:(QMNode *)node {
     if ((self = [super init])) {
-        _parent = parent;
+        _reader = [[TBContext sharedContext] beanWithClass:[QMMindmapReader class]];
 
+        _parent = parent;
         _node = node;
-        _reader = reader;
 
         _children = [[NSMutableArray alloc] initWithCapacity:3];
+        _fontConverter = [[TBContext sharedContext] beanWithClass:[QMFontConverter class]];
     }
 
     return self;
 }
 
-- (id)initAsRootNode:(QMRootNode *)node mindmapReader:(QMMindmapReader *)reader {
+- (id)initAsRootNode:(QMRootNode *)node {
     if ((self = [super init])) {
+        _reader = [[TBContext sharedContext] beanWithClass:[QMMindmapReader class]];
+
         _node = node;
-        _reader = reader;
 
         _children = [[NSMutableArray alloc] initWithCapacity:5];
+        _fontConverter = [[TBContext sharedContext] beanWithClass:[QMFontConverter class]];
     }
 
     return self;
 }
 
-- (id)initAsUnsupportedXmlElement:(NSXMLElement *)xmlElement
-                       withParent:(QMProxyNode *)parent
-                    mindmapReader:(QMMindmapReader *)reader {
+- (id)initAsUnsupportedXmlElement:(NSXMLElement *)xmlElement withParent:(QMProxyNode *)parent {
     if ((self = [super init])) {
+        _reader = [[TBContext sharedContext] beanWithClass:[QMMindmapReader class]];
+
         _node = nil;
-        _reader = reader;
         _unsupportedXmlElement = xmlElement;
         _parent = parent;
 
         _children = [[NSMutableArray alloc] init];
+        _fontConverter = [[TBContext sharedContext] beanWithClass:[QMFontConverter class]];
     }
 
     return self;
