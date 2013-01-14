@@ -18,10 +18,10 @@
 
 @implementation QMCell
 
-TB_AUTOWIRE_WITH_INSTANCE_VAR(cellSizeManager, _cellSizeManager);
-TB_AUTOWIRE_WITH_INSTANCE_VAR(cellLayoutManager, _cellLayoutManager)
-TB_AUTOWIRE_WITH_INSTANCE_VAR(cellDrawer, _cellDrawer);
-TB_AUTOWIRE_WITH_INSTANCE_VAR(textLayoutManager, _textLayoutManager);
+@synthesize cellSizeManager = _cellSizeManager;
+@synthesize cellLayoutManager = _cellLayoutManager;
+@synthesize cellDrawer = _cellDrawer;
+@synthesize textLayoutManager = _textLayoutManager;
 
 @dynamic root;
 @dynamic font;
