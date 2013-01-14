@@ -1,0 +1,20 @@
+/**
+ * Tae Won Ha
+ * http://qvacua.com
+ * https://bitbucket.org/qvacua
+ *
+ * See LICENSE
+ */
+
+#import <Foundation/Foundation.h>
+#import "QMMindmapViewDataSource.h"
+
+@class QMDocument, QMIconManager;
+
+@interface QMMindmapViewDataSourceImpl : NSObject <QMMindmapViewDataSource>
+
+@property (weak) QMIconManager *iconManager;
+
+- (id)initWithDoc:(QMDocument *)doc view:(QMMindmapView *)view;
+
+@end

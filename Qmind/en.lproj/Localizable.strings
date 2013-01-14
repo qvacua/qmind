@@ -1,0 +1,19 @@
+"undo.node.text.change" = "Change Text of Node";
+"undo.node.font.change" = "Change Font of Node(s)";
+
+"undo.node.deletion" = "Deletion of Node(s)";
+
+"undo.node.child.new" = "New Child Node";
+"undo.node.child.left.new" = "New Left Child Node";
+"undo.node.sibling.next.new" = "New Next Sibling Node";
+"undo.node.sibling.prev.new" = "New Previous Sibling Node";
+
+"undo.node.paste" = "Undo Paste";
+"undo.node.cut" = "Undo Cut";
+"undo.node.move" = "Undo Move Node(s)";
+"undo.node.copy" = "Undo Copy Node(s)";
+
+"ui.menu.iconspane.hide" = "Hide Icons Pane";
+"ui.menu.iconspane.show" = "Show Icons Pane";
+
+"undo.node.icon.add" = "Insert Icon";
