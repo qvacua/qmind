@@ -1,8 +1,17 @@
+/**
+ * Tae Won Ha
+ * http://qvacua.com
+ * https://bitbucket.org/qvacua
+ *
+ * See LICENSE
+ */
+
 #import "QMBaseTestCase.h"
 #import "QMRootNode.h"
 #import "QMMindmapReader.h"
+#import "QMCacaoTestCase.h"
 
-@interface MindmapReaderTest : QMBaseTestCase
+@interface MindmapReaderTest : QMCacaoTestCase
 @end
 
 @implementation MindmapReaderTest {
@@ -14,7 +23,7 @@
     [super setUp];
 
     testMindMapUrl = [[NSBundle bundleForClass:self.class] URLForResource:@"mindmap-reader-test" withExtension:@"mm"];
-    reader = [[QMMindmapReader alloc] init];
+    reader = [self.context beanWithClass:[QMMindmapReader class]];
 }
 
 - (void)testNonExistingUrl {
@@ -28,12 +37,12 @@
     assertThat(rootNode.leftChildren, hasSize(3));
     assertThat(rootNode.children, hasSize(5));
 
-    assertThat(rootNode.stringValue, equalTo(@"test"));
+    assertThat(rootNode.stringValue, is(@"test"));
     assertThat(rootNode.font, notNilValue());
 
     assertThat(rootNode.icons, hasSize(2));
-    assertThat([rootNode objectInIconsAtIndex:0], equalTo(@"attach"));
-    assertThat([rootNode objectInIconsAtIndex:1], equalTo(@"flag-pink"));
+    assertThat([rootNode objectInIconsAtIndex:0], is(@"attach"));
+    assertThat([rootNode objectInIconsAtIndex:1], is(@"flag-pink"));
 
     assertThat(rootNode.unsupportedChildren, hasSize(1));
     assertThat([rootNode.unsupportedChildren objectAtIndex:0], containsString(@"<html>"));
@@ -48,21 +57,21 @@
     NSArray *leftChildren = rootNode.leftChildren;
 
     QMNode *firstChild = [leftChildren objectAtIndex:0];
-    assertThat(firstChild.stringValue, equalTo(@"A"));
+    assertThat(firstChild.stringValue, is(@"A"));
     assertThat(firstChild.children, hasSize(2));
 
     NSArray *childrenOfA = firstChild.children;
     QMNode *firstGrand = [childrenOfA objectAtIndex:0];
-    assertThat(firstGrand.stringValue, equalTo(@"A1"));
+    assertThat(firstGrand.stringValue, is(@"A1"));
     assertThat(firstGrand.children, hasSize(3));
 
-    assertThat([[childrenOfA objectAtIndex:1] stringValue], equalTo(@"A2"));
+    assertThat([[childrenOfA objectAtIndex:1] stringValue], is(@"A2"));
 
     QMNode *secondChild = [leftChildren objectAtIndex:1];
-    assertThat([secondChild stringValue], equalTo(@"B"));
+    assertThat([secondChild stringValue], is(@"B"));
 
     QMNode *thirdChild = [leftChildren objectAtIndex:2];
-    assertThat([thirdChild stringValue], equalTo(@"C"));
+    assertThat([thirdChild stringValue], is(@"C"));
     assertThat([thirdChild children], hasSize(2));
 }
 
@@ -71,45 +80,43 @@
 
     // first child of the root
     QMNode *firstChild = [rightChildren objectAtIndex:0];
-    assertThat(firstChild.stringValue, equalTo(@"a"));
+    assertThat(firstChild.stringValue, is(@"a"));
 
     NSFont *firstFont = firstChild.font;
     assertThat(firstFont, notNilValue());
 
-    assertThatUnsignedInteger(firstChild.unsupportedChildren.count, equalToInt(1));
+    assertThat(@(firstChild.unsupportedChildren.count), is(@(1)));
     assertThat([firstChild.unsupportedChildren objectAtIndex:0], containsString(@"a <b>b c<u>d e</u> f g</b> h i"));
 
-    assertThatUnsignedInteger([firstChild countOfChildren], equalToInt(3));
-    assertThat([[firstChild objectInChildrenAtIndex:1] stringValue], equalTo(@"a2"));
-    assertThatUnsignedInteger([[firstChild objectInChildrenAtIndex:1] countOfIcons], equalToInt(1));
-    assertThat([[firstChild objectInChildrenAtIndex:1] objectInIconsAtIndex:0], equalTo(@"clanbomber"));
+    assertThat(@([firstChild countOfChildren]), is(@(3)));
+    assertThat([[firstChild objectInChildrenAtIndex:1] stringValue], is(@"a2"));
+    assertThat(@([[firstChild objectInChildrenAtIndex:1] countOfIcons]), is(@(1)));
+    assertThat([[firstChild objectInChildrenAtIndex:1] objectInIconsAtIndex:0], is(@"clanbomber"));
 
     // children of the first child
     QMNode *childOfA = [firstChild objectInChildrenAtIndex:0];
     QMNode *grandChildOfA = [childOfA objectInChildrenAtIndex:0];
-    assertThat(grandChildOfA.stringValue, equalTo(@"a1a"));
+    assertThat(grandChildOfA.stringValue, is(@"a1a"));
 
     // second child of the root
     QMNode *secondChild = [rightChildren objectAtIndex:1];
     assertThat(secondChild.children, hasSize(4));
-    assertThat(secondChild.stringValue, equalTo(@"b"));
+    assertThat(secondChild.stringValue, is(@"b"));
     assertThat(secondChild.attributes, isNot(hasItem(@"POSITION")));
-    assertThat(secondChild.icons, hasSize(3));
-    assertThat(secondChild.icons, contains(equalTo(@"full-6"), equalTo(@"ksmiletris"), equalTo(@"idea"), nil));
+    assertThat(secondChild.icons, consistsOf(@"full-6", @"ksmiletris", @"idea"));
 
-    assertThatUnsignedInteger([secondChild countOfChildren], equalToInt(4));
+    assertThat(@([secondChild countOfChildren]), is(@(4)));
 
     QMNode *thirdChild = [rootNode objectInChildrenAtIndex:2];
     assertThat(thirdChild.children, hasSize(3));
-    assertThatBool([thirdChild isLeaf], isFalse);
-    assertThat([[thirdChild objectInChildrenAtIndex:1] icons], hasSize(1));
-    assertThat([[thirdChild objectInChildrenAtIndex:1] icons], contains(equalTo(@"kmail"), nil));
+    assertThat(@([thirdChild isLeaf]), isNo);
+    assertThat([[thirdChild objectInChildrenAtIndex:1] icons], consistsOf(@"kmail"));
 
-    assertThatBool([[rootNode objectInChildrenAtIndex:3] isLeaf], isTrue);
+    assertThat(@([[rootNode objectInChildrenAtIndex:3] isLeaf]), isYes);
 
     QMNode *fifthChild = [rootNode objectInChildrenAtIndex:4];
-    assertThatBool([fifthChild isLeaf], isFalse);
-    assertThatBool([fifthChild isFolded], isTrue);
+    assertThat(@([fifthChild isLeaf]), isNo);
+    assertThat(@([fifthChild isFolded]), isYes);
     assertThat(fifthChild.children, hasSize(2));
 }
 
