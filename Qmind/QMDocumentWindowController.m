@@ -50,7 +50,7 @@ static NSInteger const kIconsPaneMenuItemTag = 301;
     CGFloat _lastIconsPaneWidth;
 }
 
-TB_AUTOWIRE_WITH_INSTANCE_VAR(iconManager, _iconManager)
+TB_MANUALWIRE_WITH_INSTANCE_VAR(iconManager, _iconManager)
 
 @synthesize mindmapView = _mindmapView;
 @synthesize availableIconsArray = _availableIconsArray;
@@ -300,7 +300,6 @@ TB_AUTOWIRE_WITH_INSTANCE_VAR(iconManager, _iconManager)
 - (id)initWithWindow:(NSWindow *)window {
     self = [super initWithWindow:window];
     if (self) {
-//        _iconManager = [[TBContext sharedContext] beanWithClass:[QMIconManager class]];
         [[TBContext sharedContext] autowireSeed:self];
     }
 

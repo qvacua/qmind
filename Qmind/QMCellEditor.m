@@ -33,7 +33,7 @@ static NSInteger const qEscUnicode = 27;
     QShadowedView *_containerView;
 }
 
-TB_AUTOWIRE_WITH_INSTANCE_VAR(settings, _settings)
+TB_MANUALWIRE_WITH_INSTANCE_VAR(settings, _settings)
 
 @synthesize view = _view;
 @synthesize delegate = _delegate;
@@ -196,11 +196,6 @@ TB_AUTOWIRE_WITH_INSTANCE_VAR(settings, _settings)
         [_textView setContinuousSpellCheckingEnabled:YES];
         [_textView setAutoresizingMask:NSViewWidthSizable];
         [_textView setMaxSize:NSMakeSize(CGFLOAT_MAX, CGFLOAT_MAX)];
-
-//        [_textView setDrawsBackground:YES];
-//        [_textView setBackgroundColor:[NSColor yellowColor]];
-//        [_scrollView setDrawsBackground:YES];
-//        [_scrollView setBackgroundColor:[NSColor redColor]];
 
         [_scrollView setDocumentView:_textView];
         [_scrollView setBorderType:NSNoBorder];

@@ -2,8 +2,9 @@
 #import "QMMindmapReader.h"
 #import "QMRootNode.h"
 #import "QMBaseTestCase+Util.h"
+#import "QMCacaoTestCase.h"
 
-@interface MindmapWriterTest : QMBaseTestCase
+@interface MindmapWriterTest : QMCacaoTestCase
 @end
 
 @implementation MindmapWriterTest {
@@ -21,8 +22,8 @@
     NSURL *testMindMapUrl = [[NSBundle bundleForClass:self.class] URLForResource:@"mindmap-writer-test"
                                                                    withExtension:@"mm"];
 
-    reader = [[QMMindmapReader alloc] init];
-    writer = [[QMMindmapWriter alloc] init];
+    reader = [self.context beanWithClass:[QMMindmapReader class]];
+    writer = [self.context beanWithClass:[QMMindmapWriter class]];
 
     rootNode = [reader rootNodeForFileUrl:testMindMapUrl];
 

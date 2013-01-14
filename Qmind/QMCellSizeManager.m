@@ -16,9 +16,8 @@
 @implementation QMCellSizeManager
 
 TB_BEAN
-
-TB_AUTOWIRE_WITH_INSTANCE_VAR(textLayoutManager, _textLayoutManager);
-TB_AUTOWIRE_WITH_INSTANCE_VAR(settings, _settings);
+TB_AUTOWIRE_WITH_INSTANCE_VAR(textLayoutManager, _textLayoutManager)
+TB_AUTOWIRE_WITH_INSTANCE_VAR(settings, _settings)
 
 #pragma mark Public
 - (NSSize)sizeOfCell:(QMCell *)cell {

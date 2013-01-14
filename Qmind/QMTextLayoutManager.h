@@ -20,9 +20,6 @@
 - (NSSize)sizeOfString:(NSString *)string maxWidth:(CGFloat)maxWidth usingFont:(NSFont *)font;
 - (NSSize)sizeOfAttributedString:(NSAttributedString *)attrStr maxWidth:(CGFloat)maxWidth;
 - (NSSize)sizeOfAttributedString:(NSAttributedString *)attrStr;
-
-+ (QMTextLayoutManager *)sharedManager;
-
 - (NSRange)completeRangeOfAttributedString:(NSAttributedString *)attrStr;
 
 /**

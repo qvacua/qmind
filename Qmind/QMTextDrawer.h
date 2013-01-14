@@ -8,12 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class QMCell;
-@class QMAppSettings;
-
 @interface QMTextDrawer : NSObject
-
-@property (weak) QMAppSettings *settings;
 
 - (void)drawAttributedString:(NSAttributedString *)attrStr inRect:(NSRect)frame range:(NSRange)range;
 

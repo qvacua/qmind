@@ -54,10 +54,10 @@ static inline BOOL sign(CGFloat x) {
     NSUInteger _mouseDownModifier;
 }
 
-TB_AUTOWIRE_WITH_INSTANCE_VAR(cellSelector, _cellSelector);
-TB_AUTOWIRE_WITH_INSTANCE_VAR(cellLayoutManager, _cellLayoutManager);
-TB_AUTOWIRE_WITH_INSTANCE_VAR(settings, _settings);
-TB_AUTOWIRE_WITH_INSTANCE_VAR(uiDrawer, _uiDrawer);
+TB_MANUALWIRE_WITH_INSTANCE_VAR(cellSelector, _cellSelector)
+TB_MANUALWIRE_WITH_INSTANCE_VAR(cellLayoutManager, _cellLayoutManager)
+TB_MANUALWIRE_WITH_INSTANCE_VAR(settings, _settings)
+TB_MANUALWIRE_WITH_INSTANCE_VAR(uiDrawer, _uiDrawer)
 
 @synthesize dataSource = _dataSource;
 @synthesize rootCell = _rootCell;

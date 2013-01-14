@@ -28,9 +28,9 @@ static NSString * const qDocumentNibName = @"Document";
     QMDocumentWindowController *_windowController;
 }
 
-TB_AUTOWIRE_WITH_INSTANCE_VAR(settings, _settings)
-TB_AUTOWIRE_WITH_INSTANCE_VAR(mindmapReader, _mindmapReader)
-TB_AUTOWIRE_WITH_INSTANCE_VAR(mindmapWriter, _mindmapWriter)
+TB_MANUALWIRE_WITH_INSTANCE_VAR(settings, _settings)
+TB_MANUALWIRE_WITH_INSTANCE_VAR(mindmapReader, _mindmapReader)
+TB_MANUALWIRE_WITH_INSTANCE_VAR(mindmapWriter, _mindmapWriter)
 
 @synthesize windowController = _windowController;
 

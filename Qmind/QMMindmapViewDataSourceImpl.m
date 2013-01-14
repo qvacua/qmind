@@ -25,7 +25,7 @@
     __weak QMIconManager *_iconManager;
 }
 
-TB_AUTOWIRE_WITH_INSTANCE_VAR(iconManager, _iconManager);
+TB_MANUALWIRE_WITH_INSTANCE_VAR(iconManager, _iconManager)
 
 #pragma mark Public
 - (BOOL)mindmapView:(QMMindmapView *)mindmapView isItemLeft:(id)item {

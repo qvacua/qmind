@@ -13,9 +13,12 @@
 #import "QMFontConverter.h"
 #import "QMRootNode.h"
 
-@implementation QMMindmapWriter
+@implementation QMMindmapWriter {
+    __weak QMFontConverter *_fontConverter;
+}
 
 TB_BEAN
+TB_AUTOWIRE_WITH_INSTANCE_VAR(fontConverter, _fontConverter)
 
 #pragma mark Public
 - (NSData *)dataForRootNode:(QMRootNode *)rootNode {
@@ -73,7 +76,7 @@ TB_BEAN
 
     NSFont *font = node.font;
     if (font != nil) {
-        NSDictionary *attrDictFromFont = [[QMFontConverter sharedConverter] fontAttrDictFromFont:font];
+        NSDictionary *attrDictFromFont = [_fontConverter fontAttrDictFromFont:font];
 
         if (attrDictFromFont != nil) {
             NSXMLElement *fontElement = [[NSXMLElement allocWithZone:nil] initWithName:@"font"];

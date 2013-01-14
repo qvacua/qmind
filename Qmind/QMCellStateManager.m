@@ -13,7 +13,6 @@
 #import <Qkit/Qkit.h>
 
 @implementation QMCellStateManager {
-@private
     NSMutableArray *_selectedCells;
 
     QMStack *_clickedCells;

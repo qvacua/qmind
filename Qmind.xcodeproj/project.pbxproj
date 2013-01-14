@@ -8,18 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		1929B059162A10744EF02985 /* QMIconsPaneView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929B2FCB4A407CCC68D9D45 /* QMIconsPaneView.m */; };
-		1929B0C4FB460247CD0C2702 /* QMTypes.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1929BF6379805052FA43883B /* QMTypes.h */; };
 		1929B194FE5529B11EAFE7DA /* QMCellSizeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929B353C299640D7D91AA9D /* QMCellSizeManager.m */; };
 		1929B24EA8328150C669DA66 /* QMCellSizeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929B353C299640D7D91AA9D /* QMCellSizeManager.m */; };
 		1929B29FA3F12195D97593A5 /* IconCollectionViewItemTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929B743A0D8FAB8C620E299 /* IconCollectionViewItemTest.m */; };
 		1929B2FF6732AAB197D8DFB9 /* CellComponentTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929B7664B7E4A08B9E7118B /* CellComponentTest.m */; };
-		1929B484C5599255C8D4B519 /* QMCellSizeManager.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1929B5A9AAEC82B9CE22DFA2 /* QMCellSizeManager.h */; };
 		1929B676F4A74F9E9F96AB42 /* QMIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929BA02C47D9D0A43F49EFA /* QMIcon.m */; };
 		1929B91E380C89A49F956097 /* QMUiDrawer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929B20B51839B9482813969 /* QMUiDrawer.m */; };
-		1929BA32E70F18AD04B88D24 /* QMIcon.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1929B95442D0BCBE01A02608 /* QMIcon.h */; };
-		1929BADDC17302BF22F7A486 /* QMIconsPaneView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1929B5969C8028EF888FAA7C /* QMIconsPaneView.h */; };
 		1929BB168680A05751E3F4C4 /* QMIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929BA02C47D9D0A43F49EFA /* QMIcon.m */; };
-		1929BDAC4428CFA985E60EF3 /* QMCacaoTestCase.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1929BC9E791535ADC6E79637 /* QMCacaoTestCase.h */; };
 		1929BF0203FEF5FAAC4C4C25 /* QMIconsPaneView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929B2FCB4A407CCC68D9D45 /* QMIconsPaneView.m */; };
 		1929BFD7B74324D2B8724842 /* IconGridViewTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929B83740C95CACCC412474 /* IconGridViewTest.m */; };
 		1929BFFB89F8FFD850719385 /* QMCacaoTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929B03F77F02BDFB060054E /* QMCacaoTestCase.m */; };
@@ -34,6 +29,7 @@
 		4B15777716A2F0160048480E /* QTestKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4B15777116A2EFEF0048480E /* QTestKit.framework */; };
 		4B15777816A2F01E0048480E /* Qkit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B15776F16A2EFEF0048480E /* Qkit.framework */; };
 		4B15777916A2F02D0048480E /* Qkit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4B15776F16A2EFEF0048480E /* Qkit.framework */; };
+		4B1752D416A48B01002FAFC4 /* MindmapReaderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B85653514E46D6800C6FF19 /* MindmapReaderTest.m */; };
 		4B2A00F2159F489C00582EA5 /* document-test-fail-open.mm in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4BFCD7AC14F3E32A008509BD /* document-test-fail-open.mm */; };
 		4B39307A14EC418900A9D541 /* QMMindmapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B39307914EC418900A9D541 /* QMMindmapView.m */; };
 		4B396DD614F7E446000C7B36 /* dummy.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 4BFCD7AC14F3E32A00850936 /* dummy.pdf */; };
@@ -231,11 +227,6 @@
 				4BE9D5C014F5A76A00FC8248 /* cell-layout-test.mm in CopyFiles */,
 				4BFCD7AB14F3E32A00850924 /* mindmap-writer-test.mm in CopyFiles */,
 				4BFCD7AC14F3E32A00850924 /* mindmap-reader-test.mm in CopyFiles */,
-				1929BDAC4428CFA985E60EF3 /* QMCacaoTestCase.h in CopyFiles */,
-				1929B0C4FB460247CD0C2702 /* QMTypes.h in CopyFiles */,
-				1929B484C5599255C8D4B519 /* QMCellSizeManager.h in CopyFiles */,
-				1929BA32E70F18AD04B88D24 /* QMIcon.h in CopyFiles */,
-				1929BADDC17302BF22F7A486 /* QMIconsPaneView.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -964,6 +955,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B1752D416A48B01002FAFC4 /* MindmapReaderTest.m in Sources */,
 				4B12E236168CC34900D972BE /* IconTest.m in Sources */,
 				4B9D981016878B0F00222D03 /* CellSizeManagerTest.m in Sources */,
 				4B5CB65C15E11C9600E05BD7 /* MindmapViewDraggingTest.m in Sources */,

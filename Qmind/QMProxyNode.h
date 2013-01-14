@@ -11,6 +11,7 @@
 @class QMNode;
 @class QMMindmapReader;
 @class QMRootNode;
+@class QMFontConverter;
 
 /**
 * Helper class to build up the mindmap internally using event-driven xml reading and the class QMNode.
@@ -22,19 +23,17 @@
 /**
 * The initializer to use when creating a non-root ProxyNode
 */
-- (id)initWithParent:(QMProxyNode *)parent node:(QMNode *)node mindmapReader:(QMMindmapReader *)reader;
+- (id)initWithParent:(QMProxyNode *)parent node:(QMNode *)node;
 
 /**
 * The initializer to use when encountering the root node
 */
-- (id)initAsRootNode:(QMRootNode *)node mindmapReader:(QMMindmapReader *)reader;
+- (id)initAsRootNode:(QMRootNode *)node;
 
 /**
 * The initializer to use when encountering an unsupported xml element
 */
-- (id)initAsUnsupportedXmlElement:(NSXMLElement *)xmlElement
-                       withParent:(QMProxyNode *)parent
-                    mindmapReader:(QMMindmapReader *)reader;
+- (id)initAsUnsupportedXmlElement:(NSXMLElement *)xmlElement withParent:(QMProxyNode *)parent;
 
 @end
 
