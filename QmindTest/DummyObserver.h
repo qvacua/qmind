@@ -1,9 +1,16 @@
+/**
+ * Tae Won Ha
+ * http://qvacua.com
+ * https://bitbucket.org/qvacua
+ *
+ * See LICENSE
+ */
+
 #import <Foundation/Foundation.h>
 
 @interface DummyObserver : NSObject
 
-@property(readwrite, strong) id lastObservedObj;
-@property(readwrite, copy) NSString *lastKeyPath;
-
+@property id lastObservedObj;
+@property (copy) NSString *lastKeyPath;
 
 @end
