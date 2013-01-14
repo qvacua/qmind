@@ -1,3 +1,11 @@
+/**
+ * Tae Won Ha
+ * http://qvacua.com
+ * https://bitbucket.org/qvacua
+ *
+ * See LICENSE
+ */
+
 #import "QMBaseTestCase.h"
 #import "QMRootNode.h"
 #import "QMBaseTestCase+Util.h"
@@ -132,26 +140,26 @@
 }
 
 - (void)testKvoFilter {
-    assertThatBool([QMRootNode automaticallyNotifiesObserversForKey:qNodeLeftChildrenKey], isTrue);
+    assertThat(@([QMRootNode automaticallyNotifiesObserversForKey:qNodeLeftChildrenKey]), isYes);
 }
 
 - (void)testIsRoot {
-    assertThatBool(rootNode.isRoot, isTrue);
+    assertThat(@(rootNode.isRoot), isYes);
 }
 
 - (void)testAttributes {
-    assertThat(rootNode.attributes, isNot(hasKey(equalTo(qNodePositionAttributeKey))));
+    assertThat(rootNode.attributes, isNot(hasKey(is(qNodePositionAttributeKey))));
 }
 
 - (void)testLeaf {
-    assertThatBool(rootNode.isLeaf, isTrue);
+    assertThat(@(rootNode.isLeaf), isYes);
 
     [rootNode addObjectInLeftChildren:[[QMNode alloc] init]];
-    assertThatBool(rootNode.isLeaf, isFalse);
+    assertThat(@(rootNode.isLeaf), isNo);
 
     [rootNode removeObjectFromLeftChildrenAtIndex:0];
     [rootNode addObjectInChildren:[[QMNode alloc] init]];
-    assertThatBool(rootNode.isLeaf, isFalse);
+    assertThat(@(rootNode.isLeaf), isNo);
 }
 
 - (void)testInit {
@@ -162,9 +170,9 @@
 }
 
 - (void)testFolded {
-    assertThatBool(rootNode.folded, isFalse);
+    assertThat(@(rootNode.folded), isNo);
     rootNode.folded = YES;
-    assertThatBool(rootNode.folded, isFalse);
+    assertThat(@(rootNode.folded), isNo);
 }
 
 - (void)testInitWithDict {
@@ -176,8 +184,8 @@
 
     QMRootNode *node = [[QMRootNode alloc] initWithAttributes:xmlDict];
     assertThat(node.font, nilValue());
-    assertThat(node.stringValue, equalTo(string));
-    assertThatBool(node.folded, isFalse);
+    assertThat(node.stringValue, is(string));
+    assertThat(@(node.folded), isNo);
     assertThat(node.children, hasSize(0));
     assertThat(rootNode.leftChildren, hasSize(0));
 }
@@ -208,21 +216,21 @@
     [decoder finishDecoding];
 
     assertThat(decodedNode.parent, nilValue());
-    assertThat(decodedNode.font, equalTo([NSFont boldSystemFontOfSize:13]));
-    assertThat(decodedNode.stringValue, equalTo(@"kdkdkdk"));
-    assertThatBool(decodedNode.folded, isFalse);
+    assertThat(decodedNode.font, is([NSFont boldSystemFontOfSize:13]));
+    assertThat(decodedNode.stringValue, is(@"kdkdkdk"));
+    assertThat(@(decodedNode.folded), isNo);
     assertThat(decodedNode.children, hasSize(1));
     assertThat(decodedNode.leftChildren, hasSize(1));
 
     QMNode *decodedChild = [decodedNode.children objectAtIndex:0];
-    assertThat([decodedChild stringValue], equalTo(@"childnode"));
+    assertThat([decodedChild stringValue], is(@"childnode"));
     assertThat(decodedChild.icons, hasSize(1));
-    assertThat(decodedChild.icons, contains(equalTo(@"childicon"), nil));
+    assertThat(decodedChild.icons, consistsOf(@"childicon"));
 
     QMNode *decodedLeftChild = [decodedNode.leftChildren objectAtIndex:0];
-    assertThat([decodedLeftChild stringValue], equalTo(@"leftchildnode"));
+    assertThat([decodedLeftChild stringValue], is(@"leftchildnode"));
     assertThat(decodedLeftChild.icons, hasSize(1));
-    assertThat(decodedLeftChild.icons, contains(equalTo(@"leftchildicon"), nil));
+    assertThat(decodedLeftChild.icons, consistsOf(@"leftchildicon"));
 }
 
 - (void)testAllChildren {
@@ -233,7 +241,7 @@
     [rootNode addObjectInLeftChildren:node2];
 
     assertThat(rootNode.allChildren, hasSize(2));
-    assertThatUnsignedInteger([rootNode countOfAllChildren], equalToInt(2));
+    assertThat(@([rootNode countOfAllChildren]), is(@(2)));
     assertThat(rootNode.allChildren, consistsOf(node1, node2));
 }
 
@@ -262,12 +270,12 @@
 
     assertThat(rootNode.leftChildren, hasSize(2));
 
-    assertThat(childNode, equalTo([rootNode.leftChildren objectAtIndex:1]));
-    assertThat(childNode.parent, equalTo(rootNode));
+    assertThat(childNode, is([rootNode.leftChildren objectAtIndex:1]));
+    assertThat(childNode.parent, is(rootNode));
     assertThat(childNode.observerInfos, consistsOfInAnyOrder(strInfo, fontInfo, childrenInfo));
     assertThat(childNode.undoManager, is(undoManager));
 
-    assertThatBool(undoManager.canUndo, isTrue);
+    assertThat(@(undoManager.canUndo), isYes);
     [undoManager undo];
     assertThat(rootNode.leftChildren, hasSize(1));
 }
@@ -282,12 +290,12 @@
 
     assertThat(rootNode.leftChildren, hasSize(2));
 
-    assertThat(childNode, equalTo([rootNode.leftChildren objectAtIndex:0]));
-    assertThat(childNode.parent, equalTo(rootNode));
+    assertThat(childNode, is([rootNode.leftChildren objectAtIndex:0]));
+    assertThat(childNode.parent, is(rootNode));
     assertThat(childNode.observerInfos, consistsOfInAnyOrder(strInfo, fontInfo, childrenInfo));
     assertThat(childNode.undoManager, is(undoManager));
 
-    assertThatBool(undoManager.canUndo, isTrue);
+    assertThat(@(undoManager.canUndo), isYes);
     [undoManager undo];
     assertThat(rootNode.leftChildren, hasSize(1));
 }
@@ -296,7 +304,7 @@
     QMNode *childNode = [[QMNode alloc] init];
     [rootNode addObjectInLeftChildren:childNode];
 
-    assertThat([rootNode objectInLeftChildrenAtIndex:0], equalTo(childNode));
+    assertThat([rootNode objectInLeftChildrenAtIndex:0], is(childNode));
 }
 
 - (void)testDeleteLeftChild {
@@ -310,12 +318,12 @@
     assertThat(childNode.parent, nilValue());
     assertThat(rootNode.leftChildren, hasSize(0));
     assertThat(childNode.observerInfos, hasSize(0));
-    assertThatBool(undoManager.canUndo, isTrue);
+    assertThat(@(undoManager.canUndo), isYes);
 
     [undoManager undo];
     assertThat(rootNode.leftChildren, hasSize(1));
-    assertThat(childNode, equalTo([rootNode.leftChildren objectAtIndex:0]));
-    assertThat(childNode.parent, equalTo(rootNode));
+    assertThat(childNode, is([rootNode.leftChildren objectAtIndex:0]));
+    assertThat(childNode.parent, is(rootNode));
 }
 
 - (void)testKvoForChildren {
@@ -323,10 +331,10 @@
     QMNode *childNode = [[QMNode alloc] init];
 
     [rootNode insertObject:childNode inLeftChildrenAtIndex:0];
-    assertThatBool(insertChildKvo, isTrue);
+    assertThat(@(insertChildKvo), isYes);
 
     [rootNode removeObjectFromLeftChildrenAtIndex:0];
-    assertThatBool(removeChildKvo, isTrue);
+    assertThat(@(removeChildKvo), isYes);
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {

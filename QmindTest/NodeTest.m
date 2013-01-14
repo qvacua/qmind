@@ -1,3 +1,11 @@
+/**
+ * Tae Won Ha
+ * http://qvacua.com
+ * https://bitbucket.org/qvacua
+ *
+ * See LICENSE
+ */
+
 #import "QMNode.h"
 #import "DummyObserver.h"
 #import "QMBaseTestCase+Util.h"
