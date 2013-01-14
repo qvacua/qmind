@@ -1,3 +1,11 @@
+/**
+ * Tae Won Ha
+ * http://qvacua.com
+ * https://bitbucket.org/qvacua
+ *
+ * See LICENSE
+ */
+
 #import "QMRootCell.h"
 #import "QMBaseTestCase.h"
 #import "QMNode.h"
@@ -84,7 +92,7 @@
     [NODE(1) setFolded:NO];
     [view updateCellFoldingWithIdentifier:NODE(1)];
 
-    assertThatBool([CELL(1) isFolded], isFalse);
+    assertThat(@([CELL(1) isFolded]), isNo);
     assertThat([CELL(1) children], hasSize(NUMBER_OF_GRAND_CHILD));
     assertThatSize([CELL(1) familySize], biggerThanSize(oldFamilySize));
 
@@ -296,9 +304,9 @@
     [view updateLeftCellFamilyForInsertionWithIdentifier:rootNode];
     rootCell = view.rootCell;
 
-    assertThatBool([LCELL(0) isLeft], isTrue);
-    assertThatBool([LCELL(0, 0) isLeft], isTrue);
-    assertThatBool([LCELL(0, 1) isLeft], isTrue);
+    assertThat(@([LCELL(0) isLeft]), isYes);
+    assertThat(@([LCELL(0, 0) isLeft]), isYes);
+    assertThat(@([LCELL(0, 1) isLeft]), isYes);
 }
 
 /**
@@ -337,9 +345,9 @@
     [view updateCellFamilyForInsertionWithIdentifier:zerothChild];
     rootCell = view.rootCell;
 
-    assertThatBool([LCELL(0, 0) isLeft], isTrue);
-    assertThatBool([LCELL(0, 0, 0) isLeft], isTrue);
-    assertThatBool([LCELL(0, 0, 1) isLeft], isTrue);
+    assertThat(@([LCELL(0, 0) isLeft]), isYes);
+    assertThat(@([LCELL(0, 0, 0) isLeft]), isYes);
+    assertThat(@([LCELL(0, 0, 1) isLeft]), isYes);
 }
 
 - (void)testUpdateCellFamilyForInsertion {
@@ -364,7 +372,7 @@
     rootCell = view.rootCell;
     assertThat([LCELL(5) children], hasSize(oldCount + 1));
     assertThatSize([LCELL(5) familySize], biggerThanSize(oldSize));
-    assertThatBool([LCELL(5, 3) isLeft], isTrue);
+    assertThat(@([LCELL(5, 3) isLeft]), isYes);
 
     // left leaf + child
     oldSize = [LCELL(5, 8) familySize];
@@ -375,7 +383,7 @@
     rootCell = view.rootCell;
     assertThat([LCELL(5, 8) children], hasSize(1));
     assertThatSize([LCELL(5, 8) familySize], biggerThanSize(oldSize));
-    assertThatBool([LCELL(5, 8, 0) isLeft], isTrue);
+    assertThat(@([LCELL(5, 8, 0) isLeft]), isYes);
 
     // right leaf + child
     oldSize = [CELL(5, 8) familySize];

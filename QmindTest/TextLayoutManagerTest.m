@@ -1,3 +1,11 @@
+/**
+ * Tae Won Ha
+ * http://qvacua.com
+ * https://bitbucket.org/qvacua
+ *
+ * See LICENSE
+ */
+
 #import "QMBaseTestCase.h"
 #import "QMTextLayoutManager.h"
 #import <Qkit/Qkit.h>
@@ -35,8 +43,8 @@
 - (void)testRange {
     NSAttributedString *attrStr = [[NSAttributedString alloc] initWithString:@"test ñ"];
     NSRange range = [manager completeRangeOfAttributedString:attrStr];
-    assertThatUnsignedInteger(range.location, equalToInt(0));
-    assertThatUnsignedInteger(range.length, equalToInt(6));
+    assertThat(@(range.location), is(@(0)));
+    assertThat(@(range.length), is(@(6)));
 }
 
 - (void)testAttributesDict {
@@ -46,8 +54,8 @@
 
     assertThat(attrDict, hasKey(NSParagraphStyleAttributeName));
     NSParagraphStyle *style = [attrDict objectForKey:NSParagraphStyleAttributeName];
-    assertThatInt(style.alignment, equalToInt(NSLeftTextAlignment));
-    assertThatInt(style.lineBreakMode, equalToInt(NSLineBreakByWordWrapping));
+    assertThat(@(style.alignment), is(@(NSLeftTextAlignment)));
+    assertThat(@(style.lineBreakMode), is(@(NSLineBreakByWordWrapping)));
 }
 
 - (void)testAttributesDictDefault {
@@ -59,8 +67,8 @@
     assertThat(attrDict, hasKey(NSParagraphStyleAttributeName));
 
     NSParagraphStyle *style = [attrDict objectForKey:NSParagraphStyleAttributeName];
-    assertThatInt(style.alignment, equalToInt(NSLeftTextAlignment));
-    assertThatInt(style.lineBreakMode, equalToInt(NSLineBreakByWordWrapping));
+    assertThat(@(style.alignment), is(@(NSLeftTextAlignment)));
+    assertThat(@(style.lineBreakMode), is(@(NSLineBreakByWordWrapping)));
 }
 
 - (void)testAttributedStringMeasure {
@@ -70,7 +78,7 @@
     NSDictionary *bigAttrDict = [manager stringAttributesDictWithFont:bigFont];
     NSAttributedString *bigString = [[NSAttributedString alloc] initWithString:longStr attributes:bigAttrDict];
 
-    const float maxWidth = [[QMAppSettings sharedSettings] floatForKey:qSettingMaxTextNodeWidth];
+    const CGFloat maxWidth = [[QMAppSettings sharedSettings] floatForKey:qSettingMaxTextNodeWidth];
     assertThatSize([manager sizeOfAttributedString:smallString],
                    equalToSize([manager sizeOfAttributedString:smallString maxWidth:maxWidth]));
 
@@ -91,14 +99,14 @@
     assertThatSize([manager sizeOfString:longStr maxWidth:MAX_CGFLOAT usingFont:smallFont],
                    smallerThanSize([manager sizeOfString:longStr maxWidth:MAX_CGFLOAT usingFont:bigFont]));
 
-    assertThatFloat([manager sizeOfString:longStr maxWidth:300 usingFont:smallFont].width,
+    assertThat(@([manager sizeOfString:longStr maxWidth:300 usingFont:smallFont].width),
                     equalToFloat([manager sizeOfString:longStr maxWidth:300 usingFont:bigFont].width));
     assertThatSize([manager sizeOfString:longStr maxWidth:300 usingFont:smallFont],
                    smallerThanSize([manager sizeOfString:longStr maxWidth:300 usingFont:bigFont]));
 
-    assertThatFloat([manager widthOfString:shortStr],
+    assertThat(@([manager widthOfString:shortStr]),
                     greaterThanFloat([manager widthOfString:multilineStr]));
-    assertThatFloat([manager sizeOfString:shortStr maxWidth:MAX_CGFLOAT].height,
+    assertThat(@([manager sizeOfString:shortStr maxWidth:MAX_CGFLOAT].height),
                     lessThanFloat([manager sizeOfString:multilineStr maxWidth:MAX_CGFLOAT].height));
 }
 

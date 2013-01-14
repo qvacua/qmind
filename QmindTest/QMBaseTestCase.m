@@ -1,3 +1,11 @@
+/**
+ * Tae Won Ha
+ * http://qvacua.com
+ * https://bitbucket.org/qvacua
+ *
+ * See LICENSE
+ */
+
 #import <objc/runtime.h>
 #import <TBCacao/TBCacao.h>
 #import "QMBaseTestCase.h"

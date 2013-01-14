@@ -1,3 +1,11 @@
+/**
+ * Tae Won Ha
+ * http://qvacua.com
+ * https://bitbucket.org/qvacua
+ *
+ * See LICENSE
+ */
+
 #import "QMMindmapView.h"
 #import "QMBaseTestCase.h"
 #import "QMBaseTestCase+Util.h"
@@ -7,7 +15,6 @@
 #import "QMDocument.h"
 #import "QMMindmapViewDataSourceImpl.h"
 #import "QMIconManager.h"
-#import "QMIcon.h"
 
 @interface DocumentWindowControllerTest : QMBaseTestCase @end
 
@@ -61,12 +68,12 @@
     [verifyCount(doc, never()) cutItemsToPasteboard:anything()];
 
     [given([view hasSelectedCells]) willReturnBool:YES];
-    [given([view selectedCells]) willReturn:[NSArray arrayWithObject:rootCell]];
+    [given([view selectedCells]) willReturn:@[rootCell]];
     [controller cut:self];
     [verifyCount(doc, never()) cutItemsToPasteboard:anything()];
 
     [given([view hasSelectedCells]) willReturnBool:YES];
-    [given([view selectedCells]) willReturn:[NSArray arrayWithObjects:CELL(3), CELL(5), nil]];
+    [given([view selectedCells]) willReturn:@[CELL(3), CELL(5)]];
     [controller cut:self];
     [verify(undoManager) beginUndoGrouping];
     [verify(undoManager) setActionName:NSLocalizedString(@"undo.node.cut", @"Undo Cut")];
@@ -86,7 +93,7 @@
     [verifyCount(doc, never()) copyItemsToPasteboard:anything()];
 
     [given([view hasSelectedCells]) willReturnBool:YES];
-    [given([view selectedCells]) willReturn:[NSArray arrayWithObjects:CELL(3), CELL(5), nil]];
+    [given([view selectedCells]) willReturn:@[CELL(3), CELL(5)]];
     [controller copy:self];
     [verify(doc) copyItemsToPasteboard:consistsOf([CELL(3) identifier], [CELL(5) identifier])];
 }
@@ -98,7 +105,7 @@
     [verify(dataSource) mindmapView:view insertChildrenFromPasteboard:pasteboard toItem:rootCell.identifier];
 
     [given([view hasSelectedCells]) willReturnBool:YES];
-    [given([view selectedCells]) willReturn:[NSArray arrayWithObject:CELL(4)]];
+    [given([view selectedCells]) willReturn:@[CELL(4)]];
     [controller paste:self];
     [verify(dataSource) mindmapView:view insertChildrenFromPasteboard:pasteboard toItem:[CELL(4) identifier]];
 }
@@ -110,21 +117,21 @@
     [verify(dataSource) mindmapView:view insertLeftChildrenFromPasteboard:pasteboard toItem:rootCell.identifier];
 
     [given([view hasSelectedCells]) willReturnBool:YES];
-    [given([view selectedCells]) willReturn:[NSArray arrayWithObject:rootCell]];
+    [given([view selectedCells]) willReturn:@[rootCell]];
     [controller pasteLeft:self];
     [verifyCount(dataSource, times(2)) mindmapView:view insertLeftChildrenFromPasteboard:pasteboard toItem:rootCell.identifier];
 }
 
 - (void)testPasteAsPrevSiblingIbAction {
     [given([view hasSelectedCells]) willReturnBool:YES];
-    [given([view selectedCells]) willReturn:[NSArray arrayWithObject:CELL(4)]];
+    [given([view selectedCells]) willReturn:@[CELL(4)]];
     [controller pasteAsPreviousSibling:self];
     [verify(dataSource) mindmapView:view insertPreviousSiblingsFromPasteboard:pasteboard toItem:[CELL(4) identifier]];
 }
 
 - (void)testPasteAsNextSiblingIbAction {
     [given([view hasSelectedCells]) willReturnBool:YES];
-    [given([view selectedCells]) willReturn:[NSArray arrayWithObject:CELL(4)]];
+    [given([view selectedCells]) willReturn:@[CELL(4)]];
     [controller pasteAsNextSibling:self];
     [verify(dataSource) mindmapView:view insertNextSiblingsFromPasteboard:pasteboard toItem:[CELL(4) identifier]];
 }
@@ -162,11 +169,11 @@
     [CELL(1) setFont:[NSFont systemFontOfSize:10]];
     [CELL(5) setFont:NEW_FONT];
     [given([view hasSelectedCells]) willReturnBool:YES];
-    [given([view selectedCells]) willReturn:[NSArray arrayWithObjects:CELL(1), CELL(5), nil]];
+    [given([view selectedCells]) willReturn:@[CELL(1), CELL(5)]];
 
     [controller changeFont:self];
 
-    [verify(dataSource) mindmapView:view setFont:NEW_FONT ofItems:[NSArray arrayWithObject:[CELL(1) identifier]]];
+    [verify(dataSource) mindmapView:view setFont:NEW_FONT ofItems:@[[CELL(1) identifier]]];
     [verifyCount(doc, never()) setFont:NEW_FONT ofItem:otherObject];
 }
 
@@ -195,13 +202,13 @@
     assertThat(@([controller validateUserInterfaceItem:menuItem]), isYes);
 
     [given([view hasSelectedCells]) willReturnBool:YES];
-    [given([view selectedCells]) willReturn:[NSArray arrayWithObject:CELL(1)]];
+    [given([view selectedCells]) willReturn:@[CELL(1)]];
     assertThat(@([controller validateUserInterfaceItem:menuItem]), isYes);
 
-    [given([view selectedCells]) willReturn:[NSArray arrayWithObject:LCELL(1)]];
+    [given([view selectedCells]) willReturn:@[LCELL(1)]];
     assertThat(@([controller validateUserInterfaceItem:menuItem]), isYes);
 
-    [given([view selectedCells]) willReturn:[NSArray arrayWithObjects:CELL(1), CELL(4), nil]];
+    [given([view selectedCells]) willReturn:@[CELL(1), CELL(4)]];
     assertThat(@([controller validateUserInterfaceItem:menuItem]), isNo);
 
     [menuItem setAction:@selector(newLeftChildNode:)];
@@ -209,32 +216,32 @@
     assertThat(@([controller validateUserInterfaceItem:menuItem]), isYes);
 
     [given([view hasSelectedCells]) willReturnBool:YES];
-    [given([view selectedCells]) willReturn:[NSArray arrayWithObject:rootCell]];
+    [given([view selectedCells]) willReturn:@[rootCell]];
     assertThat(@([controller validateUserInterfaceItem:menuItem]), isYes);
 
-    [given([view selectedCells]) willReturn:[NSArray arrayWithObjects:LCELL(1), LCELL(4), nil]];
+    [given([view selectedCells]) willReturn:@[LCELL(1), LCELL(4)]];
     assertThat(@([controller validateUserInterfaceItem:menuItem]), isNo);
 
     [menuItem setAction:@selector(newNextSiblingNode:)];
     [given([view hasSelectedCells]) willReturnBool:YES];
-    [given([view selectedCells]) willReturn:[NSArray arrayWithObject:rootCell]];
+    [given([view selectedCells]) willReturn:@[rootCell]];
     assertThat(@([controller validateUserInterfaceItem:menuItem]), isNo);
 
-    [given([view selectedCells]) willReturn:[NSArray arrayWithObject:CELL(1)]];
+    [given([view selectedCells]) willReturn:@[CELL(1)]];
     assertThat(@([controller validateUserInterfaceItem:menuItem]), isYes);
 
-    [given([view selectedCells]) willReturn:[NSArray arrayWithObjects:CELL(1), CELL(5), nil]];
+    [given([view selectedCells]) willReturn:@[CELL(1), CELL(5)]];
     assertThat(@([controller validateUserInterfaceItem:menuItem]), isNo);
 
     [menuItem setAction:@selector(newPreviousSiblingNode:)];
     [given([view hasSelectedCells]) willReturnBool:YES];
-    [given([view selectedCells]) willReturn:[NSArray arrayWithObject:rootCell]];
+    [given([view selectedCells]) willReturn:@[rootCell]];
     assertThat(@([controller validateUserInterfaceItem:menuItem]), isNo);
 
-    [given([view selectedCells]) willReturn:[NSArray arrayWithObject:LCELL(1)]];
+    [given([view selectedCells]) willReturn:@[LCELL(1)]];
     assertThat(@([controller validateUserInterfaceItem:menuItem]), isYes);
 
-    [given([view selectedCells]) willReturn:[NSArray arrayWithObjects:LCELL(1), LCELL(5), nil]];
+    [given([view selectedCells]) willReturn:@[LCELL(1), LCELL(5)]];
     assertThat(@([controller validateUserInterfaceItem:menuItem]), isNo);
 }
 
@@ -258,7 +265,7 @@
     [menuItem setAction:@selector(deleteSelectedNodes:)];
 
     [given([view hasSelectedCells]) willReturnBool:YES];
-    [given([view selectedCells]) willReturn:[NSArray arrayWithObject:rootCell]];
+    [given([view selectedCells]) willReturn:@[rootCell]];
     [given([view rootCellSelected]) willReturnBool:YES];
     assertThat(@([controller validateUserInterfaceItem:menuItem]), isNo);
 }
@@ -269,7 +276,7 @@
 
     [given([view hasSelectedCells]) willReturnBool:YES];
     [given([view rootCellSelected]) willReturnBool:NO];
-    [given([view selectedCells]) willReturn:[NSArray arrayWithObject:CELL(5)]];
+    [given([view selectedCells]) willReturn:@[CELL(5)]];
 
     assertThat(@([controller validateUserInterfaceItem:menuItem]), isYes);
 
@@ -278,7 +285,7 @@
     assertThat(@([controller validateUserInterfaceItem:menuItem]), isNo);
 
     [given([view rootCellSelected]) willReturnBool:YES];
-    [given([view selectedCells]) willReturn:[NSArray arrayWithObject:rootCell]];
+    [given([view selectedCells]) willReturn:@[rootCell]];
     assertThat(@([controller validateUserInterfaceItem:menuItem]), isNo);
 }
 
@@ -288,7 +295,7 @@
 
     [given([view hasSelectedCells]) willReturnBool:YES];
     [given([view rootCellSelected]) willReturnBool:NO];
-    [given([view selectedCells]) willReturn:[NSArray arrayWithObject:CELL(5)]];
+    [given([view selectedCells]) willReturn:@[CELL(5)]];
 
     assertThat(@([controller validateUserInterfaceItem:menuItem]), isYes);
 
@@ -297,7 +304,7 @@
     assertThat(@([controller validateUserInterfaceItem:menuItem]), isNo);
 
     [given([view rootCellSelected]) willReturnBool:YES];
-    [given([view selectedCells]) willReturn:[NSArray arrayWithObject:rootCell]];
+    [given([view selectedCells]) willReturn:@[rootCell]];
     assertThat(@([controller validateUserInterfaceItem:menuItem]), isYes);
 }
 
@@ -307,27 +314,27 @@
 
     [given([view hasSelectedCells]) willReturnBool:NO];
     [given([view selectedCells]) willReturn:[NSArray array]];
-    [given([pasteboard types]) willReturn:[NSArray arrayWithObject:qNodeUti]];
+    [given([pasteboard types]) willReturn:@[qNodeUti]];
     assertThat(@([controller validateUserInterfaceItem:menuItem]), isYes);
 
-    [given([pasteboard types]) willReturn:[NSArray arrayWithObject:qNodeUti]];
+    [given([pasteboard types]) willReturn:@[qNodeUti]];
     [given([view hasSelectedCells]) willReturnBool:YES];
-    [given([view selectedCells]) willReturn:[NSArray arrayWithObject:CELL(5)]];
+    [given([view selectedCells]) willReturn:@[CELL(5)]];
     assertThat(@([controller validateUserInterfaceItem:menuItem]), isYes);
 
-    [given([pasteboard types]) willReturn:[NSArray arrayWithObject:NSStringPboardType]];
+    [given([pasteboard types]) willReturn:@[NSStringPboardType]];
     [given([view hasSelectedCells]) willReturnBool:YES];
-    [given([view selectedCells]) willReturn:[NSArray arrayWithObject:CELL(5)]];
+    [given([view selectedCells]) willReturn:@[CELL(5)]];
     assertThat(@([controller validateUserInterfaceItem:menuItem]), isYes);
 
-    [given([pasteboard types]) willReturn:[NSArray arrayWithObject:NSSoundPboardType]];
+    [given([pasteboard types]) willReturn:@[NSSoundPboardType]];
     [given([view hasSelectedCells]) willReturnBool:YES];
-    [given([view selectedCells]) willReturn:[NSArray arrayWithObject:CELL(5)]];
+    [given([view selectedCells]) willReturn:@[CELL(5)]];
     assertThat(@([controller validateUserInterfaceItem:menuItem]), isNo);
 
-    [given([pasteboard types]) willReturn:[NSArray arrayWithObject:NSStringPboardType]];
+    [given([pasteboard types]) willReturn:@[NSStringPboardType]];
     [given([view hasSelectedCells]) willReturnBool:YES];
-    [given([view selectedCells]) willReturn:[NSArray arrayWithObjects:CELL(5), CELL(6), nil]];
+    [given([view selectedCells]) willReturn:@[CELL(5), CELL(6)]];
     assertThat(@([controller validateUserInterfaceItem:menuItem]), isNo);
 }
 
@@ -337,23 +344,23 @@
 
     [given([view hasSelectedCells]) willReturnBool:NO];
     [given([view selectedCells]) willReturn:[NSArray array]];
-    [given([pasteboard types]) willReturn:[NSArray arrayWithObject:qNodeUti]];
+    [given([pasteboard types]) willReturn:@[qNodeUti]];
     assertThat(@([controller validateUserInterfaceItem:menuItem]), isYes);
 
-    [given([pasteboard types]) willReturn:[NSArray arrayWithObject:qNodeUti]];
+    [given([pasteboard types]) willReturn:@[qNodeUti]];
     [given([view hasSelectedCells]) willReturnBool:YES];
-    [given([view selectedCells]) willReturn:[NSArray arrayWithObject:rootCell]];
+    [given([view selectedCells]) willReturn:@[rootCell]];
     assertThat(@([controller validateUserInterfaceItem:menuItem]), isYes);
 
-    [given([pasteboard types]) willReturn:[NSArray arrayWithObject:NSStringPboardType]];
+    [given([pasteboard types]) willReturn:@[NSStringPboardType]];
     assertThat(@([controller validateUserInterfaceItem:menuItem]), isYes);
 
-    [given([pasteboard types]) willReturn:[NSArray arrayWithObject:NSSoundPboardType]];
+    [given([pasteboard types]) willReturn:@[NSSoundPboardType]];
     assertThat(@([controller validateUserInterfaceItem:menuItem]), isNo);
 
     [given([view hasSelectedCells]) willReturnBool:YES];
-    [given([pasteboard types]) willReturn:[NSArray arrayWithObject:qNodeUti]];
-    [given([view selectedCells]) willReturn:[NSArray arrayWithObject:CELL(5)]];
+    [given([pasteboard types]) willReturn:@[qNodeUti]];
+    [given([view selectedCells]) willReturn:@[CELL(5)]];
     assertThat(@([controller validateUserInterfaceItem:menuItem]), isNo);
 }
 
@@ -365,19 +372,19 @@
 
     [given([view hasSelectedCells]) willReturnBool:NO];
     [given([view selectedCells]) willReturn:[NSArray array]];
-    [given([pasteboard types]) willReturn:[NSArray arrayWithObject:qNodeUti]];
+    [given([pasteboard types]) willReturn:@[qNodeUti]];
     assertThat(@([controller validateUserInterfaceItem:prevMenuItem]), isNo);
     assertThat(@([controller validateUserInterfaceItem:nextMenuItem]), isNo);
 
     [given([view hasSelectedCells]) willReturnBool:NO];
-    [given([view selectedCells]) willReturn:[NSArray arrayWithObject:rootCell]];
-    [given([pasteboard types]) willReturn:[NSArray arrayWithObject:qNodeUti]];
+    [given([view selectedCells]) willReturn:@[rootCell]];
+    [given([pasteboard types]) willReturn:@[qNodeUti]];
     assertThat(@([controller validateUserInterfaceItem:prevMenuItem]), isNo);
     assertThat(@([controller validateUserInterfaceItem:nextMenuItem]), isNo);
 
-    [given([pasteboard types]) willReturn:[NSArray arrayWithObject:qNodeUti]];
+    [given([pasteboard types]) willReturn:@[qNodeUti]];
     [given([view hasSelectedCells]) willReturnBool:YES];
-    [given([view selectedCells]) willReturn:[NSArray arrayWithObject:CELL(3)]];
+    [given([view selectedCells]) willReturn:@[CELL(3)]];
     assertThat(@([controller validateUserInterfaceItem:prevMenuItem]), isYes);
     assertThat(@([controller validateUserInterfaceItem:nextMenuItem]), isYes);
 }
@@ -404,7 +411,7 @@
 
     [given([view hasSelectedCells]) willReturnBool:YES];
     [given([view rootCellSelected]) willReturnBool:NO];
-    [given([view selectedCells]) willReturn:[NSArray arrayWithObject:CELL(4)]];
+    [given([view selectedCells]) willReturn:@[CELL(4)]];
 
     [CELL(4) setFolded:YES];
     assertThat(@([controller validateUserInterfaceItem:expandItem]), isYes);
@@ -416,7 +423,7 @@
 
     [given([view hasSelectedCells]) willReturnBool:YES];
     [given([view rootCellSelected]) willReturnBool:YES];
-    [given([view selectedCells]) willReturn:[NSArray arrayWithObject:rootCell]];
+    [given([view selectedCells]) willReturn:@[rootCell]];
     assertThat(@([controller validateUserInterfaceItem:expandItem]), isNo);
     assertThat(@([controller validateUserInterfaceItem:collapseItem]), isNo);
 }
@@ -457,11 +464,11 @@
     [LCELL(4, 1) setIdentifier:id41];
     [LCELL(4, 7) setIdentifier:id47];
     [given([view hasSelectedCells]) willReturnBool:YES];
-    [given([view selectedCells]) willReturn:[NSArray arrayWithObjects:LCELL(4, 1), LCELL(4, 7), nil]];
+    [given([view selectedCells]) willReturn:@[LCELL(4, 1), LCELL(4, 7)]];
 
     [controller deleteSelectedNodes:self];
     [verify(view) clearSelection];
-    NSArray *const idArray = [NSArray arrayWithObjects:[LCELL(4, 1) identifier], [LCELL(4, 7) identifier], nil];
+    NSArray *const idArray = @[[LCELL(4, 1) identifier], [LCELL(4, 7) identifier]];
     [verify(dataSource) mindmapView:view deleteItems:idArray];
 }
 

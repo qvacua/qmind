@@ -1,3 +1,11 @@
+/**
+ * Tae Won Ha
+ * http://qvacua.com
+ * https://bitbucket.org/qvacua
+ *
+ * See LICENSE
+ */
+
 #import "QMBaseTestCase+Util.h"
 #import "QMCellSelector.h"
 #import "QMRootCell.h"
@@ -51,10 +59,8 @@
     cell.origin = origin;
     NSSize size = cell.size;
 
-    assertThat([selector cellContainingPoint:origin inCell:rootCell], equalTo(cell));
-
-    assertThat([selector cellContainingPoint:NewPoint(origin.x + size.width - 0.5, origin.y + size.height - 0.5)
-                                      inCell:rootCell], equalTo(cell));
+    assertThat([selector cellContainingPoint:origin inCell:rootCell], is(cell));
+    assertThat([selector cellContainingPoint:NewPoint(origin.x + size.width - 0.5, origin.y + size.height - 0.5) inCell:rootCell], is(cell));
 }
 
 @end

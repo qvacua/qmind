@@ -1,3 +1,11 @@
+/**
+ * Tae Won Ha
+ * http://qvacua.com
+ * https://bitbucket.org/qvacua
+ *
+ * See LICENSE
+ */
+
 #import <TBCacao/TBCacao.h>
 #import "QMBaseTestCase.h"
 #import "QMAppSettings.h"
@@ -8,7 +16,6 @@
 #import "QMBaseTestCase+Util.h"
 #import "QMMindmapViewDataSourceImpl.h"
 #import "QMCacaoTestCase.h"
-#import "QMRootCell.h"
 #import "QMIcon.h"
 
 @interface MindmapDataSourceTest : QMCacaoTestCase {
@@ -154,7 +161,7 @@
 - (void)testSetFont {
     NSFont *const font = [NSFont boldSystemFontOfSize:50];
 
-    [dataSource mindmapView:view setFont:font ofItems:[NSArray arrayWithObjects:item, otherItem, nil]];
+    [dataSource mindmapView:view setFont:font ofItems:@[item, otherItem]];
 
     [verify(undoManager) beginUndoGrouping];
     [verify(undoManager) setActionName:NSLocalizedString(@"undo.node.font.change", @"Change Font of Node(s)")];
@@ -282,7 +289,7 @@
     NSObject *const object1 = [[NSObject alloc] init];
     NSObject *const object2 = [[NSObject alloc] init];
 
-    [dataSource mindmapView:view deleteItems:[NSArray arrayWithObjects:object1, object2, nil]];
+    [dataSource mindmapView:view deleteItems:@[object1, object2]];
 
     [verify(undoManager) beginUndoGrouping];
     [verify(undoManager) setActionName:NSLocalizedString(@"undo.node.deletion", @"Deletion of Node(s)")];
@@ -303,37 +310,37 @@
 
 - (void)testView {
     [given([doc numberOfChildrenOfNode:item]) willReturnUnsignedInteger:1];
-    assertThatUnsignedInteger([dataSource mindmapView:view numberOfChildrenOfItem:item], equalToInt(1));
+    assertThat(@([dataSource mindmapView:view numberOfChildrenOfItem:item]), is(@(1)));
 
     [given([doc child:8 ofNode:item]) willReturn:otherItem];
-    assertThat([dataSource mindmapView:view child:8 ofItem:item], equalTo(otherItem));
+    assertThat([dataSource mindmapView:view child:8 ofItem:item], is(otherItem));
 
     [given([doc numberOfLeftChildrenOfNode:item]) willReturnUnsignedInteger:3];
-    assertThatUnsignedInteger([dataSource mindmapView:view numberOfLeftChildrenOfItem:item], equalToInt(3));
+    assertThat(@([dataSource mindmapView:view numberOfLeftChildrenOfItem:item]), is(@(3)));
 
     [given([doc leftChild:1 ofNode:item]) willReturn:otherItem];
-    assertThat([dataSource mindmapView:view leftChild:1 ofItem:item], equalTo(otherItem));
+    assertThat([dataSource mindmapView:view leftChild:1 ofItem:item], is(otherItem));
 
     [given([doc isNodeFolded:item]) willReturnBool:YES];
-    assertThatBool([dataSource mindmapView:view isItemFolded:item], isTrue);
+    assertThat(@([dataSource mindmapView:view isItemFolded:item]), isYes);
 
     [given([doc isNodeLeaf:item]) willReturnBool:NO];
-    assertThatBool([dataSource mindmapView:view isItemLeaf:item], isFalse);
+    assertThat(@([dataSource mindmapView:view isItemLeaf:item]), isNo);
 
     [given([doc stringValueOfNode:item]) willReturn:@"string"];
-    assertThat([dataSource mindmapView:view stringValueOfItem:item], equalTo(@"string"));
+    assertThat([dataSource mindmapView:view stringValueOfItem:item], is(@"string"));
 
     NSFont *font = [NSFont boldSystemFontOfSize:12];
     [given([doc fontOfNode:item]) willReturn:font];
-    assertThat([dataSource mindmapView:view fontOfItem:item], equalTo(font));
+    assertThat([dataSource mindmapView:view fontOfItem:item], is(font));
 
     [given([doc isNodeLeft:item]) willReturnBool:YES];
-    assertThatBool([dataSource mindmapView:view isItemLeft:item], isTrue);
+    assertThat(@([dataSource mindmapView:view isItemLeft:item]), isYes);
 }
 
 - (void)testIcon {
     // return unicode, pdf, unsupported
-    [given([doc iconsOfNode:item]) willReturn:[NSArray arrayWithObjects:@"full-1", @"kmail", @"fkfkf", nil]];
+    [given([doc iconsOfNode:item]) willReturn:@[@"full-1", @"kmail", @"fkfkf"]];
     NSArray *result = [dataSource mindmapView:view iconsOfItem:item];
 
     QMIcon *icon1 = result[0];

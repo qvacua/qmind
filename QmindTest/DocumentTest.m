@@ -1,3 +1,11 @@
+/**
+ * Tae Won Ha
+ * http://qvacua.com
+ * https://bitbucket.org/qvacua
+ *
+ * See LICENSE
+ */
+
 #import "QMNode.h"
 #import "QMBaseTestCase+Util.h"
 #import "QMMindmapReader.h"
@@ -8,8 +16,8 @@
 #import "QMDocument.h"
 #import "QMMindmapView.h"
 
-static NSString *const MINDMAP_FILE_NAME = @"mindmap-reader-test";
-static NSString *const MINDMAP_EXTENSION = @"mm";
+static NSString * const MINDMAP_FILE_NAME = @"mindmap-reader-test";
+static NSString * const MINDMAP_EXTENSION = @"mm";
 
 @interface DocumentTest : QMBaseTestCase
 @end

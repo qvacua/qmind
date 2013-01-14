@@ -1,7 +1,7 @@
 /**
  * Tae Won Ha
  * http://qvacua.com
- * https://github.com/qvacua
+ * https://bitbucket.org/qvacua
  *
  * See LICENSE
  */
@@ -171,33 +171,27 @@
     QMCell *child2 = [[QMCell alloc] initWithView:view];
 
     [cell addChild:child1 left:YES];
-    assertThat(cell.children, hasSize(1));
     assertThat(cell.children, consistsOf(child1));
     assertThat(@(child1.isLeft), isNo);
 
     [cell addChild:child2 left:NO];
-    assertThat(cell.children, hasSize(2));
     assertThat(cell.children, consistsOf(child1, child2));
     assertThat(@(child2.isLeft), isNo);
 
     [cell removeChild:child1];
-    assertThat(cell.children, hasSize(1));
     assertThat(cell.children, consistsOf(child2));
     assertThat(@(child2.isLeft), isNo);
 
     leftCell.left = YES;
     [leftCell addChild:child1 left:YES];
-    assertThat(leftCell.children, hasSize(1));
     assertThat(leftCell.children, consistsOf(child1));
     assertThat(@(child1.isLeft), isYes);
 
     [leftCell addChild:child2 left:NO];
-    assertThat(leftCell.children, hasSize(2));
     assertThat(leftCell.children, consistsOf(child1, child2));
     assertThat(@(child2.isLeft), isYes);
 
     [leftCell removeChild:child2];
-    assertThat(leftCell.children, hasSize(1));
     assertThat(leftCell.children, consistsOf(child1));
     assertThat(@(child1.isLeft), isYes);
 }
@@ -238,7 +232,7 @@
     cell.font = font;
     [verify(textLayoutManager) stringAttributesDictWithFont:font];
     assertThat([cell.attributedString attributesAtIndex:0 effectiveRange:NULL],
-    atKey(NSFontAttributeName, equalTo(font)));
+    atKey(NSFontAttributeName, is(font)));
 
     font = [NSFont systemFontOfSize:50];
     [attrDict setObject:font forKey:NSFontAttributeName];
@@ -246,7 +240,7 @@
     cell.font = nil;
     [verify(textLayoutManager) stringAttributesDict];
     assertThat([cell.attributedString attributesAtIndex:0 effectiveRange:NULL],
-    atKey(NSFontAttributeName, equalTo(font)));
+    atKey(NSFontAttributeName, is(font)));
 }
 
 - (void)testStringValue {
@@ -257,10 +251,10 @@
 
     cell.stringValue = @"my string";
     [verifyCount(textLayoutManager, times(1)) stringAttributesDict];
-    assertThat(cell.stringValue, equalTo(@"my string"));
-    assertThat(cell.attributedString.string, equalTo(@"my string"));
+    assertThat(cell.stringValue, is(@"my string"));
+    assertThat(cell.attributedString.string, is(@"my string"));
     assertThat([cell.attributedString attributesAtIndex:0 effectiveRange:NULL],
-    atKey(NSFontAttributeName, equalTo(font)));
+    atKey(NSFontAttributeName, is(font)));
 
     font = [NSFont boldSystemFontOfSize:20];
     [attrDict setObject:font forKey:NSFontAttributeName];
@@ -268,7 +262,7 @@
     cell.font = font;
     [verify(textLayoutManager) stringAttributesDictWithFont:font];
     assertThat([cell.attributedString attributesAtIndex:0 effectiveRange:NULL],
-    atKey(NSFontAttributeName, equalTo(font)));
+    atKey(NSFontAttributeName, is(font)));
 
     textLayoutManager = mock(QMTextLayoutManager.class);
     [cell setInstanceVarTo:textLayoutManager];
@@ -276,12 +270,11 @@
     cell.stringValue = @"new string";
     [verify(textLayoutManager) stringAttributesDictWithFont:font];
     assertThat([cell.attributedString attributesAtIndex:0 effectiveRange:NULL],
-    atKey(NSFontAttributeName, equalTo(font)));
+    atKey(NSFontAttributeName, is(font)));
 }
 
 - (void)testRangeCache {
-    [given([textLayoutManager completeRangeOfAttributedString:instanceOf(NSAttributedString.class)])
-            willReturnRange:NSMakeRange(30, 50)];
+    [given([textLayoutManager completeRangeOfAttributedString:instanceOf(NSAttributedString.class)]) willReturnRange:NSMakeRange(30, 50)];
     cell.stringValue = @"fdsfa";
     [verify(textLayoutManager) completeRangeOfAttributedString:cell.attributedString];
     assertThatRange(cell.rangeOfStringValue, equalToRange(NSMakeRange(30, 50)));
@@ -311,7 +304,7 @@
 - (void)testInitAndBasics {
     cell = [[QMCell alloc] initWithView:view];
     [parentCell addObjectInChildren:cell];
-    assertThat(cell.stringValue, equalTo(@""));
+    assertThat(cell.stringValue, is(@""));
 
     cell.stringValue = @"test";
     cell.folded = YES;
@@ -319,11 +312,11 @@
     assertThat(parentCell.children, hasSize(2));
 
     assertThat(@(cell.isLeft), isNo);
-    assertThat(cell.view, equalTo(view));
-    assertThat(cell.parent, equalTo(parentCell));
+    assertThat(cell.view, is(view));
+    assertThat(cell.parent, is(parentCell));
     assertThat(cell.children, isNot(nilValue()));
     assertThat(cell.children, is(empty()));
-    assertThat(cell.stringValue, equalTo(@"test"));
+    assertThat(cell.stringValue, is(@"test"));
     assertThat(@(cell.isLeaf), isYes);
     assertThat(@(cell.isFolded), isYes);
 }
@@ -333,7 +326,7 @@
 
     parentCell.left = YES;
     [parentCell addObjectInChildren:cell];
-    assertThat(cell.stringValue, equalTo(@""));
+    assertThat(cell.stringValue, is(@""));
 
     cell.stringValue = @"test";
     cell.folded = YES;
@@ -341,27 +334,26 @@
     assertThat(parentCell.children, hasSize(2));
 
     assertThat(@(cell.isLeft), isYes);
-    assertThat(cell.view, equalTo(view));
-    assertThat(cell.parent, equalTo(parentCell));
+    assertThat(cell.view, is(view));
+    assertThat(cell.parent, is(parentCell));
     assertThat(cell.children, isNot(nilValue()));
     assertThat(cell.children, is(empty()));
-    assertThat(cell.stringValue, equalTo(@"test"));
+    assertThat(cell.stringValue, is(@"test"));
     assertThat(@(cell.isLeaf), isYes);
     assertThat(@(cell.isFolded), isYes);
 
     QMCell *grandChild = [[QMCell alloc] initWithView:view];
     [cell insertObject:grandChild inChildrenAtIndex:0];
     assertThat(@(grandChild.isLeft), isYes);
-    assertThat(cell.children, hasSize(1));
-    assertThat(cell.children, contains(equalTo(grandChild), nil));
+    assertThat(cell.children, consistsOf(grandChild));
 }
 
 - (void)testKvcForChildren {
     [parentCell insertObject:cell inChildrenAtIndex:0];
 
-    assertThat(cell.parent, equalTo(parentCell));
+    assertThat(cell.parent, is(parentCell));
     assertThat(@(cell.isLeft), isNo);
-    assertThat([parentCell objectInChildrenAtIndex:0], equalTo(cell));
+    assertThat([parentCell objectInChildrenAtIndex:0], is(cell));
     assertThat(@([parentCell countOfChildren]), is(@(2)));
 
     [parentCell removeObjectFromChildrenAtIndex:0];
@@ -371,7 +363,7 @@
 
 - (void)testAllChildren {
     [parentCell insertObject:cell inChildrenAtIndex:0];
-    assertThat(parentCell.allChildren, equalTo(parentCell.children));
+    assertThat(parentCell.allChildren, is(parentCell.children));
     assertThat(@(parentCell.countOfAllChildren), is(@(2)));
 }
 

@@ -1,7 +1,7 @@
 /**
  * Tae Won Ha
  * http://qvacua.com
- * https://github.com/qvacua
+ * https://bitbucket.org/qvacua
  *
  * See LICENSE
  */
