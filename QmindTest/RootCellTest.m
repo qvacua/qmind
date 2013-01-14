@@ -1,3 +1,11 @@
+/**
+ * Tae Won Ha
+ * http://qvacua.com
+ * https://bitbucket.org/qvacua
+ *
+ * See LICENSE
+ */
+
 #import "QMCellLayoutManager.h"
 #import "QMMindmapView.h"
 #import "QMCellDrawer.h"
@@ -75,10 +83,10 @@
     [rootCell addObjectInLeftChildren:leftCell];
     [rootCell addObjectInLeftChildren:leftCell2];
 
-    assertThatUnsignedInteger([rootCell indexOfChild:anotherCell], equalToInt(0));
-    assertThatUnsignedInteger([rootCell indexOfChild:cell], equalToInt(1));
-    assertThatUnsignedInteger([rootCell indexOfChild:leftCell], equalToInt(0));
-    assertThatUnsignedInteger([rootCell indexOfChild:leftCell2], equalToInt(1));
+    assertThat(@([rootCell indexOfChild:anotherCell]), is(@(0)));
+    assertThat(@([rootCell indexOfChild:cell]), is(@(1)));
+    assertThat(@([rootCell indexOfChild:leftCell]), is(@(0)));
+    assertThat(@([rootCell indexOfChild:leftCell2]), is(@(1)));
 }
 
 - (void)testConvenienceChildMethods {
@@ -86,26 +94,24 @@
     QMCell *child2 = [[QMCell alloc] initWithView:view];
 
     [rootCell addChild:child1 left:YES];
-    assertThat(rootCell.leftChildren, hasSize(1));
     assertThat(rootCell.leftChildren, consistsOf(child1));
-    assertThatBool(child1.isLeft, isTrue);
+    assertThat(@(child1.isLeft), isYes);
 
     [rootCell addChild:child2 left:NO];
-    assertThat(rootCell.children, hasSize(2));
     assertThat(rootCell.children, consistsOf(anotherCell, child2));
-    assertThatBool(child2.isLeft, isFalse);
+    assertThat(@(child2.isLeft), isNo);
 }
 
 - (void)testRoot {
-    assertThatBool(rootCell.isRoot, isTrue);
+    assertThat(@(rootCell.isRoot), isYes);
 }
 
 - (void)testLeaf {
     [rootCell removeObjectFromChildrenAtIndex:0];
-    assertThatBool(rootCell.isLeaf, isTrue);
+    assertThat(@(rootCell.isLeaf), isYes);
 
     [rootCell addObjectInLeftChildren:[[QMCell alloc] initWithView:nil]];
-    assertThatBool(rootCell.isLeaf, isFalse);
+    assertThat(@(rootCell.isLeaf), isNo);
 }
 
 - (void)testDraw {
@@ -126,41 +132,40 @@
     QMRootCell *newRootCell = [[QMRootCell alloc] initWithView:view];
 
     assertThat(newRootCell.leftChildren, hasSize(0));
-    assertThatBool(newRootCell.isLeft, isFalse);
+    assertThat(@(newRootCell.isLeft), isNo);
 }
 
 - (void)testKvcForLeftChildren {
     [rootCell insertObject:leftCell inLeftChildrenAtIndex:0];
 
-    assertThat(leftCell.parent, equalTo(rootCell));
-    assertThatBool(leftCell.isLeft, isTrue);
-    assertThat([rootCell objectInLeftChildrenAtIndex:0], equalTo(leftCell));
-    assertThatUnsignedInteger([rootCell countOfLeftChildren], equalToInt(1));
+    assertThat(leftCell.parent, is(rootCell));
+    assertThat(@(leftCell.isLeft), isYes);
+    assertThat([rootCell objectInLeftChildrenAtIndex:0], is(leftCell));
+    assertThat(@([rootCell countOfLeftChildren]), is(@(1)));
 
     QMCell *grandLeftChild = [[QMCell alloc] initWithView:view];
     [leftCell insertObject:grandLeftChild inChildrenAtIndex:0];
-    assertThatBool(grandLeftChild.isLeft, isTrue);
+    assertThat(@(grandLeftChild.isLeft), isYes);
     [leftCell removeObjectFromChildrenAtIndex:0];
-    assertThatBool(grandLeftChild.isLeft, isFalse);
+    assertThat(@(grandLeftChild.isLeft), isNo);
 
     [rootCell removeObjectFromLeftChildrenAtIndex:0];
-    assertThatUnsignedInteger([rootCell countOfLeftChildren], equalToInt(0));
+    assertThat(@([rootCell countOfLeftChildren]), is(@(0)));
     assertThat(leftCell.parent, nilValue());
-    assertThatBool(leftCell.isLeft, isFalse);
+    assertThat(@(leftCell.isLeft), isNo);
 
     [rootCell addObjectInLeftChildren:leftCell];
-    assertThat(leftCell.parent, equalTo(rootCell));
-    assertThatBool(leftCell.isLeft, isTrue);
-    assertThatUnsignedInteger([rootCell countOfLeftChildren], equalToInt(1));
+    assertThat(leftCell.parent, is(rootCell));
+    assertThat(@(leftCell.isLeft), isYes);
+    assertThat(@([rootCell countOfLeftChildren]), is(@(1)));
 }
 
 - (void)testAllChildren {
     [rootCell insertObject:cell inChildrenAtIndex:0];
     [rootCell insertObject:leftCell inLeftChildrenAtIndex:0];
 
-    assertThat(rootCell.allChildren, hasSize(3));
-    assertThat(rootCell.allChildren, containsInAnyOrder(equalTo(leftCell), equalTo(cell), equalTo(anotherCell), nil));
-    assertThatUnsignedInteger([rootCell countOfAllChildren], equalToInt(3));
+    assertThat(rootCell.allChildren, consistsOfInAnyOrder(leftCell, cell, anotherCell));
+    assertThat(@([rootCell countOfAllChildren]), is(@(3)));
 }
 
 - (void)testTestLeftChildrenFamilySize {

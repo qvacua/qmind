@@ -1,3 +1,11 @@
+/**
+ * Tae Won Ha
+ * http://qvacua.com
+ * https://bitbucket.org/qvacua
+ *
+ * See LICENSE
+ */
+
 #import "QMBaseTestCase.h"
 #import "QMCellEditor.h"
 #import "QMBaseTestCase+Util.h"
@@ -60,18 +68,8 @@
     assertThatBool([editor isEditing], isFalse);
 }
 
-//- (void)testCancelEditing {
-//    NSUndoManager *const undoManager = [editor undoManagerForTextView:nil];
-//    [undoManager registerUndoWithTarget:self selector:@selector(testEndEditing) object:self];
-//
-//    [editor beginEditStringValueForCell:CELL(4)];
-//    [editor textDidEndEditing:nil];
-//
-//    [verify(view) editingCancelledForCell:CELL(4)];
-//    assertThat(editor.currentlyEditedCell, nilValue());
-//    [verify(window) makeFirstResponder:view];
-//
-//    assertThatBool([undoManager canUndo], isFalse);
-//}
+- (void)testCancelEditing {
+    // TODO ?
+}
 
 @end

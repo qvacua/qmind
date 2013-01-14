@@ -1,3 +1,11 @@
+/**
+ * Tae Won Ha
+ * http://qvacua.com
+ * https://bitbucket.org/qvacua
+ *
+ * See LICENSE
+ */
+
 #import "QMCellSelector.h"
 #import "QMCellStateManager.h"
 #import <Qkit/Qkit.h>
