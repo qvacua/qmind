@@ -6,7 +6,6 @@
  * See LICENSE
  */
 
-#import <Qkit/Qkit.h>
 #import "QMIconCollectionViewItem.h"
 #import "QMMindmapView.h"
 #import "QMMindmapViewDataSource.h"

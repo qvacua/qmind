@@ -32,10 +32,10 @@
     NSImage *_flippedImage;
 }
 
-TB_AUTOWIRE_WITH_INSTANCE_VAR(iconManager, _iconManager)
-TB_AUTOWIRE_WITH_INSTANCE_VAR(settings, _settings)
-TB_AUTOWIRE_WITH_INSTANCE_VAR(textDrawer, _textDrawer)
-TB_AUTOWIRE_WITH_INSTANCE_VAR(textLayoutManager, _textLayoutManager)
+@synthesize iconManager = _iconManager;
+@synthesize settings = _settings;
+@synthesize textDrawer = _textDrawer;
+@synthesize textLayoutManager = _textLayoutManager;
 
 @synthesize kind = _kind;
 @synthesize origin = _origin;
