@@ -13,4 +13,4 @@ The source code of Qmind is licensed under GNU General Public License version 3 
 
 For more details, see [Wiki][].
 
-[Wiki]: https://bitbucket.org/qvacua/qmind/wiki
+[Wiki]: https://github.com/qvacua/qmind/wiki
