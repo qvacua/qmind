@@ -50,6 +50,7 @@ static NSString * const MINDMAP_EXTENSION = @"mm";
     rootNode.undoManager = undoManager;
 
     doc = [[QMDocument alloc] init];
+    doc.settings = settings;
     [doc setUndoManager:undoManager];
     [doc setInstanceVarTo:pasteboard];
     [doc setWindowController:controller];
@@ -546,6 +547,12 @@ static NSString * const MINDMAP_EXTENSION = @"mm";
     newFont = [settings settingForKey:qSettingDefaultFont];
     [doc setFont:newFont ofItem:NODE(3)];
     assertThat([NODE(3) font], is(nilValue()));
+
+    /**
+    * @bug
+    */
+    [doc setFont:newFont ofItem:LNODE(4, 1)];
+    assertThat([LNODE(4, 1) font], is(nilValue()));
 }
 
 - (void)testMarkAsNotNew {

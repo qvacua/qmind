@@ -142,6 +142,7 @@ TB_MANUALWIRE_WITH_INSTANCE_VAR(mindmapWriter, _mindmapWriter)
 
 - (void)setFont:(NSFont *)font ofItem:(QMNode *)item {
     if ([font isEqual:[_settings settingForKey:qSettingDefaultFont]]) {
+        [item setFont:nil];
         return;
     }
 
