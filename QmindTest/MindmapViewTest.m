@@ -41,7 +41,7 @@ static NSSize const CELL_SIZE = {100, 20};
 }
 
 - (void)setUp {
-    [[TBContext sharedContext] initContext];
+    [super setUp];
 
     stateManager = [[QMCellStateManager alloc] init];
     selector = mock(QMCellSelector.class);
@@ -184,7 +184,8 @@ static NSSize const CELL_SIZE = {100, 20};
 }
 
 - (void)testCellEditingEnd {
-    NSMutableDictionary *const paragraphStyle = [[NSMutableDictionary alloc] initWithDictionary:[[QMAppSettings sharedSettings] settingForKey:qSettingDefaultStringAttributeDict]];
+    QMAppSettings *settings = [self.context beanWithClass:[QMAppSettings class]];
+    NSMutableDictionary *const paragraphStyle = [[NSMutableDictionary alloc] initWithDictionary:[settings settingForKey:qSettingDefaultStringAttributeDict]];
 
     NSAttributedString *oldString = [[NSAttributedString alloc] initWithString:[CELL(3) stringValue] attributes:paragraphStyle];
 

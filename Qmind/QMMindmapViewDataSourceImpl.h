@@ -13,6 +13,7 @@
 
 @interface QMMindmapViewDataSourceImpl : NSObject <QMMindmapViewDataSource>
 
+@property (weak) QMAppSettings *settings;
 @property (weak) QMIconManager *iconManager;
 
 - (id)initWithDoc:(QMDocument *)doc view:(QMMindmapView *)view;

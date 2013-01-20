@@ -96,10 +96,13 @@
 @implementation MindmapViewDraggingTest {
     QMCellLayoutManager *cellLayoutManager;
     NSRect viewFrame;
+    QMAppSettings *settings;
 }
 
 - (void)setUp {
-    [[TBContext sharedContext] initContext];
+    [super setUp];
+
+    settings = [self.context beanWithClass:[QMAppSettings class]];
 
     stateManager = [[QMCellStateManager alloc] init];
     selector = mock([QMCellSelector class]);
@@ -119,7 +122,7 @@
     [view setInstanceVarTo:rootCell];
     [view setInstanceVarTo:cellLayoutManager];
     [view setInstanceVarTo:dataSource implementingProtocol:@protocol(QMMindmapViewDataSource)];
-    [view setInstanceVarTo:[QMAppSettings sharedSettings]];
+    [view setInstanceVarTo:settings];
 }
 
 - (void)testDraggingUpdatedNoOldTargetCell {

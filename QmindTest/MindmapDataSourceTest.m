@@ -34,10 +34,13 @@
 
 @implementation MindmapDataSourceTest {
     QMCell *rootCell;
+    QMAppSettings *settings;
 }
 
 - (void)setUp {
     [super setUp];
+
+    settings = [self.context beanWithClass:[QMAppSettings class]];
 
     doc = mock(QMDocument.class);
     view = mock([QMMindmapView class]);
@@ -263,8 +266,6 @@
 }
 
 - (void)testEditingCancelled {
-    QMAppSettings *const settings = [QMAppSettings sharedSettings];
-
     NSObject *object1 = [[NSObject alloc] init];
     NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:@"test" attributes:[settings settingForKey:qSettingDefaultStringAttributeDict]];
 

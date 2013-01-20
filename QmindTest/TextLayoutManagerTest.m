@@ -24,12 +24,14 @@
     NSString *shortStr;
     NSString *longStr;
     NSString *multilineStr;
+    QMAppSettings *settings;
 }
 
 - (void)setUp {
     [super setUp];
 
-    manager = [self.context beanWithIdentifier:[[QMTextLayoutManager class] description]];
+    settings = [self.context beanWithClass:[QMAppSettings class]];
+    manager = [self.context beanWithClass:[QMTextLayoutManager class]];
 
     smallFont = [NSFont menuBarFontOfSize:13.0];
     bigFont = [NSFont boldSystemFontOfSize:50.0];
@@ -50,7 +52,7 @@
 - (void)testAttributesDict {
     NSDictionary *attrDict = [manager stringAttributesDictWithFont:bigFont];
 
-    assertThat(attrDict, atKey(NSFontAttributeName, equalTo(bigFont)));
+    assertThat(attrDict, atKey(NSFontAttributeName, is(bigFont)));
 
     assertThat(attrDict, hasKey(NSParagraphStyleAttributeName));
     NSParagraphStyle *style = [attrDict objectForKey:NSParagraphStyleAttributeName];
@@ -61,8 +63,7 @@
 - (void)testAttributesDictDefault {
     NSDictionary *attrDict = [manager stringAttributesDict];
 
-    assertThat(attrDict,
-               atKey(NSFontAttributeName, equalTo([[QMAppSettings sharedSettings] settingForKey:qSettingDefaultFont])));
+    assertThat(attrDict, atKey(NSFontAttributeName, is([settings settingForKey:qSettingDefaultFont])));
 
     assertThat(attrDict, hasKey(NSParagraphStyleAttributeName));
 
@@ -78,7 +79,7 @@
     NSDictionary *bigAttrDict = [manager stringAttributesDictWithFont:bigFont];
     NSAttributedString *bigString = [[NSAttributedString alloc] initWithString:longStr attributes:bigAttrDict];
 
-    const CGFloat maxWidth = [[QMAppSettings sharedSettings] floatForKey:qSettingMaxTextNodeWidth];
+    const CGFloat maxWidth = [settings floatForKey:qSettingMaxTextNodeWidth];
     assertThatSize([manager sizeOfAttributedString:smallString],
                    equalToSize([manager sizeOfAttributedString:smallString maxWidth:maxWidth]));
 
