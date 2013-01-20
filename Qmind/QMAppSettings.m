@@ -27,19 +27,6 @@ TB_BEAN
     return (CGFloat) [_settingsDict[key] floatValue];
 }
 
-#pragma mark Static
-+ (QMAppSettings *)sharedSettings {
-    static QMAppSettings *_sharedAppSettings = nil;
-
-    @synchronized (self) {
-        if (_sharedAppSettings == nil) {
-            _sharedAppSettings = [[self alloc] init];
-        }
-    }
-
-    return _sharedAppSettings;
-}
-
 #pragma mark NSObject
 - (id)init {
     self = [super init];

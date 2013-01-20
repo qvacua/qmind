@@ -52,8 +52,6 @@ static NSString * const qSettingCellVerticalPadding = @"CellVerticalPadding";
 */
 @interface QMAppSettings : NSObject
 
-+ (QMAppSettings *)sharedSettings;
-
 /**
 * General getter for a setting. When the result is a number, an NSNumber is returned.
 */

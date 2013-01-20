@@ -8,10 +8,7 @@
 
 #import "QMAppDelegate.h"
 
-@implementation QMAppDelegate {
-    __weak NSMenuItem *_insertNewChildNodeMenuItem;
-    __weak NSMenuItem *_insertNewLeftChildNodeMenuItem;
-}
+@implementation QMAppDelegate
 
 @synthesize insertNewChildNodeMenuItem = _insertNewChildNodeMenuItem;
 @synthesize insertNewLeftChildNodeMenuItem = _insertNewLeftChildNodeMenuItem;

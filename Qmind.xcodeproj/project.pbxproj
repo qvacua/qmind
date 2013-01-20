@@ -183,12 +183,26 @@
 			remoteGlobalIDString = 4B5CB3F315E0E57E00E05BD7;
 			remoteInfo = QkitTests;
 		};
-		4BFCD76C14F3D49B00850924 /* PBXContainerItemProxy */ = {
+		4B1752E616A5F655002FAFC4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 4B8564B814E461DC00C6FF0A /* Project object */;
+			containerPortal = 4B15776516A2EFEF0048480E /* Qkit.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 4B8564C014E461DC00C6FF0A;
-			remoteInfo = Qmind;
+			remoteGlobalIDString = 4B5CB3DA15E0E57E00E05BD7;
+			remoteInfo = Qkit;
+		};
+		4B1752E816A5F660002FAFC4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4B15776516A2EFEF0048480E /* Qkit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 4B5CB3DA15E0E57E00E05BD7;
+			remoteInfo = Qkit;
+		};
+		4B1752EA16A5F667002FAFC4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4B15776516A2EFEF0048480E /* Qkit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 4B5CB4F715E1069400E05BD7;
+			remoteInfo = QTestKit;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -418,7 +432,6 @@
 				4BFCD7AC14F3E32A00850980 /* Text */,
 				4B39308014EC41E100A9D541 /* View */,
 				4B85653514E46D6800C6FF3C /* Cell */,
-				4BE684B016922ED800789892 /* Icons Pane */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -669,6 +682,7 @@
 				1929B5A9AAEC82B9CE22DFA2 /* QMCellSizeManager.h */,
 				1929BA02C47D9D0A43F49EFA /* QMIcon.m */,
 				1929B95442D0BCBE01A02608 /* QMIcon.h */,
+				4BE684B016922ED800789892 /* Icons Pane */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -760,6 +774,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				4B1752E716A5F655002FAFC4 /* PBXTargetDependency */,
 				4B03B24C1628724F00E5ECA2 /* PBXTargetDependency */,
 			);
 			name = Qmind;
@@ -781,8 +796,9 @@
 			buildRules = (
 			);
 			dependencies = (
+				4B1752EB16A5F667002FAFC4 /* PBXTargetDependency */,
+				4B1752E916A5F660002FAFC4 /* PBXTargetDependency */,
 				4B03B2501628726200E5ECA2 /* PBXTargetDependency */,
-				4BFCD76D14F3D49B00850924 /* PBXTargetDependency */,
 			);
 			name = QmindSenTesting;
 			productName = QmindTesting;
@@ -1028,10 +1044,20 @@
 			name = TBCacao;
 			targetProxy = 4B03B24F1628726200E5ECA2 /* PBXContainerItemProxy */;
 		};
-		4BFCD76D14F3D49B00850924 /* PBXTargetDependency */ = {
+		4B1752E716A5F655002FAFC4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 4B8564C014E461DC00C6FF0A /* Qmind */;
-			targetProxy = 4BFCD76C14F3D49B00850924 /* PBXContainerItemProxy */;
+			name = Qkit;
+			targetProxy = 4B1752E616A5F655002FAFC4 /* PBXContainerItemProxy */;
+		};
+		4B1752E916A5F660002FAFC4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Qkit;
+			targetProxy = 4B1752E816A5F660002FAFC4 /* PBXContainerItemProxy */;
+		};
+		4B1752EB16A5F667002FAFC4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = QTestKit;
+			targetProxy = 4B1752EA16A5F667002FAFC4 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

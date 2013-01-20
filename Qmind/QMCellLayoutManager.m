@@ -12,9 +12,7 @@
 #import "QMIcon.h"
 #import <Qkit/Qkit.h>
 
-@implementation QMCellLayoutManager {
-    __weak QMAppSettings *_settings;
-}
+@implementation QMCellLayoutManager
 
 TB_BEAN
 TB_AUTOWIRE_WITH_INSTANCE_VAR(settings, _settings)

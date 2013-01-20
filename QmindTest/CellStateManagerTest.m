@@ -25,7 +25,7 @@
 }
 
 - (void)setUp {
-    [[TBContext sharedContext] initContext];
+    [super setUp];
 
     stateManager = [[QMCellStateManager alloc] init];
     selCells = stateManager.selectedCells;

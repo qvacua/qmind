@@ -21,10 +21,9 @@
     __weak QMDocument *_doc;
     __weak NSUndoManager *_undoManager;
     __weak QMMindmapView *_view;
-
-    __weak QMIconManager *_iconManager;
 }
 
+TB_MANUALWIRE_WITH_INSTANCE_VAR(settings, _settings)
 TB_MANUALWIRE_WITH_INSTANCE_VAR(iconManager, _iconManager)
 
 #pragma mark Public
@@ -151,7 +150,7 @@ TB_MANUALWIRE_WITH_INSTANCE_VAR(iconManager, _iconManager)
 
         NSFont *font = [newAttrStr fontOfTheBeginning];
         if (font == nil) {
-            font = [[QMAppSettings sharedSettings] settingForKey:qSettingDefaultFont];
+            font = [_settings settingForKey:qSettingDefaultFont];
         }
 
         [_doc setFont:font ofItem:item];

@@ -36,7 +36,7 @@
 }
 
 - (void)setUp {
-    [[TBContext sharedContext] initContext];
+    [super setUp];
 
     stateManager = [[QMCellStateManager alloc] init];
     selector = mock(QMCellSelector.class);
@@ -49,7 +49,7 @@
     [view setInstanceVarTo:stateManager];
     [view setInstanceVarTo:editor];
     [view setInstanceVarTo:dataSource implementingProtocol:@protocol(QMMindmapViewDataSource)];
-    [view setInstanceVarTo:[QMAppSettings sharedSettings]];
+    [view setInstanceVarTo:[self.context beanWithClass:[QMAppSettings class]]];
 
     rootCell = [self rootCellForTestWithView:view];
 

@@ -15,8 +15,6 @@
 static NSInteger const qEscUnicode = 27;
 
 @implementation QMCellEditor {
-    __weak QMAppSettings *_settings;
-
     __weak QMMindmapView *_view;
     __weak id <QMCellEditorDelegate> _delegate;
     __weak QMCell *_currentlyEditedCell;

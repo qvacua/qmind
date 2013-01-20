@@ -32,10 +32,13 @@ static NSString * const MINDMAP_EXTENSION = @"mm";
     QMRootNode *rootNode;
     NSUndoManager *undoManager;
     NSPasteboard *pasteboard;
+    QMAppSettings *settings;
 }
 
 - (void)setUp {
     [super setUp];
+
+    settings = [[QMAppSettings alloc] init];
 
     reader = mock(QMMindmapReader.class);
     writer = mock(QMMindmapWriter.class);
@@ -540,7 +543,7 @@ static NSString * const MINDMAP_EXTENSION = @"mm";
     [doc setFont:newFont ofItem:LNODE(4, 1)];
     assertThat([LNODE(4, 1) font], is(newFont));
 
-    newFont = [[QMAppSettings sharedSettings] settingForKey:qSettingDefaultFont];
+    newFont = [settings settingForKey:qSettingDefaultFont];
     [doc setFont:newFont ofItem:NODE(3)];
     assertThat([NODE(3) font], is(nilValue()));
 }

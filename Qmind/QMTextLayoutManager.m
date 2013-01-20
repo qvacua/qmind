@@ -15,8 +15,6 @@
     NSLayoutManager *_layoutManager;
     NSTextStorage *_textStorage;
     NSTextContainer *_textContainer;
-
-    __weak QMAppSettings *_settings;
 }
 
 TB_BEAN
@@ -102,7 +100,7 @@ TB_AUTOWIRE_WITH_INSTANCE_VAR(settings, _settings)
 }
 
 - (NSDictionary *)stringAttributesDict {
-    return [[QMAppSettings sharedSettings] settingForKey:qSettingDefaultStringAttributeDict];
+    return [_settings settingForKey:qSettingDefaultStringAttributeDict];
 }
 
 #pragma mark NSObject
