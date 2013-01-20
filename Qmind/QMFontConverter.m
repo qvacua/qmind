@@ -21,9 +21,7 @@ static NSString * const qDefaultSerifFondName = @"Serif";
 static NSString * const qTimesFontName = @"Times";
 
 @implementation QMFontConverter {
-    __weak QMAppSettings *_settings;
     NSFontManager *_fontManager;
-
     NSFont *_defaultFont;
 }
 

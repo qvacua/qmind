@@ -15,8 +15,6 @@
     NSLayoutManager *_layoutManager;
     NSTextStorage *_textStorage;
     NSTextContainer *_textContainer;
-
-    __weak QMAppSettings *_settings;
 }
 
 TB_BEAN

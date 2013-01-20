@@ -18,10 +18,6 @@
 static NSString * const qDocumentNibName = @"Document";
 
 @implementation QMDocument {
-    __weak QMAppSettings *_settings;
-    __weak QMMindmapReader *_mindmapReader;
-    __weak QMMindmapWriter *_mindmapWriter;
-
     __weak NSPasteboard *_pasteboard;
 
     QMRootNode *_rootNode;

@@ -21,8 +21,6 @@
     __weak QMDocument *_doc;
     __weak NSUndoManager *_undoManager;
     __weak QMMindmapView *_view;
-
-    __weak QMIconManager *_iconManager;
 }
 
 TB_MANUALWIRE_WITH_INSTANCE_VAR(iconManager, _iconManager)

@@ -30,7 +30,6 @@ static NSInteger const kIconsPaneMenuItemTag = 301;
 
 @implementation QMDocumentWindowController {
     __weak QMAppSettings *_settings;
-    __weak QMIconManager *_iconManager;
 
     __weak NSPasteboard *_pasteboard;
 
@@ -50,6 +49,7 @@ static NSInteger const kIconsPaneMenuItemTag = 301;
     CGFloat _lastIconsPaneWidth;
 }
 
+TB_MANUALWIRE_WITH_INSTANCE_VAR(settings, _settings)
 TB_MANUALWIRE_WITH_INSTANCE_VAR(iconManager, _iconManager)
 
 @synthesize mindmapView = _mindmapView;

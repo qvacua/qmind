@@ -16,14 +16,7 @@
 #import "QMCellLayoutManager.h"
 #import "QMIcon.h"
 
-@implementation QMCellDrawer {
-    __weak QMTextLayoutManager *_textLayoutManager;
-    __weak QMCellLayoutManager *_cellLayoutManager;
-
-    __weak QMTextDrawer *_textDrawer;
-
-    __weak QMAppSettings *_settings;
-}
+@implementation QMCellDrawer
 
 TB_BEAN
 TB_AUTOWIRE_WITH_INSTANCE_VAR(textLayoutManager, _textLayoutManager)

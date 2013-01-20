@@ -13,9 +13,7 @@
 #import "QMFontConverter.h"
 #import "QMRootNode.h"
 
-@implementation QMMindmapWriter {
-    __weak QMFontConverter *_fontConverter;
-}
+@implementation QMMindmapWriter
 
 TB_BEAN
 TB_AUTOWIRE_WITH_INSTANCE_VAR(fontConverter, _fontConverter)

@@ -38,11 +38,6 @@ static inline BOOL sign(CGFloat x) {
 @implementation QMMindmapView {
     __weak id <QMMindmapViewDataSource> _dataSource;
 
-    __weak QMAppSettings *_settings;
-    __weak QMCellSelector *_cellSelector;
-    __weak QMCellLayoutManager *_cellLayoutManager;
-    __weak QMUiDrawer *_uiDrawer;
-
     QMRootCell *_rootCell;
 
     QMCellEditor *_cellEditor;
