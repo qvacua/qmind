@@ -29,8 +29,6 @@ static NSInteger const kViewMenuItemTag = 300;
 static NSInteger const kIconsPaneMenuItemTag = 301;
 
 @implementation QMDocumentWindowController {
-    __weak QMAppSettings *_settings;
-
     __weak NSPasteboard *_pasteboard;
 
     __weak QMDocument *_doc;
