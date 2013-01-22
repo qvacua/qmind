@@ -21,12 +21,12 @@ static NSString * const qDefaultSerifFondName = @"Serif";
 static NSString * const qTimesFontName = @"Times";
 
 @implementation QMFontConverter {
-    NSFontManager *_fontManager;
     NSFont *_defaultFont;
 }
 
 TB_BEAN
 TB_AUTOWIRE_WITH_INSTANCE_VAR(settings, _settings)
+TB_AUTOWIRE_WITH_INSTANCE_VAR(fontManager, _fontManager)
 
 #pragma mark Public
 - (NSFont *)fontFromFontAttrDict:(NSDictionary *)fontAttrDict {
@@ -96,7 +96,6 @@ TB_AUTOWIRE_WITH_INSTANCE_VAR(settings, _settings)
 
 #pragma mark TBInitializingBean
 - (void)postConstruct {
-    _fontManager = [NSFontManager sharedFontManager];
     _defaultFont = [_settings settingForKey:qSettingDefaultFont];
 }
 
