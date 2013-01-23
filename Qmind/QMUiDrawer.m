@@ -10,7 +10,7 @@
 #import <Qkit/Qkit.h>
 #import <TBCacao/TBCacao.h>
 
-static const NSSize SIZE_OF_BADGE_CIRCLE = {20., 20.};
+static const NSSize qSizeOfBadgeCircle = {20., 20.};
 
 @implementation QMUiDrawer
 
@@ -34,7 +34,7 @@ TB_BEAN
     [shadow setShadowOffset:NewSize(0, -1)];
     [shadow setShadowBlurRadius:5];
 
-    NSBezierPath *redCirclePath = [NSBezierPath bezierPathWithOvalInRect:NewRectWithOriginAndSize(location, SIZE_OF_BADGE_CIRCLE)];
+    NSBezierPath *redCirclePath = [NSBezierPath bezierPathWithOvalInRect:NewRectWithOriginAndSize(location, qSizeOfBadgeCircle)];
     [NSGraphicsContext saveGraphicsState];
     [shadow set];
     [shadow.shadowColor setFill];
@@ -46,7 +46,7 @@ TB_BEAN
     [redCirclePath setLineWidth:1];
     [redCirclePath stroke];
 
-    NSBezierPath *shinyCirclePath = [NSBezierPath bezierPathWithOvalInRect:NewRectWithOriginAndSize(location, SIZE_OF_BADGE_CIRCLE)];
+    NSBezierPath *shinyCirclePath = [NSBezierPath bezierPathWithOvalInRect:NewRectWithOriginAndSize(location, qSizeOfBadgeCircle)];
     [shinyGradient drawInBezierPath:shinyCirclePath angle:-45];
 }
 

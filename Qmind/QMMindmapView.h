@@ -20,25 +20,19 @@
 @class QMCellLayoutManager;
 @class QMUiDrawer;
 
-static const NSSize UNIT_SIZE = {1.0, 1.0};
-static const CGFloat MIN_ZOOM_FACTOR = 0.01;
-static const CGFloat MAX_ZOOM_FACTOR = 100.0;
-static const CGFloat ZOOM_SCROLLWHEEL_STEP = 0.25;
-
-static inline BOOL modifier_check(NSUInteger value, NSUInteger modifier) {
-    return (value & modifier) == modifier;
-}
+static const NSSize qUnitSize = {1.0, 1.0};
+static const CGFloat qMinZoomFactor = 0.01;
+static const CGFloat qMaxZoomFactor = 100.0;
 
 @interface QMMindmapView : NSView <QMCellEditorDelegate, NSDraggingSource, NSDraggingDestination>
-
-#pragma mark Properties
-@property (weak, readonly) id<QMMindmapViewDataSource> dataSource;
-@property (strong, readonly) QMRootCell *rootCell;
 
 @property (weak) QMUiDrawer *uiDrawer;
 @property (weak) QMCellSelector *cellSelector;
 @property (weak) QMCellLayoutManager *cellLayoutManager;
 @property (weak) QMAppSettings *settings;
+
+@property (weak, readonly) id<QMMindmapViewDataSource> dataSource;
+@property (readonly) QMRootCell *rootCell;
 
 #pragma mark Public
 - (void)updateCanvasSize;
@@ -73,6 +67,10 @@ static inline BOOL modifier_check(NSUInteger value, NSUInteger modifier) {
 - (void)updateCellFamily:(id)parentId forNewCell:(id)childId;
 - (void)updateLeftCellFamily:(id)parentId forNewCell:(id)childId;
 
+-(void)endEditing;
+-(NSPoint)middlePointOfVisibleRect;
+- (void)updateCanvasWithOldClipViewOrigin:(NSPoint)oldClipViewOrigin oldClipViewSize:(NSSize)oldClipViewSize oldCenterInView:(NSPoint)oldCenterInView;
+
 #pragma mark QMCellEditorDelegate
 - (void)editingEndedWithString:(NSAttributedString *)newAttrStr forCell:(QMCell *)editedCell byChar:(unichar)character;
 - (void)editingCancelledWithString:(NSAttributedString *)newAttrStr forCell:(QMCell *)editedCell;
@@ -98,9 +96,4 @@ static inline BOOL modifier_check(NSUInteger value, NSUInteger modifier) {
 - (void)drawRect:(NSRect)dirtyRect;
 - (BOOL)isFlipped;
 
--(void)endEditing;
-
--(NSPoint)middlePointOfVisibleRect;
-
-- (void)updateCanvasWithOldClipViewOrigin:(NSPoint)oldClipViewOrigin oldClipViewSize:(NSSize)oldClipViewSize oldCenterInView:(NSPoint)oldCenterInView;
 @end
