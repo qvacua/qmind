@@ -1,5 +1,7 @@
 # Qmind
 
+![Screenshot](Meta/screenshot.png)
+
 <http://qvacua.com>
 
 ## About
