@@ -1,6 +1,6 @@
 # Qmind
 
-![Screenshot](Meta/screenshot.png)
+![Screenshot](https://raw.github.com/qvacua/qmind/master/Meta/screenshot.png)
 
 <http://qvacua.com>
 
