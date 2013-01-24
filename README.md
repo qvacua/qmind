@@ -1,5 +1,7 @@
 # Qmind
 
+<http://qvacua.com>
+
 ## About
 Qmind is a mind mapping App for OS X compatible with [FreeMind][]. Many features of FreeMind are yet to be implemented.
 
