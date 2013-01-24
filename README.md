@@ -1,7 +1,7 @@
 # Qmind
 
 ## About
-Qmind is a mind mapping App for OS X compatible with FreeMind. Many features of FreeMind are yet to be implemented.
+Qmind is a mind mapping App for OS X compatible with [FreeMind][]. Many features of FreeMind are yet to be implemented.
 
 ## Contribution
 If you want to contribute, please contact me first.
@@ -14,3 +14,4 @@ The source code of Qmind is licensed under GNU General Public License version 3 
 For more details, see [Wiki][].
 
 [Wiki]: https://github.com/qvacua/qmind/wiki
+[FreeMind]: http://freemind.sf.net
