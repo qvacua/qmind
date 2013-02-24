@@ -46,6 +46,7 @@ static inline BOOL modifier_check(NSUInteger value, NSUInteger modifier) {
     QMCellStateManager *_cellStateManager;
 
     BOOL _dragging;
+    BOOL _keepMouseTrackOn;
 
     NSUInteger _mouseDownModifier;
 }
@@ -584,8 +585,12 @@ we only test the begin edit part... We are being to lazy here...
 }
 
 - (void)draggingEnded:(id <NSDraggingInfo>)sender {
-    // when dragging ends, -mouseUp: is not fired, thus, we have to set dragging to NO here.
-    _dragging = NO;
+    /**
+    * As described in -doMouseUp:, we get out of the mouse-track loop when a drag session is started. Therefore, we have
+    * to end the mouse-track loop by setting _keepMouseTrackOn.
+    */
+
+    [self clearMouseTrackLoopFlags];
 
     [_cellStateManager clearCellsForDrag];
 }
@@ -706,22 +711,27 @@ we only test the begin edit part... We are being to lazy here...
         [_dataSource mindmapView:self toggleFoldingForItem:[selCells.lastObject identifier]];
     }
 
-    BOOL keepOn = YES;
-    while (keepOn) {
-        event = [self.window nextEventMatchingMask:NSLeftMouseUpMask | NSLeftMouseDraggedMask];
+    NSEvent *currentEvent;
+    _keepMouseTrackOn = YES;
+    while (_keepMouseTrackOn) {
+        currentEvent = [self.window nextEventMatchingMask:NSLeftMouseUpMask | NSLeftMouseDraggedMask];
 
-        switch ([event type]) {
+        switch ([currentEvent type]) {
             case NSLeftMouseDragged:
-                [self doMouseDragged:event];
+                [self doMouseDragged:currentEvent];
                 break;
+
             case NSLeftMouseUp:
-                [self doMouseUp:event];
-                keepOn = NO;
+                log4Debug(@"mouse up!");
+                [[self enclosingScrollView] setDocumentCursor:[NSCursor arrowCursor]];
+                [self doMouseUp:currentEvent];
+
+                [self clearMouseTrackLoopFlags];
                 break;
+
             default:
                 break;
         }
-
     }
 }
 
@@ -882,16 +892,18 @@ we only test the begin edit part... We are being to lazy here...
 }
 
 #pragma mark Private
+- (void)clearMouseTrackLoopFlags {
+    _dragging = NO;
+    _keepMouseTrackOn = NO;
+}
+
 - (void)doMouseDragged:(NSEvent *)event {
     // drag scrolling
     QMCell *mouseDownHitCell = _cellStateManager.mouseDownHitCell;
 
     if (mouseDownHitCell == nil) {
-        if (_dragging == NO) {
-            [[self enclosingScrollView] setDocumentCursor:[NSCursor closedHandCursor]];
-            _dragging = YES;
-        }
-
+        log4Debug(@"starting to drag scroll");
+        [[self enclosingScrollView] setDocumentCursor:[NSCursor closedHandCursor]];
         [self dragScrollViewWithEvent:event];
 
         return;
@@ -904,10 +916,11 @@ we only test the begin edit part... We are being to lazy here...
     }
 
     // starting to dragging cells
+    log4Debug(@"starting to drag a cell");
     _dragging = YES;
 
     /**
-    * the user can drag:
+    * The user can drag:
     * - selected cells
     * - a non-selected cell
     */
@@ -935,7 +948,8 @@ we only test the begin edit part... We are being to lazy here...
 
 - (void)doMouseUp:(NSEvent *)event {
     /**
-    * NOTE: mouseUp does not get invoked when a drag and drop session is initiated in -mouseDragged:.
+    * NOTE: -mouseUp does not get invoked when a drag and drop session is initiated in -mouseDragged:,
+    * even when we use the mouse-track loop approach, after a drag session started and ended.
     */
 
     NSInteger clickCount = [event clickCount];
@@ -945,11 +959,6 @@ we only test the begin edit part... We are being to lazy here...
     }
 
     _cellStateManager.mouseDownHitCell = nil;
-
-    if (_dragging) {
-        _dragging = NO;
-        [[self enclosingScrollView] setDocumentCursor:[NSCursor arrowCursor]];
-    }
 }
 
 - (QMDirection)directionFromCellRegion:(QMCellRegion)cellRegion {
@@ -1033,11 +1042,6 @@ we only test the begin edit part... We are being to lazy here...
 }
 
 - (void)handleSingleMouseUp {
-    if (_dragging) {
-        [self setNeedsDisplay:YES];
-        return;
-    }
-
     BOOL mouseDownCommandKey = modifier_check(_mouseDownModifier, NSCommandKeyMask);;
     BOOL mouseDownShiftKey = modifier_check(_mouseDownModifier, NSShiftKeyMask);;
 
