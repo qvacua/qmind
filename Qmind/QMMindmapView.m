@@ -680,12 +680,10 @@ we only test the begin edit part... We are being to lazy here...
     NSUInteger modifier = [event modifierFlags];
 
     if (clickCount == 1) {
+
         [self handleSingleMouseDown:clickLocation modifier:modifier];
-        return;
-    }
 
-    if (clickCount == 2) {
-
+    } else if (clickCount == 2) {
         if (modifier_check(modifier, NSCommandKeyMask) || modifier_check(modifier, NSShiftKeyMask)) {
             return;
         }
@@ -700,12 +698,28 @@ we only test the begin edit part... We are being to lazy here...
         }
 
         [_dataSource mindmapView:self toggleFoldingForItem:[selCells.lastObject identifier]];
+    }
 
-        return;
+    BOOL keepOn = YES;
+    while (keepOn) {
+        event = [self.window nextEventMatchingMask:NSLeftMouseUpMask | NSLeftMouseDraggedMask];
+
+        switch ([event type]) {
+            case NSLeftMouseDragged:
+                [self doMouseDragged:event];
+                break;
+            case NSLeftMouseUp:
+                [self doMouseUp:event];
+                keepOn = NO;
+                break;
+            default:
+                break;
+        }
+
     }
 }
 
-- (void)mouseDragged:(NSEvent *)event {
+- (void)doMouseDragged:(NSEvent *)event {
     // drag scrolling
     QMCell *mouseDownHitCell = _cellStateManager.mouseDownHitCell;
 
@@ -756,7 +770,7 @@ we only test the begin edit part... We are being to lazy here...
           slideBack:YES];
 }
 
-- (void)mouseUp:(NSEvent *)event {
+- (void)doMouseUp:(NSEvent *)event {
     /**
     * NOTE: mouseUp does not get invoked when a drag and drop session is initiated in -mouseDragged:.
     */
