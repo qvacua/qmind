@@ -20,7 +20,6 @@
 #import "QMMindmapViewDataSourceImpl.h"
 
 @interface MindmapViewEventsTest : QMCacaoTestCase
-- (void)makeEventReturnModifier:(NSUInteger)modifier locationInWindow:(NSPoint)location;
 @end
 
 @implementation MindmapViewEventsTest {
@@ -28,7 +27,9 @@
     QMCellSelector *selector;
     QMCellEditor *editor;
     QMMindmapViewDataSourceImpl *dataSource;
+    NSWindow *window;
     NSEvent *event;
+    NSEvent *nextEvent;
 
     QMRootCell *rootCell;
 
@@ -43,6 +44,8 @@
     event = mock(NSEvent.class);
     editor = mock([QMCellEditor class]);
     dataSource = mock([QMMindmapViewDataSourceImpl class]);
+    window = mock([NSWindow class]);
+    nextEvent = mock([NSEvent class]);
 
     view = [[QMMindmapView alloc] initWithFrame:NewRect(0, 0, 640, 480)];
     [view setInstanceVarTo:selector];
@@ -50,6 +53,7 @@
     [view setInstanceVarTo:editor];
     [view setInstanceVarTo:dataSource implementingProtocol:@protocol(QMMindmapViewDataSource)];
     [view setInstanceVarTo:[self.context beanWithClass:[QMAppSettings class]]];
+    [view setInstanceVarTo:window];
 
     rootCell = [self rootCellForTestWithView:view];
 
@@ -233,12 +237,10 @@
     [[given([selector cellContainingPoint:NewPoint(10, 460) inCell:rootCell])
             withMatcher:equalToPoint(NewPoint(10, 460)) forArgument:0]
             willReturn:CELL(4)];
+    [self makeWindowReturnNextEventWithType:NSLeftMouseUp clickCount:1];
 
-    FAIL;
-//    [view mouseDown:event];
-    assertThat(stateManager.mouseDownHitCell, is(CELL(4)));
+    [view mouseDown:event];
 
-    [view mouseUp:event];
     assertThat(stateManager.selectedCells, consistsOf(CELL(4)));
     assertThat(stateManager.mouseDownHitCell, nilValue());
 }
@@ -262,8 +264,9 @@
     [self makeEventReturnModifier:0 locationInWindow:NewPoint(10, 20)];
 
     [given([event clickCount]) willReturnInteger:2];
-    FAIL;
-//    [view mouseDown:event];
+    [self makeWindowReturnNextEventWithType:NSLeftMouseUp clickCount:2];
+
+    [view mouseDown:event];
 
     [verify(dataSource) mindmapView:view toggleFoldingForItem:[CELL(4) identifier]];
 }
@@ -294,11 +297,6 @@
 //    [view mouseDown:event];
     [verifyCount(dataSource, never()) mindmapView:view toggleFoldingForItem:[CELL(4) identifier]];
     [verifyCount(dataSource, never()) mindmapView:view toggleFoldingForItem:[CELL(6) identifier]];
-}
-
-- (void)makeEventReturnModifier:(NSUInteger)modifier locationInWindow:(NSPoint)location {
-    [given([event modifierFlags]) willReturnUnsignedInteger:modifier];
-    [given([event locationInWindow]) willReturnPoint:location];
 }
 
 - (void)testCommandClick {
@@ -413,39 +411,16 @@
     assertThat(stateManager.selectedCells, consistsOf(LCELL(4), LCELL(5), LCELL(6), LCELL(7)));
 }
 
-- (void)testMouseDragged {
-    NSScrollView *scrollView = [[NSScrollView alloc] init];
-    NSClipView *clipView = [[NSClipView alloc] init];
-
-    [clipView setDocumentView:view];
-    [scrollView setContentView:clipView];
-
-    NSEvent *event = mock([NSEvent class]);
-    [given([event deltaX]) willReturnFloat:-4];
-    [given([event deltaY]) willReturnFloat:-2];
-
-    NSPoint oldScrollPt = clipView.bounds.origin;
-    [view mouseDragged:event];
-    assertThatPoint(clipView.bounds.origin, isNot(equalToPoint(oldScrollPt)));
-    assertThat([scrollView documentCursor], is([NSCursor closedHandCursor]));
+#pragma mark Private
+- (void)makeEventReturnModifier:(NSUInteger)modifier locationInWindow:(NSPoint)location {
+    [given([event modifierFlags]) willReturnUnsignedInteger:modifier];
+    [given([event locationInWindow]) willReturnPoint:location];
 }
 
-- (void)untestMouseUp {
-    NSScrollView *scrollView = [[NSScrollView alloc] init];
-    NSClipView *clipView = [[NSClipView alloc] init];
-
-    [clipView setDocumentView:view];
-    [scrollView setContentView:clipView];
-
-    NSEvent *event = mock([NSEvent class]);
-    [given([event deltaX]) willReturnFloat:-4];
-    [given([event deltaY]) willReturnFloat:-2];
-
-    [view mouseDragged:event];
-    [view mouseUp:nil];
-
-    // sometimes [NSCursor arrowCursor] == nil for some reason
-    // assertThat([scrollView documentCursor], is(nilValue()));
+- (void)makeWindowReturnNextEventWithType:(NSEventType)type clickCount:(NSInteger)clickCount {
+    [given([nextEvent type]) willReturnUnsignedInteger:type];
+    [given([nextEvent clickCount]) willReturnInteger:clickCount];
+    [given([window nextEventMatchingMask:NSLeftMouseUpMask | NSLeftMouseDraggedMask]) willReturn:nextEvent];
 }
 
 @end
