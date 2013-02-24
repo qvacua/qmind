@@ -19,27 +19,20 @@
 #import "QMIconsPaneView.h"
 #import "QMIcon.h"
 
-static CGFloat const kMinimumIconsPaneWidth = 48;
-static CGFloat const kMaxIconsPaneWidth = 250;
-static CGFloat const kPreferredMinMindmapViewWidth = 300;
-static CGFloat const kAbsoluteMinMindmapViewWidth = 150;
-static CGFloat const kMinIconGridWidth = 44;
-static CGFloat const kMinIconGridHeight = 44;
-static NSInteger const kViewMenuItemTag = 300;
-static NSInteger const kIconsPaneMenuItemTag = 301;
+static CGFloat const qMinimumIconsPaneWidth = 48;
+static CGFloat const qMaxIconsPaneWidth = 250;
+static CGFloat const qPreferredMinMindmapViewWidth = 300;
+static CGFloat const qAbsoluteMinMindmapViewWidth = 150;
+static CGFloat const qMinIconGridWidth = 44;
+static CGFloat const qMinIconGridHeight = 44;
+static NSInteger const qViewMenuItemTag = 300;
+static NSInteger const qIconsPaneMenuItemTag = 301;
 
 @implementation QMDocumentWindowController {
     __weak NSPasteboard *_pasteboard;
-
     __weak QMDocument *_doc;
-    id<QMMindmapViewDataSource> _dataSource;
-    __weak QMMindmapView *_mindmapView;
-    __weak NSButton *_iconsPaneButton;
-    __weak NSSplitView *_splitView;
-    __weak QMIconsPaneView *_iconsPaneView;
 
-    NSMutableArray *_availableIconsArray;
-    __weak NSArrayController *_availableIconsArrayController;
+    id<QMMindmapViewDataSource> _dataSource;
 
     CGSize _oldClipviewSize;
     NSPoint _oldClipviewOrigin;
@@ -314,7 +307,7 @@ TB_MANUALWIRE_WITH_INSTANCE_VAR(iconManager, _iconManager)
     [self initAvailableIcons];
     [_mindmapView initMindmapViewWithDataSource:_dataSource];
 
-    [self setIconGridSize:NewSize(kMinIconGridWidth, kMinIconGridHeight)];
+    [self setIconGridSize:NewSize(qMinIconGridWidth, qMinIconGridHeight)];
     [_splitView setPosition:[self maxDividerPosition] ofDividerAtIndex:0];
     [self adaptIconCollectionGridViewSize];
     [self updateIconsPaneSenderStatus];
@@ -366,10 +359,10 @@ TB_MANUALWIRE_WITH_INSTANCE_VAR(iconManager, _iconManager)
 }
 
 - (CGFloat)splitView:(NSSplitView *)splitView constrainMinCoordinate:(CGFloat)proposedMinimumPosition ofSubviewAt:(NSInteger)dividerIndex {
-    CGFloat computedMindmapViewMinWidth = [_splitView frame].size.width - [_splitView dividerThickness] - kMaxIconsPaneWidth;
+    CGFloat computedMindmapViewMinWidth = [_splitView frame].size.width - [_splitView dividerThickness] - qMaxIconsPaneWidth;
 
-    if (computedMindmapViewMinWidth < kPreferredMinMindmapViewWidth) {
-        return proposedMinimumPosition + kAbsoluteMinMindmapViewWidth;
+    if (computedMindmapViewMinWidth < qPreferredMinMindmapViewWidth) {
+        return proposedMinimumPosition + qAbsoluteMinMindmapViewWidth;
     }
 
     return computedMindmapViewMinWidth;
@@ -564,8 +557,8 @@ TB_MANUALWIRE_WITH_INSTANCE_VAR(iconManager, _iconManager)
 
 - (void)updateIconsPaneSenderStatus {
     NSMenu *mainMenu = [[NSApplication sharedApplication] mainMenu];
-    NSMenuItem *menuItem = [mainMenu itemWithTag:kViewMenuItemTag];
-    NSMenuItem *iconsPaneMenuItem = [[menuItem submenu] itemWithTag:kIconsPaneMenuItemTag];
+    NSMenuItem *menuItem = [mainMenu itemWithTag:qViewMenuItemTag];
+    NSMenuItem *iconsPaneMenuItem = [[menuItem submenu] itemWithTag:qIconsPaneMenuItemTag];
 
     if ([_splitView isSubviewCollapsed:[self iconsPane]]) {
         [_iconsPaneButton setState:NSOffState];
@@ -628,15 +621,15 @@ TB_MANUALWIRE_WITH_INSTANCE_VAR(iconManager, _iconManager)
     * When we use the frame of _iconsPaneView, the width is narrower thant the visible width. Scrollbar bug?
     */
     CGFloat visibleWidth = ([_iconsPaneView visibleRect]).size.width;
-    NSUInteger possibleNumberOfColumn = (NSUInteger) floor(visibleWidth / kMinIconGridWidth);
-    CGFloat remainderWidth = visibleWidth - possibleNumberOfColumn * kMinIconGridWidth;
-    CGFloat newWidth = kMinIconGridWidth + remainderWidth / possibleNumberOfColumn;
+    NSUInteger possibleNumberOfColumn = (NSUInteger) floor(visibleWidth / qMinIconGridWidth);
+    CGFloat remainderWidth = visibleWidth - possibleNumberOfColumn * qMinIconGridWidth;
+    CGFloat newWidth = qMinIconGridWidth + remainderWidth / possibleNumberOfColumn;
 
     NSSize size;
     if (remainderWidth > 0) {
-        size = NewSize(newWidth, kMinIconGridHeight);
+        size = NewSize(newWidth, qMinIconGridHeight);
     } else {
-        size = NewSize(kMinIconGridWidth, kMinIconGridHeight);
+        size = NewSize(qMinIconGridWidth, qMinIconGridHeight);
     }
 
     [_iconsPaneView setMaxItemSize:size];
@@ -649,7 +642,7 @@ TB_MANUALWIRE_WITH_INSTANCE_VAR(iconManager, _iconManager)
         scrollbarWidth= [NSScroller scrollerWidthForControlSize:NSRegularControlSize scrollerStyle:NSScrollerStyleLegacy];
     }
 
-    return kMinimumIconsPaneWidth + scrollbarWidth;
+    return qMinimumIconsPaneWidth + scrollbarWidth;
 }
 
 - (CGFloat)maxDividerPosition {

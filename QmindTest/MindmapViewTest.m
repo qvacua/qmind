@@ -150,22 +150,22 @@ static NSSize const CELL_SIZE = {100, 20};
     zoomedFrameSize = view.frame.size;
     assertThatFloat(zoomedFrameSize.width, closeTo(1, 0.0001));
     assertThatFloat(zoomedFrameSize.height, closeTo(1, 0.0001));
-    assertThatFloat(1, equalToFloat([view convertSize:UNIT_SIZE toView:nil].width));
+    assertThatFloat(1, equalToFloat([view convertSize:qUnitSize toView:nil].width));
 
-    [view zoomByFactor:MIN_ZOOM_FACTOR - 0.01];
-    assertThatFloat(1, equalToFloat([view convertSize:UNIT_SIZE toView:nil].width));
+    [view zoomByFactor:qMinZoomFactor - 0.01];
+    assertThatFloat(1, equalToFloat([view convertSize:qUnitSize toView:nil].width));
     zoomedFrameSize = view.frame.size;
     assertThatFloat(zoomedFrameSize.width, closeTo(1, 0.0001));
     assertThatFloat(zoomedFrameSize.height, closeTo(1, 0.0001));
-    assertThatFloat(1, equalToFloat([view convertSize:UNIT_SIZE toView:nil].width));
+    assertThatFloat(1, equalToFloat([view convertSize:qUnitSize toView:nil].width));
 
     [view zoomToActualSize];
 
-    [view zoomByFactor:MAX_ZOOM_FACTOR + 0.0001];
+    [view zoomByFactor:qMaxZoomFactor + 0.0001];
     zoomedFrameSize = view.frame.size;
     assertThatFloat(zoomedFrameSize.width, closeTo(1, 0.0001));
     assertThatFloat(zoomedFrameSize.height, closeTo(1, 0.0001));
-    assertThatFloat(1, equalToFloat([view convertSize:UNIT_SIZE toView:nil].width));
+    assertThatFloat(1, equalToFloat([view convertSize:qUnitSize toView:nil].width));
 }
 
 - (void)testCellIsSelected {

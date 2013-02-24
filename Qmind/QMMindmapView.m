@@ -21,11 +21,13 @@
 #import "QMNode.h"
 #import "QMIcon.h"
 
-static unsigned int const PAGE_UP_KEY = 0xF72C;
-static unsigned int const PAGE_DOWN_KEY = 0xF72D;
+static const CGFloat qZoomScrollWheelStep = 0.25;
 
-static const NSSize SIZE_OF_BADGE = {24., 24.};
-static const NSSize SIZE_OF_BADGE_CIRCLE = {20., 20.};
+static unsigned int const qPageUpKeyCode = 0xF72C;
+static unsigned int const qPageDownKeyCode = 0xF72D;
+
+static const NSSize qSizeOfBadge = {24., 24.};
+static const NSSize qSizeOfBadgeCircle = {20., 20.};
 
 static inline CGFloat area(NSRect rect) {
     return rect.size.width * rect.size.height;
@@ -35,11 +37,11 @@ static inline BOOL sign(CGFloat x) {
     return (BOOL) ((x > 0) - (x < 0));
 }
 
+static inline BOOL modifier_check(NSUInteger value, NSUInteger modifier) {
+    return (value & modifier) == modifier;
+}
+
 @implementation QMMindmapView {
-    __weak id <QMMindmapViewDataSource> _dataSource;
-
-    QMRootCell *_rootCell;
-
     QMCellEditor *_cellEditor;
     QMCellStateManager *_cellStateManager;
 
@@ -170,7 +172,7 @@ TB_MANUALWIRE_WITH_INSTANCE_VAR(uiDrawer, _uiDrawer)
 }
 
 - (void)zoomToActualSize {
-    CGFloat currentScale = ([self convertSize:UNIT_SIZE toView:nil]).width;
+    CGFloat currentScale = ([self convertSize:qUnitSize toView:nil]).width;
     [self zoomByFactor:1. / currentScale withFixedPoint:[self middlePointOfVisibleRect]];
 }
 
@@ -603,7 +605,7 @@ we only test the begin edit part... We are being to lazy here...
     BOOL commandKey = modifier_check(modifierFlags, NSCommandKeyMask);
     BOOL shiftKey = modifier_check(modifierFlags, NSShiftKeyMask);
 
-    if (keyChar == PAGE_UP_KEY || keyChar == PAGE_DOWN_KEY) {
+    if (keyChar == qPageUpKeyCode || keyChar == qPageDownKeyCode) {
         [self scrollViewOnePageAccordingToKey:keyChar];
         return;
     }
@@ -786,7 +788,7 @@ we only test the begin edit part... We are being to lazy here...
         return;
     }
 
-    CGFloat factor = 1.0 + sign([event deltaY]) * ZOOM_SCROLLWHEEL_STEP;
+    CGFloat factor = 1.0 + sign([event deltaY]) * qZoomScrollWheelStep;
     NSPoint locInView = [self convertPoint:[event locationInWindow] fromView:nil];
 
     [self zoomByFactor:factor withFixedPoint:locInView];
@@ -973,15 +975,15 @@ we only test the begin edit part... We are being to lazy here...
     NSImage *hitCellImg = [hitCell image];
 
     CGFloat margin = 2.5;
-    CGFloat width = SIZE_OF_BADGE.width + hitCell.size.width + margin;
-    CGFloat height = MAX(SIZE_OF_BADGE.height, hitCell.size.height);
+    CGFloat width = qSizeOfBadge.width + hitCell.size.width + margin;
+    CGFloat height = MAX(qSizeOfBadge.height, hitCell.size.height);
     NSSize sizeOfFinalImg = NewSize(width, height);
 
     NSImage *badgeImg = [[NSImage alloc] initWithSize:sizeOfFinalImg];
     [badgeImg lockFocusFlipped:NO];
 
-    [hitCellImg drawAtPoint:NewPoint(SIZE_OF_BADGE.width + margin, sizeOfFinalImg.height - [hitCellImg size].height) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:0.65];
-    [_uiDrawer drawBadgeWithNumber:numberOfSelCells atPoint:NewPoint(4, height - 4 - SIZE_OF_BADGE.height)];
+    [hitCellImg drawAtPoint:NewPoint(qSizeOfBadge.width + margin, sizeOfFinalImg.height - [hitCellImg size].height) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:0.65];
+    [_uiDrawer drawBadgeWithNumber:numberOfSelCells atPoint:NewPoint(4, height - 4 - qSizeOfBadge.height)];
 
     NSDictionary *fontAttr = @{
             NSFontAttributeName : [NSFont fontWithName:@"Helvetica" size:12],
@@ -989,7 +991,7 @@ we only test the begin edit part... We are being to lazy here...
     };
     NSString *numberStr = numberOfSelCells > 9 ? @"..." : [@(numberOfSelCells) stringValue];
     NSAttributedString *str = [[NSAttributedString alloc] initWithString:numberStr attributes:fontAttr];
-    [str drawAtPoint:NewPoint(11, height - 4 - SIZE_OF_BADGE.height + 3)];
+    [str drawAtPoint:NewPoint(11, height - 4 - qSizeOfBadge.height + 3)];
 
     [badgeImg unlockFocus];
 
@@ -1069,14 +1071,14 @@ we only test the begin edit part... We are being to lazy here...
         return;
     }
 
-    NSSize oldScale = [self convertSize:UNIT_SIZE toView:nil];
+    NSSize oldScale = [self convertSize:qUnitSize toView:nil];
     NSSize newScale = NSMakeSize(oldScale.width * factor, oldScale.height * factor);
 
-    if (newScale.width < MIN_ZOOM_FACTOR) {
+    if (newScale.width < qMinZoomFactor) {
         return;
     }
 
-    if (newScale.width > MAX_ZOOM_FACTOR) {
+    if (newScale.width > qMaxZoomFactor) {
         return;
     }
 
@@ -1105,7 +1107,7 @@ we only test the begin edit part... We are being to lazy here...
 }
 
 - (void)resetScaling {
-    [self scaleUnitSquareToSize:[self convertSize:UNIT_SIZE fromView:nil]];
+    [self scaleUnitSquareToSize:[self convertSize:qUnitSize fromView:nil]];
 }
 
 - (NSSize)scaledBoundsSizeWithParentSize:(NSSize)unconvertedParentSize {
@@ -1246,12 +1248,12 @@ we only test the begin edit part... We are being to lazy here...
     const NSRect visibleRect = [self visibleRect];
     const CGFloat verticalBuffer = 3 * [[self enclosingScrollView] verticalLineScroll];
 
-    if (keyChar == PAGE_UP_KEY) {
+    if (keyChar == qPageUpKeyCode) {
         [self scrollRectToVisible:NSOffsetRect(visibleRect, 0, -visibleRect.size.height + verticalBuffer)];
         return;
     }
 
-    if (keyChar == PAGE_DOWN_KEY) {
+    if (keyChar == qPageDownKeyCode) {
         [self scrollRectToVisible:NSOffsetRect(visibleRect, 0, visibleRect.size.height - verticalBuffer)];
         return;
     }
