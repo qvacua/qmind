@@ -46,7 +46,6 @@ static inline BOOL modifier_check(NSUInteger value, NSUInteger modifier) {
     QMCellStateManager *_cellStateManager;
 
     BOOL _dragging;
-    NSImage *_dragImage;
 
     NSUInteger _mouseDownModifier;
 }
@@ -676,7 +675,7 @@ we only test the begin edit part... We are being to lazy here...
     */
 
     /**
-    * single click event always precede the double click event, i.e. when the user double-clicks, then:
+    * Single click event always precede the double click event, i.e. when the user double-clicks, then:
     *
     * - mouseDown event with clickCount = 1
     * - mouseDown event with clickCount = 2
@@ -1029,12 +1028,6 @@ we only test the begin edit part... We are being to lazy here...
     _mouseDownModifier = modifier;
     QMCell *mouseDownHitCell = [_cellSelector cellContainingPoint:clickLocation inCell:_rootCell];
     _cellStateManager.mouseDownHitCell = mouseDownHitCell;
-
-    if (mouseDownHitCell == nil) {
-        _dragImage = nil;
-    } else {
-        _dragImage = [self dragImageForHitCell:mouseDownHitCell numberOfSelectedCells:[[_cellStateManager selectedCells] count]];
-    }
 
     [self setNeedsDisplay:YES];
 }
