@@ -218,7 +218,8 @@
             withMatcher:equalToPoint(NewPoint(10, 460)) forArgument:0]
             willReturn:nil];
 
-    [view mouseDown:event];
+    FAIL;
+//    [view mouseDown:event];
     [view mouseUp:event];
 
     assertThat(stateManager.selectedCells, hasSize(0));
@@ -233,7 +234,8 @@
             withMatcher:equalToPoint(NewPoint(10, 460)) forArgument:0]
             willReturn:CELL(4)];
 
-    [view mouseDown:event];
+    FAIL;
+//    [view mouseDown:event];
     assertThat(stateManager.mouseDownHitCell, is(CELL(4)));
 
     [view mouseUp:event];
@@ -260,7 +262,8 @@
     [self makeEventReturnModifier:0 locationInWindow:NewPoint(10, 20)];
 
     [given([event clickCount]) willReturnInteger:2];
-    [view mouseDown:event];
+    FAIL;
+//    [view mouseDown:event];
 
     [verify(dataSource) mindmapView:view toggleFoldingForItem:[CELL(4) identifier]];
 }
@@ -271,11 +274,13 @@
     [given([stateManager selectedCells]) willReturn:[NSArray arrayWithObject:CELL(4)]];
 
     [self makeEventReturnModifier:NSCommandKeyMask locationInWindow:NewPoint(10, 20)];
-    [view mouseDown:event];
+    FAIL;
+//    [view mouseDown:event];
     [verifyCount(dataSource, never()) mindmapView:view toggleFoldingForItem:[CELL(4) identifier]];
 
     [self makeEventReturnModifier:NSShiftKeyMask locationInWindow:NewPoint(10, 20)];
-    [view mouseDown:event];
+    FAIL;
+//    [view mouseDown:event];
     [verifyCount(dataSource, never()) mindmapView:view toggleFoldingForItem:[CELL(4) identifier]];
 }
 
@@ -285,7 +290,8 @@
     [given([stateManager hasSelectedCells]) willReturnBool:YES];
     [given([stateManager selectedCells]) willReturn:[NSArray arrayWithObjects:CELL(4), CELL(6), nil]];
 
-    [view mouseDown:event];
+    FAIL;
+//    [view mouseDown:event];
     [verifyCount(dataSource, never()) mindmapView:view toggleFoldingForItem:[CELL(4) identifier]];
     [verifyCount(dataSource, never()) mindmapView:view toggleFoldingForItem:[CELL(6) identifier]];
 }
@@ -315,7 +321,8 @@
 
     // ADD
     [self makeEventReturnModifier:0 locationInWindow:NewPoint(10, 20)];
-    [view mouseDown:event];
+    FAIL;
+//    [view mouseDown:event];
 
     [view mouseUp:event];
     assertThat(stateManager.selectedCells, consistsOf(CELL(4)));
@@ -323,28 +330,32 @@
     [view setFrameSize:NewSize(640, 480)];
 
     [self makeEventReturnModifier:NSCommandKeyMask locationInWindow:NewPoint(10, 40)];
-    [view mouseDown:event];
+    FAIL;
+//    [view mouseDown:event];
     [view mouseUp:event];
     assertThat(stateManager.selectedCells, consistsOf(CELL(4), CELL(8)));
     [view setFrameSize:NewSize(640, 480)];
 
     // trying to add CELL(8, 1)
     [self makeEventReturnModifier:NSCommandKeyMask locationInWindow:NewPoint(10, 60)];
-    [view mouseDown:event];
+    FAIL;
+//    [view mouseDown:event];
     [view mouseUp:event];
     assertThat(stateManager.selectedCells, consistsOf(CELL(4), CELL(8)));
     [view setFrameSize:NewSize(640, 480)];
 
     // trying to add nil
     [self makeEventReturnModifier:NSCommandKeyMask locationInWindow:NewPoint(10, 80)];
-    [view mouseDown:event];
+    FAIL;
+//    [view mouseDown:event];
     [view mouseUp:event];
     assertThat(stateManager.selectedCells, consistsOf(CELL(4), CELL(8)));
     [view setFrameSize:NewSize(640, 480)];
 
     // REMOVE
     [self makeEventReturnModifier:NSCommandKeyMask locationInWindow:NewPoint(10, 40)];
-    [view mouseDown:event];
+    FAIL;
+//    [view mouseDown:event];
     [view mouseUp:event];
     assertThat(stateManager.selectedCells, consistsOf(CELL(4)));
 }
@@ -367,14 +378,15 @@
 
     // ADD
     [self makeEventReturnModifier:0 locationInWindow:NewPoint(10, 20)];
-    [view mouseDown:event];
+    FAIL;
+//    [view mouseDown:event];
     [view mouseUp:event];
     // the only clear selection call
     assertThat(stateManager.selectedCells, consistsOf(LCELL(4)));
     [view setFrameSize:NewSize(640, 480)];
 
     [self makeEventReturnModifier:NSShiftKeyMask locationInWindow:NewPoint(10, 40)];
-    [view mouseDown:event];
+//    [view mouseDown:event];
     [view mouseUp:event];
     assertThat(stateManager.selectedCells, consistsOf(LCELL(4), LCELL(5), LCELL(6), LCELL(7), LCELL(8)));
     // make sure that clearSelection does not get called anymore
@@ -382,21 +394,21 @@
 
     // trying to add LCELL(8, 1)
     [self makeEventReturnModifier:NSShiftKeyMask locationInWindow:NewPoint(10, 60)];
-    [view mouseDown:event];
+//    [view mouseDown:event];
     [view mouseUp:event];
     assertThat(stateManager.selectedCells, consistsOf(LCELL(4), LCELL(5), LCELL(6), LCELL(7), LCELL(8)));
     [view setFrameSize:NewSize(640, 480)];
 
     // trying to add nil
     [self makeEventReturnModifier:NSShiftKeyMask locationInWindow:NewPoint(10, 80)];
-    [view mouseDown:event];
+//    [view mouseDown:event];
     [view mouseUp:event];
     assertThat(stateManager.selectedCells, consistsOf(LCELL(4), LCELL(5), LCELL(6), LCELL(7), LCELL(8)));
     [view setFrameSize:NewSize(640, 480)];
 
     // REMOVE
     [self makeEventReturnModifier:NSShiftKeyMask locationInWindow:NewPoint(10, 40)];
-    [view mouseDown:event];
+//    [view mouseDown:event];
     [view mouseUp:event];
     assertThat(stateManager.selectedCells, consistsOf(LCELL(4), LCELL(5), LCELL(6), LCELL(7)));
 }
