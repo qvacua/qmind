@@ -46,7 +46,7 @@ static inline BOOL modifier_check(NSUInteger value, NSUInteger modifier) {
     QMCellStateManager *_cellStateManager;
 
     BOOL _dragging;
-    NSImage *_dragImage;
+    BOOL _keepMouseTrackOn;
 
     NSUInteger _mouseDownModifier;
 }
@@ -585,8 +585,12 @@ we only test the begin edit part... We are being to lazy here...
 }
 
 - (void)draggingEnded:(id <NSDraggingInfo>)sender {
-    // when dragging ends, -mouseUp: is not fired, thus, we have to set dragging to NO here.
-    _dragging = NO;
+    /**
+    * As described in -doMouseUp:, we get out of the mouse-track loop when a drag session is started. Therefore, we have
+    * to end the mouse-track loop by setting _keepMouseTrackOn.
+    */
+
+    [self clearMouseTrackLoopFlags];
 
     [_cellStateManager clearCellsForDrag];
 }
@@ -669,7 +673,14 @@ we only test the begin edit part... We are being to lazy here...
 
 - (void)mouseDown:(NSEvent *)event {
     /**
-    * single click event always precede the double click event, i.e. when the user double-clicks, then:
+    * We're using the mouse-track loop approach to handle mouse dragging and mouse up events
+    * because of the issue #6:
+    *
+    * https://github.com/qvacua/qmind/issues/6
+    */
+
+    /**
+    * Single click event always precede the double click event, i.e. when the user double-clicks, then:
     *
     * - mouseDown event with clickCount = 1
     * - mouseDown event with clickCount = 2
@@ -680,12 +691,10 @@ we only test the begin edit part... We are being to lazy here...
     NSUInteger modifier = [event modifierFlags];
 
     if (clickCount == 1) {
+
         [self handleSingleMouseDown:clickLocation modifier:modifier];
-        return;
-    }
 
-    if (clickCount == 2) {
-
+    } else if (clickCount == 2) {
         if (modifier_check(modifier, NSCommandKeyMask) || modifier_check(modifier, NSShiftKeyMask)) {
             return;
         }
@@ -700,78 +709,28 @@ we only test the begin edit part... We are being to lazy here...
         }
 
         [_dataSource mindmapView:self toggleFoldingForItem:[selCells.lastObject identifier]];
-
-        return;
     }
-}
 
-- (void)mouseDragged:(NSEvent *)event {
-    // drag scrolling
-    QMCell *mouseDownHitCell = _cellStateManager.mouseDownHitCell;
+    NSEvent *currentEvent;
+    _keepMouseTrackOn = YES;
+    while (_keepMouseTrackOn) {
+        currentEvent = [self.window nextEventMatchingMask:NSLeftMouseUpMask | NSLeftMouseDraggedMask];
 
-    if (mouseDownHitCell == nil) {
-        if (_dragging == NO) {
-            [[self enclosingScrollView] setDocumentCursor:[NSCursor closedHandCursor]];
-            _dragging = YES;
+        switch ([currentEvent type]) {
+            case NSLeftMouseDragged:
+                [self doMouseDragged:currentEvent];
+                break;
+
+            case NSLeftMouseUp:
+                [[self enclosingScrollView] setDocumentCursor:[NSCursor arrowCursor]];
+                [self doMouseUp:currentEvent];
+
+                [self clearMouseTrackLoopFlags];
+                break;
+
+            default:
+                break;
         }
-
-        [self dragScrollViewWithEvent:event];
-
-        return;
-    }
-
-    // already dragging cells
-    if (_dragging) {
-        [[self superview] autoscroll:event];
-        return;
-    }
-
-    // starting to dragging cells
-    _dragging = YES;
-
-    /**
-    * the user can drag:
-    * - selected cells
-    * - a non-selected cell
-    */
-    NSArray *selCells = [_cellStateManager selectedCells];
-    NSMutableArray *toBeDraggedCells = [[NSMutableArray alloc] init];
-    if ([selCells containsObject:mouseDownHitCell]) {
-        [toBeDraggedCells addObjectsFromArray:selCells];
-    } else {
-        [toBeDraggedCells addObject:mouseDownHitCell];
-    }
-
-    [_dataSource mindmapView:self prepareDragAndDropWithCells:toBeDraggedCells];
-
-    NSPoint origin = [self convertPoint:NewPoint(mouseDownHitCell.origin.x, mouseDownHitCell.origin.y + mouseDownHitCell.size.height)
-                               fromView:self];
-
-    [self dragImage:[self dragImageForHitCell:mouseDownHitCell numberOfSelectedCells:[toBeDraggedCells count]]
-                 at:origin
-             offset:NSZeroSize
-              event:event
-         pasteboard:[NSPasteboard pasteboardWithName:NSDragPboard]
-             source:self
-          slideBack:YES];
-}
-
-- (void)mouseUp:(NSEvent *)event {
-    /**
-    * NOTE: mouseUp does not get invoked when a drag and drop session is initiated in -mouseDragged:.
-    */
-
-    NSInteger clickCount = [event clickCount];
-
-    if (clickCount == 1) {
-        [self handleSingleMouseUp];
-    }
-
-    _cellStateManager.mouseDownHitCell = nil;
-
-    if (_dragging) {
-        _dragging = NO;
-        [[self enclosingScrollView] setDocumentCursor:[NSCursor arrowCursor]];
     }
 }
 
@@ -932,6 +891,75 @@ we only test the begin edit part... We are being to lazy here...
 }
 
 #pragma mark Private
+- (void)clearMouseTrackLoopFlags {
+    _dragging = NO;
+    _keepMouseTrackOn = NO;
+}
+
+- (void)doMouseDragged:(NSEvent *)event {
+    // drag scrolling
+    QMCell *mouseDownHitCell = _cellStateManager.mouseDownHitCell;
+
+    if (mouseDownHitCell == nil) {
+        log4Debug(@"starting to drag scroll");
+        [[self enclosingScrollView] setDocumentCursor:[NSCursor closedHandCursor]];
+        [self dragScrollViewWithEvent:event];
+
+        return;
+    }
+
+    // already dragging cells
+    if (_dragging) {
+        [[self superview] autoscroll:event];
+        return;
+    }
+
+    // starting to dragging cells
+    log4Debug(@"starting to drag a cell");
+    _dragging = YES;
+
+    /**
+    * The user can drag:
+    * - selected cells
+    * - a non-selected cell
+    */
+    NSArray *selCells = [_cellStateManager selectedCells];
+    NSMutableArray *toBeDraggedCells = [[NSMutableArray alloc] init];
+    if ([selCells containsObject:mouseDownHitCell]) {
+        [toBeDraggedCells addObjectsFromArray:selCells];
+    } else {
+        [toBeDraggedCells addObject:mouseDownHitCell];
+    }
+
+    [_dataSource mindmapView:self prepareDragAndDropWithCells:toBeDraggedCells];
+
+    NSPoint origin = [self convertPoint:NewPoint(mouseDownHitCell.origin.x, mouseDownHitCell.origin.y + mouseDownHitCell.size.height)
+                               fromView:self];
+
+    [self dragImage:[self dragImageForHitCell:mouseDownHitCell numberOfSelectedCells:[toBeDraggedCells count]]
+                 at:origin
+             offset:NSZeroSize
+              event:event
+         pasteboard:[NSPasteboard pasteboardWithName:NSDragPboard]
+             source:self
+          slideBack:YES];
+}
+
+- (void)doMouseUp:(NSEvent *)event {
+    /**
+    * NOTE: -mouseUp does not get invoked when a drag and drop session is initiated in -mouseDragged:,
+    * even when we use the mouse-track loop approach, after a drag session started and ended.
+    */
+
+    NSInteger clickCount = [event clickCount];
+
+    if (clickCount == 1) {
+        [self handleSingleMouseUp];
+    }
+
+    _cellStateManager.mouseDownHitCell = nil;
+}
+
 - (QMDirection)directionFromCellRegion:(QMCellRegion)cellRegion {
     switch (cellRegion) {
         case QMCellRegionNone:
@@ -1009,21 +1037,10 @@ we only test the begin edit part... We are being to lazy here...
     QMCell *mouseDownHitCell = [_cellSelector cellContainingPoint:clickLocation inCell:_rootCell];
     _cellStateManager.mouseDownHitCell = mouseDownHitCell;
 
-    if (mouseDownHitCell == nil) {
-        _dragImage = nil;
-    } else {
-        _dragImage = [self dragImageForHitCell:mouseDownHitCell numberOfSelectedCells:[[_cellStateManager selectedCells] count]];
-    }
-
     [self setNeedsDisplay:YES];
 }
 
 - (void)handleSingleMouseUp {
-    if (_dragging) {
-        [self setNeedsDisplay:YES];
-        return;
-    }
-
     BOOL mouseDownCommandKey = modifier_check(_mouseDownModifier, NSCommandKeyMask);;
     BOOL mouseDownShiftKey = modifier_check(_mouseDownModifier, NSShiftKeyMask);;
 
