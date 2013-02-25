@@ -722,7 +722,6 @@ we only test the begin edit part... We are being to lazy here...
                 break;
 
             case NSLeftMouseUp:
-                log4Debug(@"mouse up!");
                 [[self enclosingScrollView] setDocumentCursor:[NSCursor arrowCursor]];
                 [self doMouseUp:currentEvent];
 
