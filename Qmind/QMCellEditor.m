@@ -11,6 +11,7 @@
 #import "QMCell.h"
 #import <Qkit/Qkit.h>
 #import "QMAppSettings.h"
+#import "DummyView.h"
 
 static NSInteger const qEscUnicode = 27;
 
@@ -89,12 +90,20 @@ TB_MANUALWIRE_WITH_INSTANCE_VAR(settings, _settings)
     [_scrollView setFrame:NewRectWithSize(0, 0, scrollViewSize)];
 
     NSPoint textOrigin = cellToEdit.textOrigin;
-    [_containerView setFrameOrigin:NewPoint(textOrigin.x - CONTAINER_BORDER_WIDTH,
-                                            textOrigin.y - CONTAINER_BORDER_WIDTH)];
+    NSPoint localOrigin = NewPoint(textOrigin.x - CONTAINER_BORDER_WIDTH, textOrigin.y - CONTAINER_BORDER_WIDTH);
+    [_containerView setFrameOrigin:localOrigin];
+
+    logSize4Debug(@"current scale of the parent view:", [_view convertSize:NewSize(1, 1) toView:nil]);
+    logPoint4Debug(@"desired origin of child view in the parent view's coordinate:", localOrigin);
+    DummyView *v = [[DummyView alloc] initWithFrame:NewRect(100, 100, 100, 100)];
+    logRect4Debug(@"frame before adding:", [v frame]);
+    logSize4Debug(@"scale before adding", [v convertSize:NewSize(1,1) toView:nil]);
+    [_view addSubview:v];
+    logSize4Debug(@"scale adding", [v convertSize:NewSize(1,1) toView:nil]);
+    logRect4Debug(@"frame after adding:", [v frame]);
 
     [_containerView addOnlySubview:_scrollView];
 
-    [_view addSubview:_containerView];
     [_view scrollRectToVisible:_containerView.frame];
     [_view.window makeFirstResponder:_textView];
 
