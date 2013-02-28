@@ -693,7 +693,20 @@ we only test the begin edit part... We are being to lazy here...
     NSPoint clickLocation = [self convertPoint:[event locationInWindow] fromView:nil];
     NSUInteger modifier = [event modifierFlags];
 
+    /**
+    * DUMMY code to track down the bug...
+    */
     logPoint4Debug(@"location in view", clickLocation);
+
+    logSize4Debug(@"current scale of the parent view:", [self convertSize:NewSize(1, 1) toView:nil]);
+    DummyView *v = [[DummyView alloc] initWithFrame:NewRect(1000, 500, 100, 100)];
+    logRect4Debug(@"frame before adding:", [v frame]);
+    logSize4Debug(@"scale before adding", [v convertSize:NewSize(1,1) toView:nil]);
+    [self addSubview:v];
+    logSize4Debug(@"scale adding", [v convertSize:NewSize(1,1) toView:nil]);
+    logRect4Debug(@"frame after adding:", [v frame]);
+
+    return;
 
     if (clickCount == 1) {
 

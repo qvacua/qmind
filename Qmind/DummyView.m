@@ -25,7 +25,7 @@
 }
 
 - (void)setFrame:(NSRect)rect {
-    logRect4Debug(@"set frame:", rect);
+    logRect4Debug(@"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! set frame:", rect);
     [super setFrame:rect];
 }
 
