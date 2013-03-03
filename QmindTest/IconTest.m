@@ -63,4 +63,11 @@
     assertThatSize(icon.size, equalToSize(NewSize([settings floatForKey:qSettingIconDrawSize], [settings floatForKey:qSettingIconDrawSize])));
 }
 
+- (void)testFrame {
+    QMIcon *icon = [[QMIcon alloc] initWithCode:@"list"];
+    icon.origin = NewPoint(1, 2);
+    assertThatRect(icon.frame, equalToRect(NewRect(1, 2, [settings floatForKey:qSettingIconDrawSize], [settings floatForKey:qSettingIconDrawSize])));
+
+}
+
 @end
