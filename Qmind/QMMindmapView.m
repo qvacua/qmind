@@ -29,6 +29,8 @@ static unsigned int const qPageDownKeyCode = 0xF72D;
 static const NSSize qSizeOfBadge = {24., 24.};
 static const NSSize qSizeOfBadgeCircle = {20., 20.};
 
+static const int qDeleteIconMenuItemTag = 1000;
+
 static inline CGFloat area(NSRect rect) {
     return rect.size.width * rect.size.height;
 }
@@ -49,7 +51,6 @@ static inline BOOL modifier_check(NSUInteger value, NSUInteger modifier) {
     BOOL _keepMouseTrackOn;
 
     NSUInteger _mouseDownModifier;
-    NSSize _newScale;
 }
 
 TB_MANUALWIRE_WITH_INSTANCE_VAR(cellSelector, _cellSelector)
@@ -59,7 +60,6 @@ TB_MANUALWIRE_WITH_INSTANCE_VAR(uiDrawer, _uiDrawer)
 
 @synthesize dataSource = _dataSource;
 @synthesize rootCell = _rootCell;
-@synthesize newScale = _newScale;
 
 #pragma mark Public
 - (void)endEditing {
@@ -882,6 +882,40 @@ we only test the begin edit part... We are being to lazy here...
     return self;
 }
 
+- (NSMenu *)menuForEvent:(NSEvent *)event {
+    if ([event type] != NSRightMouseDown) {
+        return nil;
+    }
+
+    NSPoint clickLocation = [self convertPoint:[event locationInWindow] fromView:nil];
+    QMCell *mouseDownHitCell = [_cellSelector cellContainingPoint:clickLocation inCell:_rootCell];
+
+    if (mouseDownHitCell == nil) {
+        return nil;
+    }
+
+    if (NSPointInRect(clickLocation, mouseDownHitCell.textFrame)) {
+        return nil;
+    }
+
+    QMIcon *hitIcon = nil;
+    for (QMIcon *icon in mouseDownHitCell.icons) {
+        if (NSPointInRect(clickLocation, icon.frame)) {
+            hitIcon = icon;
+        }
+    }
+
+    if (hitIcon == nil) {
+        return nil;
+    }
+
+    NSMenuItem *deleteIconItem = [[self menu] itemWithTag:qDeleteIconMenuItemTag];
+    [deleteIconItem setTitle:[NSString stringWithFormat:@"Delete %@", hitIcon.unicode]];
+
+    return [self menu];
+}
+
+
 - (void)drawRect:(NSRect)dirtyRect {
     [super drawRect:dirtyRect];
 
@@ -1091,13 +1125,13 @@ we only test the begin edit part... We are being to lazy here...
     }
 
     NSSize oldScale = [self convertSize:qUnitSize toView:nil];
-    _newScale = NSMakeSize(oldScale.width * factor, oldScale.height * factor);
+    NSSize newScale = NSMakeSize(oldScale.width * factor, oldScale.height * factor);
 
-    if (_newScale.width < qMinZoomFactor) {
+    if (newScale.width < qMinZoomFactor) {
         return;
     }
 
-    if (_newScale.width > qMaxZoomFactor) {
+    if (newScale.width > qMaxZoomFactor) {
         return;
     }
 
@@ -1112,7 +1146,7 @@ we only test the begin edit part... We are being to lazy here...
     NSSize oldDist = NewSize(locInView.x - oldScrollPt.x, locInView.y - oldScrollPt.y);
 
     [self resetScaling];
-    [self scaleUnitSquareToSize:_newScale];
+    [self scaleUnitSquareToSize:newScale];
 
     NSSize newParentSize = [self convertSize:clipViewFrameSize fromView:clipView];
     NSPoint newMapOrigin = [self rootCellOriginForParentSize:newParentSize];

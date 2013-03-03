@@ -35,8 +35,6 @@ static const CGFloat qMaxZoomFactor = 100.0;
 @property (readonly) QMRootCell *rootCell;
 
 #pragma mark Public
-@property NSSize newScale;
-
 - (void)updateCanvasSize;
 
 - (void)initMindmapViewWithDataSource:(id <QMMindmapViewDataSource>)aDataSource;
