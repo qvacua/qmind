@@ -49,6 +49,7 @@ static inline BOOL modifier_check(NSUInteger value, NSUInteger modifier) {
     BOOL _keepMouseTrackOn;
 
     NSUInteger _mouseDownModifier;
+    NSSize _newScale;
 }
 
 TB_MANUALWIRE_WITH_INSTANCE_VAR(cellSelector, _cellSelector)
@@ -58,6 +59,7 @@ TB_MANUALWIRE_WITH_INSTANCE_VAR(uiDrawer, _uiDrawer)
 
 @synthesize dataSource = _dataSource;
 @synthesize rootCell = _rootCell;
+@synthesize newScale = _newScale;
 
 #pragma mark Public
 - (void)endEditing {
@@ -1089,13 +1091,13 @@ we only test the begin edit part... We are being to lazy here...
     }
 
     NSSize oldScale = [self convertSize:qUnitSize toView:nil];
-    NSSize newScale = NSMakeSize(oldScale.width * factor, oldScale.height * factor);
+    _newScale = NSMakeSize(oldScale.width * factor, oldScale.height * factor);
 
-    if (newScale.width < qMinZoomFactor) {
+    if (_newScale.width < qMinZoomFactor) {
         return;
     }
 
-    if (newScale.width > qMaxZoomFactor) {
+    if (_newScale.width > qMaxZoomFactor) {
         return;
     }
 
@@ -1110,7 +1112,7 @@ we only test the begin edit part... We are being to lazy here...
     NSSize oldDist = NewSize(locInView.x - oldScrollPt.x, locInView.y - oldScrollPt.y);
 
     [self resetScaling];
-    [self scaleUnitSquareToSize:newScale];
+    [self scaleUnitSquareToSize:_newScale];
 
     NSSize newParentSize = [self convertSize:clipViewFrameSize fromView:clipView];
     NSPoint newMapOrigin = [self rootCellOriginForParentSize:newParentSize];

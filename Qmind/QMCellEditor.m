@@ -12,6 +12,22 @@
 #import <Qkit/Qkit.h>
 #import "QMAppSettings.h"
 
+/**
+* FIXME: The following is an evil hack! See
+* http://weblog.hataewon.com/2013/02/adding-child-view-to-zoomed-parent-view.html
+*
+* This hack fixes the issue #7, but it's awful.
+*/
+@interface QShadowedView (Bug) @end
+
+@implementation QShadowedView (Bug)
+
+- (void)setFrame:(NSRect)frameRect {
+    log4Debug(@"current rect: %@\tfuture rect: %@", [NSValue valueWithRect:[self frame]], [NSValue valueWithRect:frameRect]);
+}
+
+@end
+
 static NSInteger const qEscUnicode = 27;
 
 @implementation QMCellEditor {
@@ -89,9 +105,9 @@ TB_MANUALWIRE_WITH_INSTANCE_VAR(settings, _settings)
     [_scrollView setFrame:NewRectWithSize(0, 0, scrollViewSize)];
 
     NSPoint textOrigin = cellToEdit.textOrigin;
-    [_containerView setFrameOrigin:NewPoint(textOrigin.x - CONTAINER_BORDER_WIDTH,
-                                            textOrigin.y - CONTAINER_BORDER_WIDTH)];
+    NSPoint containerOrigin = NewPoint(textOrigin.x - CONTAINER_BORDER_WIDTH, textOrigin.y - CONTAINER_BORDER_WIDTH);
 
+    [_containerView setFrameOrigin:containerOrigin];
     [_containerView addOnlySubview:_scrollView];
 
     [_view addSubview:_containerView];

@@ -21,6 +21,8 @@
 @property (weak) id<QMCellEditorDelegate> delegate;
 @property (readonly, weak) QMCell *currentlyEditedCell;
 
+- (id)initWithView:(QMMindmapView *)aView;
+
 - (void)beginEditStringValueForCell:(QMCell *)cellToEdit;
 - (BOOL)isEditing;
 - (void)endEditing;
