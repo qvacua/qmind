@@ -17,3 +17,5 @@
 "ui.menu.iconspane.show" = "Show Icons Pane";
 
 "undo.node.icon.add" = "Insert Icon";
+
+"delete.node.icon" = "Delete %@";
