@@ -50,17 +50,26 @@ static CGFloat const kBackgroundBoxPadding = -1;
 
     _backgroundColor = [QMIconGridView pressedBackgroundColor];
     [self setNeedsDisplay:YES];
-}
 
-- (void)mouseUp:(NSEvent *)theEvent {
-    if (![_viewController canSetIcon]) {
-        return;
+    NSEvent *currentEvent;
+    BOOL keepMouseTrackOn = YES;
+    while (keepMouseTrackOn) {
+        currentEvent = [self.window nextEventMatchingMask:NSLeftMouseUpMask];
+
+        switch ([currentEvent type]) {
+            case NSLeftMouseUp:
+                _backgroundColor = [QMIconGridView normalBackgroundColor];
+                [self setNeedsDisplay:YES];
+
+                [_viewController setIcon];
+
+                keepMouseTrackOn = NO;
+                break;
+
+            default:
+                break;
+        }
     }
-
-    _backgroundColor = [QMIconGridView normalBackgroundColor];
-    [self setNeedsDisplay:YES];
-
-    [_viewController setIcon];
 }
 
 #pragma mark Static
