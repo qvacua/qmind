@@ -13,11 +13,9 @@
 		1929B29FA3F12195D97593A5 /* IconCollectionViewItemTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929B743A0D8FAB8C620E299 /* IconCollectionViewItemTest.m */; };
 		1929B2FF6732AAB197D8DFB9 /* CellComponentTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929B7664B7E4A08B9E7118B /* CellComponentTest.m */; };
 		1929B676F4A74F9E9F96AB42 /* QMIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929BA02C47D9D0A43F49EFA /* QMIcon.m */; };
-		1929B8AC38F16CF2872B8CA0 /* DummyView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1929B3402C545663FBCD10F6 /* DummyView.h */; };
 		1929B91E380C89A49F956097 /* QMUiDrawer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929B20B51839B9482813969 /* QMUiDrawer.m */; };
 		1929BB168680A05751E3F4C4 /* QMIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929BA02C47D9D0A43F49EFA /* QMIcon.m */; };
 		1929BB6FEB32F64962B24562 /* QMManualBeanProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929B43F698543362E51BAB9 /* QMManualBeanProvider.m */; };
-		1929BCE646E9800456F9F279 /* DummyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929BD2651F4313F5742E2B0 /* DummyView.m */; };
 		1929BF0203FEF5FAAC4C4C25 /* QMIconsPaneView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929B2FCB4A407CCC68D9D45 /* QMIconsPaneView.m */; };
 		1929BFD7B74324D2B8724842 /* IconGridViewTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929B83740C95CACCC412474 /* IconGridViewTest.m */; };
 		1929BFFB89F8FFD850719385 /* QMCacaoTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929B03F77F02BDFB060054E /* QMCacaoTestCase.m */; };
@@ -219,7 +217,6 @@
 			files = (
 				4B15777916A2F02D0048480E /* Qkit.framework in CopyFiles */,
 				4B03B24E1628725900E5ECA2 /* TBCacao.framework in CopyFiles */,
-				1929B8AC38F16CF2872B8CA0 /* DummyView.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -257,7 +254,6 @@
 		1929B209E6C81B9C03DE0505 /* CellSizeManagerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellSizeManagerTest.m; sourceTree = "<group>"; };
 		1929B20B51839B9482813969 /* QMUiDrawer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMUiDrawer.m; sourceTree = "<group>"; };
 		1929B2FCB4A407CCC68D9D45 /* QMIconsPaneView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMIconsPaneView.m; sourceTree = "<group>"; };
-		1929B3402C545663FBCD10F6 /* DummyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DummyView.h; sourceTree = "<group>"; };
 		1929B353C299640D7D91AA9D /* QMCellSizeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMCellSizeManager.m; sourceTree = "<group>"; };
 		1929B43F698543362E51BAB9 /* QMManualBeanProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMManualBeanProvider.m; sourceTree = "<group>"; };
 		1929B4E814EA183B1791462A /* QMUiDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMUiDrawer.h; sourceTree = "<group>"; };
@@ -270,7 +266,6 @@
 		1929BA02C47D9D0A43F49EFA /* QMIcon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMIcon.m; sourceTree = "<group>"; };
 		1929BC2901D96DABE95AE4BB /* IconTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IconTest.m; sourceTree = "<group>"; };
 		1929BC9E791535ADC6E79637 /* QMCacaoTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMCacaoTestCase.h; sourceTree = "<group>"; };
-		1929BD2651F4313F5742E2B0 /* DummyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DummyView.m; sourceTree = "<group>"; };
 		1929BF6379805052FA43883B /* QMTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMTypes.h; sourceTree = "<group>"; };
 		1929BFC33C586805007B7B9E /* QMManualBeanProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMManualBeanProvider.h; sourceTree = "<group>"; };
 		4B03B23F1628724000E5ECA2 /* TBCacao.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TBCacao.xcodeproj; path = tbcacao/TBCacao.xcodeproj; sourceTree = "<group>"; };
@@ -441,8 +436,6 @@
 				4BFCD7AC14F3E32A00850980 /* Text */,
 				4B39308014EC41E100A9D541 /* View */,
 				4B85653514E46D6800C6FF3C /* Cell */,
-				1929BD2651F4313F5742E2B0 /* DummyView.m */,
-				1929B3402C545663FBCD10F6 /* DummyView.h */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -978,7 +971,6 @@
 				4BE684B716922F6E00789892 /* QMIconGridView.m in Sources */,
 				1929B059162A10744EF02985 /* QMIconsPaneView.m in Sources */,
 				1929BB6FEB32F64962B24562 /* QMManualBeanProvider.m in Sources */,
-				1929BCE646E9800456F9F279 /* DummyView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
