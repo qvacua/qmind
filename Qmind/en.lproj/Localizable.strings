@@ -19,3 +19,5 @@
 "undo.node.icon.add" = "Insert Icon";
 
 "delete.node.icon" = "Delete %@";
+
+"delete.node.unsupported.icon" = "Unsupported Icon";

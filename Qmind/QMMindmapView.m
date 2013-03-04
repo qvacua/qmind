@@ -915,7 +915,11 @@ we only test the begin edit part... We are being to lazy here...
     }
 
     NSMenuItem *deleteIconItem = [[self menu] itemWithTag:qDeleteIconMenuItemTag];
-    [deleteIconItem setTitle:[NSString stringWithFormat:NSLocalizedString(@"delete.node.icon", @"Delete %@"), hitIcon.unicode]];
+    NSString *unicode = hitIcon.unicode;
+    if (unicode == nil) {
+        unicode = NSLocalizedString(@"delete.node.unsupported.icon", @"Unsupported Icon");
+    }
+    [deleteIconItem setTitle:[NSString stringWithFormat:NSLocalizedString(@"delete.node.icon", @"Delete %@"), unicode]];
 
     return [self menu];
 }
