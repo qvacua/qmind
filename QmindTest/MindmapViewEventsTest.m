@@ -18,6 +18,7 @@
 #import "QMMindmapView.h"
 #import "QMCacaoTestCase.h"
 #import "QMMindmapViewDataSourceImpl.h"
+#import "QMIcon.h"
 
 @interface MindmapViewEventsTest : QMCacaoTestCase
 @end
@@ -30,6 +31,7 @@
     NSWindow *window;
     NSEvent *event;
     NSEvent *nextEvent;
+    NSMenu *menu;
 
     QMRootCell *rootCell;
 
@@ -46,8 +48,10 @@
     dataSource = mock([QMMindmapViewDataSourceImpl class]);
     window = mock([NSWindow class]);
     nextEvent = mock([NSEvent class]);
+    menu = mock([NSMenu class]);
 
     view = [[QMMindmapView alloc] initWithFrame:NewRect(0, 0, 640, 480)];
+    [view setMenu:menu];
     [view setInstanceVarTo:selector];
     [view setInstanceVarTo:stateManager];
     [view setInstanceVarTo:editor];
@@ -58,6 +62,63 @@
     rootCell = [self rootCellForTestWithView:view];
 
     [view setInstanceVarTo:rootCell];
+}
+
+- (void)testMenuForEventNotRightMouseDown {
+    [given([event type]) willReturnUnsignedInteger:NSRightMouseDown + 1];
+
+    assertThat([view menuForEvent:event], is(nilValue()));
+}
+
+- (void)testMenuForEventNoCellHit {
+    [given([event type]) willReturnUnsignedInteger:NSRightMouseDown];
+    [[given([selector cellContainingPoint:NewPoint(1, 2) inCell:anything()]) withMatcher:anything() forArgument:0] willReturn:nil];
+
+    assertThat([view menuForEvent:event], is(nilValue()));
+}
+
+- (void)testMenuForEventHitText {
+    [given([event type]) willReturnUnsignedInteger:NSRightMouseDown];
+    [given([event locationInWindow]) willReturnPoint:NewPoint(3, 4)];
+    [CELL(1) setTextOrigin:NewPoint(0, 470)];
+    [[given([selector cellContainingPoint:NewPoint(1, 2) inCell:anything()]) withMatcher:anything() forArgument:0] willReturn:CELL(1)];
+
+    assertThat([view menuForEvent:event], is(nilValue()));
+}
+
+- (void)testMenuForEventNoIcon {
+    [given([event type]) willReturnUnsignedInteger:NSRightMouseDown];
+    [given([event locationInWindow]) willReturnPoint:NewPoint(3, 4)];
+    [CELL(1) setTextOrigin:NewPoint(100, 100)];
+    [[given([selector cellContainingPoint:NewPoint(1, 2) inCell:anything()]) withMatcher:anything() forArgument:0] willReturn:CELL(1)];
+
+    assertThat([view menuForEvent:event], is(nilValue()));
+}
+
+- (void)testMenuForEventNoIconHit {
+    [given([event type]) willReturnUnsignedInteger:NSRightMouseDown];
+    [given([event locationInWindow]) willReturnPoint:NewPoint(3, 4)];
+    [CELL(1) setTextOrigin:NewPoint(100, 100)];
+    [[given([selector cellContainingPoint:NewPoint(1, 2) inCell:anything()]) withMatcher:anything() forArgument:0] willReturn:CELL(1)];
+
+    QMIcon *icon = [[QMIcon alloc] initWithCode:@"icon"];
+    [CELL(1) addObjectInIcons:icon];
+    icon.origin = NewPoint(100, 100);
+
+    assertThat([view menuForEvent:event], is(nilValue()));
+}
+
+- (void)testMenuForEvent {
+    [given([event type]) willReturnUnsignedInteger:NSRightMouseDown];
+    [given([event locationInWindow]) willReturnPoint:NewPoint(3, 4)];
+    [CELL(1) setTextOrigin:NewPoint(100, 100)];
+    [[given([selector cellContainingPoint:NewPoint(1, 2) inCell:anything()]) withMatcher:anything() forArgument:0] willReturn:CELL(1)];
+
+    QMIcon *icon = [[QMIcon alloc] initWithCode:@"icon"];
+    [CELL(1) addObjectInIcons:icon];
+    icon.origin = NewPoint(2, 470);
+
+    assertThat([view menuForEvent:event], is(menu));
 }
 
 - (void)testKeyDownForFolding {
