@@ -894,16 +894,21 @@ we only test the begin edit part... We are being to lazy here...
         return nil;
     }
 
+    if ([mouseDownHitCell countOfIcons] == 0) {
+        return nil;
+    }
+
     if (NSPointInRect(clickLocation, mouseDownHitCell.textFrame)) {
         return nil;
     }
 
-    QMIcon *hitIcon = nil;
-    for (QMIcon *icon in mouseDownHitCell.icons) {
+    __block QMIcon *hitIcon = nil;
+    [mouseDownHitCell.icons enumerateObjectsUsingBlock:^(QMIcon *icon, NSUInteger index, BOOL *stop) {
         if (NSPointInRect(clickLocation, icon.frame)) {
             hitIcon = icon;
+            *stop = YES;
         }
-    }
+    }];
 
     if (hitIcon == nil) {
         return nil;
