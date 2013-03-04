@@ -920,6 +920,10 @@ we only test the begin edit part... We are being to lazy here...
         unicode = NSLocalizedString(@"delete.node.unsupported.icon", @"Unsupported Icon");
     }
     [deleteIconItem setTitle:[NSString stringWithFormat:NSLocalizedString(@"delete.node.icon", @"Delete %@"), unicode]];
+    [deleteIconItem setBlockAction:^(id sender) {
+        log4Debug(@"cell: %@", mouseDownHitCell);
+        log4Debug(@"icon: %@", unicode);
+    }];
 
     return [self menu];
 }
