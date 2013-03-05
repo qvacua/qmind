@@ -73,6 +73,10 @@
     [verify(undoManager) endUndoGrouping];
 }
 
+- (void)testDeleteIcon {
+    FAIL;
+}
+
 - (void)testIdentifier {
     [given([doc identifierForItem:nil]) willReturn:item];
     [given([doc identifierForItem:otherItem]) willReturn:otherItem];

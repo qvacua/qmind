@@ -153,6 +153,10 @@ TB_MANUALWIRE_WITH_INSTANCE_VAR(mindmapWriter, _mindmapWriter)
     [item addObjectInIcons:iconCode];
 }
 
+- (void)deleteIconOfItem:(id)item atIndex:(NSUInteger)index {
+
+}
+
 - (BOOL)itemIsNewlyCreated:(QMNode *)item {
     return item.createdNewly;
 }
