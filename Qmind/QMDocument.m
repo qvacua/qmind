@@ -14,6 +14,7 @@
 #import "QMMindmapWriter.h"
 #import "QMRootNode.h"
 #import "QMAppSettings.h"
+#import "QMCell.h"
 
 static NSString * const qDocumentNibName = @"Document";
 
@@ -154,7 +155,7 @@ TB_MANUALWIRE_WITH_INSTANCE_VAR(mindmapWriter, _mindmapWriter)
 }
 
 - (void)deleteIconOfItem:(id)item atIndex:(NSUInteger)index {
-
+    [item removeObjectFromIconsAtIndex:index];
 }
 
 - (BOOL)itemIsNewlyCreated:(QMNode *)item {
