@@ -74,7 +74,12 @@
 }
 
 - (void)testDeleteIcon {
-    FAIL;
+    [dataSource mindmapView:view deleteIconOfItem:item atIndex:1];
+
+    [verify(undoManager) beginUndoGrouping];
+    [verify(undoManager) setActionName:NSLocalizedString(@"undo.node.icon.delete", @"Delete Icon")];
+    [verify(doc) deleteIconOfItem:item atIndex:1];
+    [verify(undoManager) endUndoGrouping];
 }
 
 - (void)testIdentifier {

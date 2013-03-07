@@ -98,8 +98,10 @@ TB_MANUALWIRE_WITH_INSTANCE_VAR(iconManager, _iconManager)
     }];
 }
 
-- (void)mindmapView:(QMMindmapView *)mindmapView deleteIcon:(QMIcon *)icon fromItem:(id)item {
-
+- (void)mindmapView:(QMMindmapView *)mindmapView deleteIconOfItem:(id)item atIndex:(NSUInteger)index {
+    [self doInsideUndoGroup:NSLocalizedString(@"undo.node.icon.delete", @"Delete Icon") usingBlock:^{
+        [_doc deleteIconOfItem:item atIndex:index];
+    }];
 }
 
 - (void)mindmapView:(QMMindmapView *)mindmapView moveItems:(NSArray *)itemsToMove toItem:(id)itemToModify inDirection:(QMDirection)direction {

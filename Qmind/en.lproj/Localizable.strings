@@ -21,3 +21,5 @@
 "delete.node.icon" = "Delete %@";
 
 "delete.node.unsupported.icon" = "Unsupported Icon";
+
+"undo.node.icon.delete" = "Delete Icon";
