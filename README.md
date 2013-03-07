@@ -1,5 +1,7 @@
 # Qmind
 
+[Download][]
+
 ![Screenshot](https://raw.github.com/qvacua/qmind/master/Meta/screenshot.png)
 
 <http://qvacua.com>
@@ -19,3 +21,4 @@ For more details, see [Wiki][].
 
 [Wiki]: https://github.com/qvacua/qmind/wiki
 [FreeMind]: http://freemind.sf.net
+[Download]: https://github.com/qvacua/qmind/wiki/Downloads
