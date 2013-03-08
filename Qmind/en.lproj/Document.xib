@@ -137,10 +137,6 @@
 									<reference key="NSControlView" ref="801315032"/>
 									<int key="NSButtonFlags">-2034221056</int>
 									<int key="NSButtonFlags2">35</int>
-									<object class="NSCustomResource" key="NSNormalImage" id="804541675">
-										<string key="NSClassName">NSImage</string>
-										<string key="NSResourceName">ToolbarNewNodeTemplate</string>
-									</object>
 									<string key="NSAlternateContents"/>
 									<string key="NSKeyEquivalent"/>
 									<int key="NSPeriodicDelay">400</int>
@@ -153,7 +149,10 @@
 										<int key="NSKeyEquivModMask">1048576</int>
 										<int key="NSMnemonicLoc">2147483647</int>
 										<int key="NSState">1</int>
-										<reference key="NSImage" ref="804541675"/>
+										<object class="NSCustomResource" key="NSImage" id="50592306">
+											<string key="NSClassName">NSImage</string>
+											<string key="NSResourceName">ToolbarNewNodeTemplate</string>
+										</object>
 										<object class="NSCustomResource" key="NSOnImage" id="885688912">
 											<string key="NSClassName">NSImage</string>
 											<string key="NSResourceName">NSMenuCheckmark</string>
@@ -225,7 +224,7 @@
 								</object>
 								<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 							</object>
-							<reference key="NSToolbarItemImage" ref="804541675"/>
+							<reference key="NSToolbarItemImage" ref="50592306"/>
 							<nil key="NSToolbarItemTarget"/>
 							<nil key="NSToolbarItemAction"/>
 							<string key="NSToolbarItemMinSize">{40, 25}</string>
@@ -695,7 +694,7 @@
 						<int key="NSMnemonicLoc">2147483647</int>
 						<reference key="NSOnImage" ref="885688912"/>
 						<reference key="NSMixedImage" ref="648775878"/>
-						<int key="NSTag">1001</int>
+						<int key="NSTag">1100</int>
 					</object>
 				</array>
 			</object>

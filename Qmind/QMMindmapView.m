@@ -912,7 +912,10 @@ we only test the begin edit part... We are being to lazy here...
         return nil;
     }
 
-    NSMenuItem *deleteIconItem = [[self menu] itemWithTag:qDeleteIconMenuItemTag];
+    NSMenu *menu = [self menu];
+    NSMenuItem *deleteIconItem = [menu itemWithTag:qDeleteIconMenuItemTag];
+    NSMenuItem *deleteAllIconsItem = [menu itemWithTag:qDeleteAllIconsMenuItemTag];
+    
     NSString *unicode = hitIcon.unicode;
     if (unicode == nil) {
         unicode = NSLocalizedString(@"delete.node.unsupported.icon", @"Unsupported Icon");
@@ -924,7 +927,11 @@ we only test the begin edit part... We are being to lazy here...
         [_dataSource mindmapView:self deleteIconOfItem:mouseDownHitCell.identifier atIndex:indexOfHitIcon];
     }];
 
-    return [self menu];
+    [deleteAllIconsItem setBlockAction:^(id sender) {
+        [_dataSource mindmapView:self deleteAllIconsOfItem:mouseDownHitCell.identifier];
+    }];
+
+    return menu;
 }
 
 

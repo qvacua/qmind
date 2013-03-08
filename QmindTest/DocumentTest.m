@@ -537,6 +537,10 @@ static NSString * const MINDMAP_EXTENSION = @"mm";
     assertThat([NODE(1) icons], consistsOf(@"icon3"));
 }
 
+- (void)testDeleteAllIcons {
+    FAIL;
+}
+
 - (void)testItemNewlyCreated {
     [NODE(1) setCreatedNewly:YES];
     assertThatBool([doc itemIsNewlyCreated:NODE(1)], isTrue);

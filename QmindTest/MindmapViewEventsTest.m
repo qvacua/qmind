@@ -154,6 +154,38 @@
     [verify(dataSource) mindmapView:view deleteIconOfItem:cell.identifier atIndex:1];
 }
 
+- (void)testMenuForEventDeleteAllIconsAction {
+    QMIcon *icon1 = [[QMIcon alloc] initWithCode:@"folder"];
+    QMIcon *icon2 = [[QMIcon alloc] initWithCode:@"edit"];
+    QMIcon *icon3 = [[QMIcon alloc] initWithCode:@"password"];
+
+    QMCell *cell = CELL(1);
+    [cell addObjectInIcons:icon1];
+    [cell addObjectInIcons:icon2];
+    [cell addObjectInIcons:icon3];
+
+    NSMenuItem *menuItem = [[NSMenuItem alloc] init];
+    [menuItem setTag:qDeleteAllIconsMenuItemTag];
+
+    NSMenu *menu = [[NSMenu alloc] init];
+    [menu addItem:menuItem];
+    [view setMenu:menu];
+
+    [given([event type]) willReturnUnsignedInteger:NSRightMouseDown];
+    [given([event locationInWindow]) willReturnPoint:NewPoint(3, 4)];
+
+    [cell setTextOrigin:NewPoint(100, 100)];
+    icon2.origin = NewPoint(2, 470);
+    [[given([selector cellContainingPoint:NewPoint(1, 2) inCell:anything()]) withMatcher:anything() forArgument:0] willReturn:cell];
+
+    [view menuForEvent:event];
+
+    void (^blockAction)(id) = [menuItem blockAction];
+    blockAction(self);
+
+    [verify(dataSource) mindmapView:view deleteAllIconsOfItem:cell.identifier];
+}
+
 - (void)testKeyDownForFolding {
     unichar key[] = { 0x20 };
     NSString *string = [NSString stringWithCharacters:key length:1];
