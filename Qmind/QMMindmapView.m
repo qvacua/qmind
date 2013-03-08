@@ -888,16 +888,34 @@ we only test the begin edit part... We are being to lazy here...
     NSPoint clickLocation = [self convertPoint:[event locationInWindow] fromView:nil];
     QMCell *mouseDownHitCell = [_cellSelector cellContainingPoint:clickLocation inCell:_rootCell];
 
-    if (mouseDownHitCell == nil) {
-        return nil;
+    NSMenu *menu = [self menu];
+    NSMenuItem *deleteIconItem = [menu itemWithTag:qDeleteIconMenuItemTag];
+    NSMenuItem *deleteAllIconsItem = [menu itemWithTag:qDeleteAllIconsMenuItemTag];
+
+    if (mouseDownHitCell == nil || [mouseDownHitCell countOfIcons] == 0) {
+        [deleteIconItem setTitle:NSLocalizedString(@"delete.node.icon.generic", @"Delete Icon")];
+        [deleteIconItem setEnabled:NO];
+        [deleteIconItem setBlockAction:nil];
+        
+        [deleteAllIconsItem setEnabled:NO];
+        [deleteAllIconsItem setBlockAction:nil];
+
+        return menu;
     }
 
-    if ([mouseDownHitCell countOfIcons] == 0) {
-        return nil;
-    }
+    void (^deleteAllIconsBlock)(id) = ^(id sender) {
+        [_dataSource mindmapView:self deleteAllIconsOfItem:mouseDownHitCell.identifier];
+    };
 
     if (NSPointInRect(clickLocation, mouseDownHitCell.textFrame)) {
-        return nil;
+        [deleteIconItem setTitle:NSLocalizedString(@"delete.node.icon.generic", @"Delete Icon")];
+        [deleteIconItem setEnabled:NO];
+        [deleteIconItem setBlockAction:nil];
+
+        [deleteAllIconsItem setEnabled:YES];
+        [deleteAllIconsItem setBlockAction:deleteAllIconsBlock];
+
+        return menu;
     }
 
     __block QMIcon *hitIcon = nil;
@@ -909,27 +927,29 @@ we only test the begin edit part... We are being to lazy here...
     }];
 
     if (hitIcon == nil) {
-        return nil;
+        [deleteIconItem setTitle:NSLocalizedString(@"delete.node.icon.generic", @"Delete Icon")];
+        [deleteIconItem setEnabled:NO];
+        [deleteIconItem setBlockAction:nil];
+
+        [deleteAllIconsItem setEnabled:YES];
+        [deleteAllIconsItem setBlockAction:deleteAllIconsBlock];
+
+        return menu;
     }
 
-    NSMenu *menu = [self menu];
-    NSMenuItem *deleteIconItem = [menu itemWithTag:qDeleteIconMenuItemTag];
-    NSMenuItem *deleteAllIconsItem = [menu itemWithTag:qDeleteAllIconsMenuItemTag];
-    
     NSString *unicode = hitIcon.unicode;
     if (unicode == nil) {
         unicode = NSLocalizedString(@"delete.node.unsupported.icon", @"Unsupported Icon");
     }
 
     [deleteIconItem setTitle:[NSString stringWithFormat:NSLocalizedString(@"delete.node.icon", @"Delete %@"), unicode]];
+    [deleteIconItem setEnabled:YES];
     [deleteIconItem setBlockAction:^(id sender) {
         NSUInteger indexOfHitIcon = [mouseDownHitCell.icons indexOfObject:hitIcon];
         [_dataSource mindmapView:self deleteIconOfItem:mouseDownHitCell.identifier atIndex:indexOfHitIcon];
     }];
 
-    [deleteAllIconsItem setBlockAction:^(id sender) {
-        [_dataSource mindmapView:self deleteAllIconsOfItem:mouseDownHitCell.identifier];
-    }];
+    [deleteAllIconsItem setBlockAction:deleteAllIconsBlock];
 
     return menu;
 }

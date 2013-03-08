@@ -17,9 +17,9 @@
 "ui.menu.iconspane.show" = "Show Icons Pane";
 
 "undo.node.icon.add" = "Insert Icon";
+"undo.node.icon.delete" = "Delete Icon";
 
 "delete.node.icon" = "Delete %@";
-
+"delete.node.icon.generic" = "Delete Icon";
 "delete.node.unsupported.icon" = "Unsupported Icon";
 
-"undo.node.icon.delete" = "Delete Icon";

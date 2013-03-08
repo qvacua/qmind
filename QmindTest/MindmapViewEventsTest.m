@@ -37,6 +37,8 @@
     QMRootCell *rootCell;
 
     QMMindmapView *view;
+    NSMenuItem *deleteIconItem;
+    NSMenuItem *deleteAllIconsItem;
 }
 
 - (void)setUp {
@@ -49,7 +51,16 @@
     dataSource = mock([QMMindmapViewDataSourceImpl class]);
     window = mock([NSWindow class]);
     nextEvent = mock([NSEvent class]);
-    menu = mock([NSMenu class]);
+
+    menu = [[NSMenu alloc] init];
+
+    deleteIconItem = [[NSMenuItem alloc] init];
+    [deleteIconItem setTag:qDeleteIconMenuItemTag];
+    [menu addItem:deleteIconItem];
+
+    deleteAllIconsItem = [[NSMenuItem alloc] init];
+    [deleteAllIconsItem setTag:qDeleteAllIconsMenuItemTag];
+    [menu addItem:deleteAllIconsItem];
 
     view = [[QMMindmapView alloc] initWithFrame:NewRect(0, 0, 640, 480)];
     [view setMenu:menu];
@@ -75,16 +86,43 @@
     [given([event type]) willReturnUnsignedInteger:NSRightMouseDown];
     [[given([selector cellContainingPoint:NewPoint(1, 2) inCell:anything()]) withMatcher:anything() forArgument:0] willReturn:nil];
 
-    assertThat([view menuForEvent:event], is(nilValue()));
+    assertThat([view menuForEvent:event], is(menu));
+    assertThat(@([deleteIconItem isEnabled]), isNo);
+    assertThat([deleteIconItem title], is(NSLocalizedString(@"delete.node.icon.generic", @"Delete Icon")));
+    assertThat([deleteIconItem blockAction], is(nilValue()));
+    assertThat(@([deleteAllIconsItem isEnabled]), isNo);
+    assertThat([deleteAllIconsItem blockAction], is(nilValue()));
 }
 
-- (void)testMenuForEventHitText {
+- (void)testMenuForEventHitTextCellWithNoIcon {
     [given([event type]) willReturnUnsignedInteger:NSRightMouseDown];
     [given([event locationInWindow]) willReturnPoint:NewPoint(3, 4)];
     [CELL(1) setTextOrigin:NewPoint(0, 470)];
     [[given([selector cellContainingPoint:NewPoint(1, 2) inCell:anything()]) withMatcher:anything() forArgument:0] willReturn:CELL(1)];
 
-    assertThat([view menuForEvent:event], is(nilValue()));
+    assertThat([view menuForEvent:event], is(menu));
+    assertThat(@([deleteIconItem isEnabled]), isNo);
+    assertThat([deleteIconItem title], is(NSLocalizedString(@"delete.node.icon.generic", @"Delete Icon")));
+    assertThat([deleteIconItem blockAction], is(nilValue()));
+    assertThat(@([deleteAllIconsItem isEnabled]), isNo);
+    assertThat([deleteAllIconsItem blockAction], is(nilValue()));
+}
+
+- (void)testMenuForEventHitTextCellWithIcon {
+    [given([event type]) willReturnUnsignedInteger:NSRightMouseDown];
+    [given([event locationInWindow]) willReturnPoint:NewPoint(3, 4)];
+    [CELL(1) setTextOrigin:NewPoint(0, 470)];
+    [[given([selector cellContainingPoint:NewPoint(1, 2) inCell:anything()]) withMatcher:anything() forArgument:0] willReturn:CELL(1)];
+
+    QMIcon *icon = [[QMIcon alloc] initWithCode:@"icon"];
+    [CELL(1) addObjectInIcons:icon];
+
+    assertThat([view menuForEvent:event], is(menu));
+    assertThat(@([deleteIconItem isEnabled]), isNo);
+    assertThat([deleteIconItem title], is(NSLocalizedString(@"delete.node.icon.generic", @"Delete Icon")));
+    assertThat([deleteIconItem blockAction], is(nilValue()));
+    assertThat(@([deleteAllIconsItem isEnabled]), isYes);
+    assertThat([deleteAllIconsItem blockAction], isNot(nilValue()));
 }
 
 - (void)testMenuForEventNoIcon {
@@ -93,7 +131,12 @@
     [CELL(1) setTextOrigin:NewPoint(100, 100)];
     [[given([selector cellContainingPoint:NewPoint(1, 2) inCell:anything()]) withMatcher:anything() forArgument:0] willReturn:CELL(1)];
 
-    assertThat([view menuForEvent:event], is(nilValue()));
+    assertThat([view menuForEvent:event], is(menu));
+    assertThat(@([deleteIconItem isEnabled]), isNo);
+    assertThat([deleteIconItem title], is(NSLocalizedString(@"delete.node.icon.generic", @"Delete Icon")));
+    assertThat([deleteIconItem blockAction], is(nilValue()));
+    assertThat(@([deleteAllIconsItem isEnabled]), isNo);
+    assertThat([deleteAllIconsItem blockAction], is(nilValue()));
 }
 
 - (void)testMenuForEventNoIconHit {
@@ -106,7 +149,12 @@
     [CELL(1) addObjectInIcons:icon];
     icon.origin = NewPoint(100, 100);
 
-    assertThat([view menuForEvent:event], is(nilValue()));
+    assertThat([view menuForEvent:event], is(menu));
+    assertThat([deleteIconItem title], is(NSLocalizedString(@"delete.node.icon.generic", @"Delete Icon")));
+    assertThat(@([deleteIconItem isEnabled]), isNo);
+    assertThat([deleteIconItem blockAction], is(nilValue()));
+    assertThat(@([deleteAllIconsItem isEnabled]), isYes);
+    assertThat([deleteAllIconsItem blockAction], isNot(nilValue()));
 }
 
 - (void)testMenuForEvent {
@@ -120,6 +168,11 @@
     icon.origin = NewPoint(2, 470);
 
     assertThat([view menuForEvent:event], is(menu));
+    assertThat([deleteIconItem title], isNot(NSLocalizedString(@"delete.node.icon.generic", @"Delete Icon")));
+    assertThat(@([deleteIconItem isEnabled]), isYes);
+    assertThat([deleteIconItem blockAction], isNot(nilValue()));
+    assertThat(@([deleteAllIconsItem isEnabled]), isYes);
+    assertThat([deleteAllIconsItem blockAction], isNot(nilValue()));
 }
 
 - (void)testMenuForEventDeleteIconAction {
@@ -132,13 +185,6 @@
     [cell addObjectInIcons:icon2];
     [cell addObjectInIcons:icon3];
 
-    NSMenuItem *menuItem = [[NSMenuItem alloc] init];
-    [menuItem setTag:qDeleteIconMenuItemTag];
-
-    NSMenu *menu = [[NSMenu alloc] init];
-    [menu addItem:menuItem];
-    [view setMenu:menu];
-
     [given([event type]) willReturnUnsignedInteger:NSRightMouseDown];
     [given([event locationInWindow]) willReturnPoint:NewPoint(3, 4)];
 
@@ -148,7 +194,7 @@
 
     [view menuForEvent:event];
 
-    void (^blockAction)(id) = [menuItem blockAction];
+    void (^blockAction)(id) = [deleteIconItem blockAction];
     blockAction(self);
 
     [verify(dataSource) mindmapView:view deleteIconOfItem:cell.identifier atIndex:1];
@@ -164,13 +210,6 @@
     [cell addObjectInIcons:icon2];
     [cell addObjectInIcons:icon3];
 
-    NSMenuItem *menuItem = [[NSMenuItem alloc] init];
-    [menuItem setTag:qDeleteAllIconsMenuItemTag];
-
-    NSMenu *menu = [[NSMenu alloc] init];
-    [menu addItem:menuItem];
-    [view setMenu:menu];
-
     [given([event type]) willReturnUnsignedInteger:NSRightMouseDown];
     [given([event locationInWindow]) willReturnPoint:NewPoint(3, 4)];
 
@@ -180,7 +219,7 @@
 
     [view menuForEvent:event];
 
-    void (^blockAction)(id) = [menuItem blockAction];
+    void (^blockAction)(id) = [deleteAllIconsItem blockAction];
     blockAction(self);
 
     [verify(dataSource) mindmapView:view deleteAllIconsOfItem:cell.identifier];
