@@ -29,8 +29,6 @@ static unsigned int const qPageDownKeyCode = 0xF72D;
 static const NSSize qSizeOfBadge = {24., 24.};
 static const NSSize qSizeOfBadgeCircle = {20., 20.};
 
-static const int qDeleteIconMenuItemTag = 1000;
-
 static inline CGFloat area(NSRect rect) {
     return rect.size.width * rect.size.height;
 }
@@ -919,10 +917,11 @@ we only test the begin edit part... We are being to lazy here...
     if (unicode == nil) {
         unicode = NSLocalizedString(@"delete.node.unsupported.icon", @"Unsupported Icon");
     }
+
     [deleteIconItem setTitle:[NSString stringWithFormat:NSLocalizedString(@"delete.node.icon", @"Delete %@"), unicode]];
     [deleteIconItem setBlockAction:^(id sender) {
-        log4Debug(@"cell: %@", mouseDownHitCell);
-        log4Debug(@"icon: %@", unicode);
+        NSUInteger indexOfHitIcon = [mouseDownHitCell.icons indexOfObject:hitIcon];
+        [_dataSource mindmapView:self deleteIconOfItem:mouseDownHitCell.identifier atIndex:indexOfHitIcon];
     }];
 
     return [self menu];

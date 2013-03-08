@@ -24,6 +24,8 @@ static const NSSize qUnitSize = {1.0, 1.0};
 static const CGFloat qMinZoomFactor = 0.01;
 static const CGFloat qMaxZoomFactor = 100.0;
 
+static const int qDeleteIconMenuItemTag = 1000;
+
 @interface QMMindmapView : NSView <QMCellEditorDelegate, NSDraggingSource, NSDraggingDestination>
 
 @property (weak) QMUiDrawer *uiDrawer;
