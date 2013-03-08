@@ -83,7 +83,11 @@
 }
 
 - (void)testDeleteAllIcons {
-    FAIL;
+    [dataSource mindmapView:view deleteAllIconsOfItem:item];
+
+    [verify(undoManager) beginUndoGrouping];
+    [verify(doc) deleteAllIconsOfItem:item];
+    [verify(undoManager) endUndoGrouping];
 }
 
 - (void)testIdentifier {

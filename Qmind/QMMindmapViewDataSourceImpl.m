@@ -105,7 +105,9 @@ TB_MANUALWIRE_WITH_INSTANCE_VAR(iconManager, _iconManager)
 }
 
 - (void)mindmapView:(QMMindmapView *)mindmapView deleteAllIconsOfItem:(id)item {
-
+    [self doInsideUndoGroup:NSLocalizedString(@"undo.node.icon.delete", @"Delete Icon") usingBlock:^{
+        [_doc deleteAllIconsOfItem:item];
+    }];
 }
 
 - (void)mindmapView:(QMMindmapView *)mindmapView moveItems:(NSArray *)itemsToMove toItem:(id)itemToModify inDirection:(QMDirection)direction {
