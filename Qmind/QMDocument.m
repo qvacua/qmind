@@ -158,8 +158,10 @@ TB_MANUALWIRE_WITH_INSTANCE_VAR(mindmapWriter, _mindmapWriter)
     [item removeObjectFromIconsAtIndex:index];
 }
 
-- (void)deleteAllIconsOfItem:(id)item {
-
+- (void)deleteAllIconsOfItem:(QMNode *)item {
+    while ([item countOfIcons] > 0) {
+        [item removeObjectFromIconsAtIndex:0];
+    }
 }
 
 - (BOOL)itemIsNewlyCreated:(QMNode *)item {
