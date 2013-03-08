@@ -889,16 +889,14 @@ we only test the begin edit part... We are being to lazy here...
     QMCell *mouseDownHitCell = [_cellSelector cellContainingPoint:clickLocation inCell:_rootCell];
 
     NSMenu *menu = [self menu];
-    NSMenuItem *deleteIconItem = [menu itemWithTag:qDeleteIconMenuItemTag];
-    NSMenuItem *deleteAllIconsItem = [menu itemWithTag:qDeleteAllIconsMenuItemTag];
+    NSMenuItem *deleteIconMenuItem = [menu itemWithTag:qDeleteIconMenuItemTag];
+    NSMenuItem *deleteAllIconsMenuItem = [menu itemWithTag:qDeleteAllIconsMenuItemTag];
 
     if (mouseDownHitCell == nil || [mouseDownHitCell countOfIcons] == 0) {
-        [deleteIconItem setTitle:NSLocalizedString(@"delete.node.icon.generic", @"Delete Icon")];
-        [deleteIconItem setEnabled:NO];
-        [deleteIconItem setBlockAction:nil];
-        
-        [deleteAllIconsItem setEnabled:NO];
-        [deleteAllIconsItem setBlockAction:nil];
+        [self disableDeleteIconMenuItem:deleteIconMenuItem];
+
+        [deleteAllIconsMenuItem setEnabled:NO];
+        [deleteAllIconsMenuItem setBlockAction:nil];
 
         return menu;
     }
@@ -908,12 +906,8 @@ we only test the begin edit part... We are being to lazy here...
     };
 
     if (NSPointInRect(clickLocation, mouseDownHitCell.textFrame)) {
-        [deleteIconItem setTitle:NSLocalizedString(@"delete.node.icon.generic", @"Delete Icon")];
-        [deleteIconItem setEnabled:NO];
-        [deleteIconItem setBlockAction:nil];
-
-        [deleteAllIconsItem setEnabled:YES];
-        [deleteAllIconsItem setBlockAction:deleteAllIconsBlock];
+        [self disableDeleteIconMenuItem:deleteIconMenuItem];
+        [self enableDeleteAllIconsMenuItem:deleteAllIconsMenuItem withBlock:deleteAllIconsBlock];
 
         return menu;
     }
@@ -927,12 +921,8 @@ we only test the begin edit part... We are being to lazy here...
     }];
 
     if (hitIcon == nil) {
-        [deleteIconItem setTitle:NSLocalizedString(@"delete.node.icon.generic", @"Delete Icon")];
-        [deleteIconItem setEnabled:NO];
-        [deleteIconItem setBlockAction:nil];
-
-        [deleteAllIconsItem setEnabled:YES];
-        [deleteAllIconsItem setBlockAction:deleteAllIconsBlock];
+        [self disableDeleteIconMenuItem:deleteIconMenuItem];
+        [self enableDeleteAllIconsMenuItem:deleteAllIconsMenuItem withBlock:deleteAllIconsBlock];
 
         return menu;
     }
@@ -942,18 +932,17 @@ we only test the begin edit part... We are being to lazy here...
         unicode = NSLocalizedString(@"delete.node.unsupported.icon", @"Unsupported Icon");
     }
 
-    [deleteIconItem setTitle:[NSString stringWithFormat:NSLocalizedString(@"delete.node.icon", @"Delete %@"), unicode]];
-    [deleteIconItem setEnabled:YES];
-    [deleteIconItem setBlockAction:^(id sender) {
+    [deleteIconMenuItem setTitle:[NSString stringWithFormat:NSLocalizedString(@"delete.node.icon", @"Delete %@"), unicode]];
+    [deleteIconMenuItem setEnabled:YES];
+    [deleteIconMenuItem setBlockAction:^(id sender) {
         NSUInteger indexOfHitIcon = [mouseDownHitCell.icons indexOfObject:hitIcon];
         [_dataSource mindmapView:self deleteIconOfItem:mouseDownHitCell.identifier atIndex:indexOfHitIcon];
     }];
 
-    [deleteAllIconsItem setBlockAction:deleteAllIconsBlock];
+    [self enableDeleteAllIconsMenuItem:deleteAllIconsMenuItem withBlock:deleteAllIconsBlock];
 
     return menu;
 }
-
 
 - (void)drawRect:(NSRect)dirtyRect {
     [super drawRect:dirtyRect];
@@ -966,6 +955,17 @@ we only test the begin edit part... We are being to lazy here...
 }
 
 #pragma mark Private
+- (void)enableDeleteAllIconsMenuItem:(NSMenuItem *)deleteAllIconsMenuItem withBlock:(void (^)(id))deleteAllIconsBlock {
+    [deleteAllIconsMenuItem setEnabled:YES];
+    [deleteAllIconsMenuItem setBlockAction:deleteAllIconsBlock];
+}
+
+- (void)disableDeleteIconMenuItem:(NSMenuItem *)deleteIconItem {
+    [deleteIconItem setTitle:NSLocalizedString(@"delete.node.icon.generic", @"Delete Icon")];
+    [deleteIconItem setEnabled:NO];
+    [deleteIconItem setBlockAction:nil];
+}
+
 - (void)clearMouseTrackLoopFlags {
     _dragging = NO;
     _keepMouseTrackOn = NO;
