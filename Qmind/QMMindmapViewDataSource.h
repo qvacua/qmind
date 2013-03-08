@@ -38,6 +38,9 @@
 - (void)mindmapView:(QMMindmapView *)mindmapView setFont:(NSFont *)font ofItems:(NSArray *)items;
 - (void)mindmapView:(QMMindmapView *)mindmapView addIcon:(QMIcon *)icon toItem:(id)item;
 
+- (void)mindmapView:(QMMindmapView *)mindmapView deleteIconOfItem:(id)item atIndex:(NSUInteger)index;
+- (void)mindmapView:(QMMindmapView *)mindmapView deleteAllIconsOfItem:(id)item;
+
 - (void)mindmapView:(QMMindmapView *)mindmapView insertChildrenFromPasteboard:(NSPasteboard *)pasteboard toItem:(id)item;
 - (void)mindmapView:(QMMindmapView *)mindmapView insertLeftChildrenFromPasteboard:(NSPasteboard *)pasteboard toItem:(id)item;
 - (void)mindmapView:(QMMindmapView *)mindmapView insertNextSiblingsFromPasteboard:(NSPasteboard *)pasteboard toItem:(id)item;

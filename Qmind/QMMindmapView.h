@@ -24,6 +24,9 @@ static const NSSize qUnitSize = {1.0, 1.0};
 static const CGFloat qMinZoomFactor = 0.01;
 static const CGFloat qMaxZoomFactor = 100.0;
 
+static const int qDeleteIconMenuItemTag = 1000;
+static const int qDeleteAllIconsMenuItemTag = 1100;
+
 @interface QMMindmapView : NSView <QMCellEditorDelegate, NSDraggingSource, NSDraggingDestination>
 
 @property (weak) QMUiDrawer *uiDrawer;
@@ -35,8 +38,6 @@ static const CGFloat qMaxZoomFactor = 100.0;
 @property (readonly) QMRootCell *rootCell;
 
 #pragma mark Public
-@property NSSize newScale;
-
 - (void)updateCanvasSize;
 
 - (void)initMindmapViewWithDataSource:(id <QMMindmapViewDataSource>)aDataSource;

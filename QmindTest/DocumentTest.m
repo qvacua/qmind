@@ -525,6 +525,27 @@ static NSString * const MINDMAP_EXTENSION = @"mm";
     assertThat([NODE(1) icons], consistsOf(@"icon1", @"icon2"));
 }
 
+- (void)testDeleteIcon {
+    [NODE(1) addObjectInIcons:@"icon1"];
+    [NODE(1) addObjectInIcons:@"icon2"];
+    [NODE(1) addObjectInIcons:@"icon3"];
+
+    [doc deleteIconOfItem:NODE(1) atIndex:1];
+    assertThat([NODE(1) icons], consistsOf(@"icon1", @"icon3"));
+
+    [doc deleteIconOfItem:NODE(1) atIndex:0];
+    assertThat([NODE(1) icons], consistsOf(@"icon3"));
+}
+
+- (void)testDeleteAllIcons {
+    [NODE(1) addObjectInIcons:@"icon1"];
+    [NODE(1) addObjectInIcons:@"icon2"];
+    [NODE(1) addObjectInIcons:@"icon3"];
+
+    [doc deleteAllIconsOfItem:NODE(1)];
+    assertThat([NODE(1) icons], is(empty()));
+}
+
 - (void)testItemNewlyCreated {
     [NODE(1) setCreatedNewly:YES];
     assertThatBool([doc itemIsNewlyCreated:NODE(1)], isTrue);

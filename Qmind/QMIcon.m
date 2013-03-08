@@ -32,6 +32,8 @@
     NSImage *_flippedImage;
 }
 
+@dynamic frame;
+
 @synthesize iconManager = _iconManager;
 @synthesize settings = _settings;
 @synthesize textDrawer = _textDrawer;
@@ -44,6 +46,11 @@
 @synthesize unicode = _unicode;
 @synthesize image = _image;
 @synthesize flippedImage = _flippedImage;
+
+#pragma mark Public
+- (NSRect)frame {
+    return NewRectWithOriginAndSize(_origin, _size);
+}
 
 #pragma mark NSCopying
 - (id)copyWithZone:(NSZone *)zone {

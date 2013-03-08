@@ -3,12 +3,12 @@
 	<data>
 		<int key="IBDocument.SystemTarget">1070</int>
 		<string key="IBDocument.SystemVersion">12C60</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2844</string>
+		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
 		<string key="IBDocument.AppKitVersion">1187.34</string>
 		<string key="IBDocument.HIToolboxVersion">625.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">2844</string>
+			<string key="NS.object.0">3084</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>NSArrayController</string>
@@ -149,7 +149,7 @@
 										<int key="NSKeyEquivModMask">1048576</int>
 										<int key="NSMnemonicLoc">2147483647</int>
 										<int key="NSState">1</int>
-										<object class="NSCustomResource" key="NSImage" id="842178844">
+										<object class="NSCustomResource" key="NSImage" id="50592306">
 											<string key="NSClassName">NSImage</string>
 											<string key="NSResourceName">ToolbarNewNodeTemplate</string>
 										</object>
@@ -224,7 +224,7 @@
 								</object>
 								<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 							</object>
-							<reference key="NSToolbarItemImage" ref="842178844"/>
+							<reference key="NSToolbarItemImage" ref="50592306"/>
 							<nil key="NSToolbarItemTarget"/>
 							<nil key="NSToolbarItemAction"/>
 							<string key="NSToolbarItemMinSize">{40, 25}</string>
@@ -603,7 +603,7 @@
 											<string key="NSFrame">{{61, 0}, {15, 480}}</string>
 											<reference key="NSSuperview" ref="810898937"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView" ref="715715546"/>
+											<reference key="NSNextKeyView"/>
 											<string key="NSReuseIdentifierKey">_NS:82</string>
 											<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 											<reference key="NSTarget" ref="810898937"/>
@@ -617,6 +617,7 @@
 											<string key="NSFrame">{{-100, -100}, {61, 15}}</string>
 											<reference key="NSSuperview" ref="810898937"/>
 											<reference key="NSWindow"/>
+											<reference key="NSNextKeyView" ref="200382927"/>
 											<string key="NSReuseIdentifierKey">_NS:91</string>
 											<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 											<int key="NSsFlags">1</int>
@@ -628,7 +629,7 @@
 									<string key="NSFrame">{{582, 0}, {76, 480}}</string>
 									<reference key="NSSuperview" ref="583913853"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView" ref="200382927"/>
+									<reference key="NSNextKeyView" ref="715715546"/>
 									<string key="NSReuseIdentifierKey">_NS:76</string>
 									<int key="NSsFlags">133648</int>
 									<reference key="NSVScroller" ref="29470921"/>
@@ -673,6 +674,29 @@
 				<object class="_NSManagedProxy" key="_NSManagedProxy"/>
 				<bool key="NSFilterRestrictsInsertion">YES</bool>
 				<bool key="NSClearsFilterPredicateOnInsertion">YES</bool>
+			</object>
+			<object class="NSMenu" id="41843221">
+				<string key="NSTitle"/>
+				<array class="NSMutableArray" key="NSMenuItems">
+					<object class="NSMenuItem" id="331850761">
+						<reference key="NSMenu" ref="41843221"/>
+						<string key="NSTitle">Delete Icon</string>
+						<string key="NSKeyEquiv"/>
+						<int key="NSMnemonicLoc">2147483647</int>
+						<reference key="NSOnImage" ref="885688912"/>
+						<reference key="NSMixedImage" ref="648775878"/>
+						<int key="NSTag">1000</int>
+					</object>
+					<object class="NSMenuItem" id="439385931">
+						<reference key="NSMenu" ref="41843221"/>
+						<string key="NSTitle">Delete All Icons</string>
+						<string key="NSKeyEquiv"/>
+						<int key="NSMnemonicLoc">2147483647</int>
+						<reference key="NSOnImage" ref="885688912"/>
+						<reference key="NSMixedImage" ref="648775878"/>
+						<int key="NSTag">1100</int>
+					</object>
+				</array>
 			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
@@ -796,6 +820,14 @@
 						<reference key="destination" ref="512844837"/>
 					</object>
 					<int key="connectionID">100122</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">menu</string>
+						<reference key="source" ref="900509981"/>
+						<reference key="destination" ref="41843221"/>
+					</object>
+					<int key="connectionID">100222</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -1144,6 +1176,25 @@
 						<reference key="object" ref="887361966"/>
 						<reference key="parent" ref="810898937"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">100215</int>
+						<reference key="object" ref="41843221"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="331850761"/>
+							<reference ref="439385931"/>
+						</array>
+						<reference key="parent" ref="0"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">100217</int>
+						<reference key="object" ref="331850761"/>
+						<reference key="parent" ref="41843221"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">100218</int>
+						<reference key="object" ref="439385931"/>
+						<reference key="parent" ref="41843221"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -1190,6 +1241,9 @@
 				<string key="100168.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="100169.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="100193.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="100215.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="100217.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="100218.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="5.IBWindowTemplateEditedContentRect">{{133, 170}, {507, 413}}</string>
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1198,7 +1252,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">100214</int>
+			<int key="maxID">100222</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1212,7 +1266,7 @@
 						<string key="cut:">id</string>
 						<string key="deleteSelectedNodes:">id</string>
 						<string key="expandNodeAction:">id</string>
-						<string key="iconsPaneButtonAction:">id</string>
+						<string key="iconsPaneToggleAction:">id</string>
 						<string key="newChildNode:">id</string>
 						<string key="newLeftChildNode:">id</string>
 						<string key="newNextSiblingNode:">id</string>
@@ -1251,8 +1305,8 @@
 							<string key="name">expandNodeAction:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-						<object class="IBActionInfo" key="iconsPaneButtonAction:">
-							<string key="name">iconsPaneButtonAction:</string>
+						<object class="IBActionInfo" key="iconsPaneToggleAction:">
+							<string key="name">iconsPaneToggleAction:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="newChildNode:">

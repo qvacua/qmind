@@ -37,6 +37,8 @@
 */
 @property NSSize size;
 
+@property (readonly) NSRect frame;
+
 - (id)initWithCode:(NSString *)aCode;
 - (void)drawRect:(NSRect)dirtyRect;
 

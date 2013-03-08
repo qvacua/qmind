@@ -49,7 +49,6 @@ static inline BOOL modifier_check(NSUInteger value, NSUInteger modifier) {
     BOOL _keepMouseTrackOn;
 
     NSUInteger _mouseDownModifier;
-    NSSize _newScale;
 }
 
 TB_MANUALWIRE_WITH_INSTANCE_VAR(cellSelector, _cellSelector)
@@ -59,7 +58,6 @@ TB_MANUALWIRE_WITH_INSTANCE_VAR(uiDrawer, _uiDrawer)
 
 @synthesize dataSource = _dataSource;
 @synthesize rootCell = _rootCell;
-@synthesize newScale = _newScale;
 
 #pragma mark Public
 - (void)endEditing {
@@ -882,6 +880,70 @@ we only test the begin edit part... We are being to lazy here...
     return self;
 }
 
+- (NSMenu *)menuForEvent:(NSEvent *)event {
+    if ([event type] != NSRightMouseDown) {
+        return nil;
+    }
+
+    NSPoint clickLocation = [self convertPoint:[event locationInWindow] fromView:nil];
+    QMCell *mouseDownHitCell = [_cellSelector cellContainingPoint:clickLocation inCell:_rootCell];
+
+    NSMenu *menu = [self menu];
+    NSMenuItem *deleteIconMenuItem = [menu itemWithTag:qDeleteIconMenuItemTag];
+    NSMenuItem *deleteAllIconsMenuItem = [menu itemWithTag:qDeleteAllIconsMenuItemTag];
+
+    if (mouseDownHitCell == nil || [mouseDownHitCell countOfIcons] == 0) {
+        [self disableDeleteIconMenuItem:deleteIconMenuItem];
+
+        [deleteAllIconsMenuItem setEnabled:NO];
+        [deleteAllIconsMenuItem setBlockAction:nil];
+
+        return menu;
+    }
+
+    void (^deleteAllIconsBlock)(id) = ^(id sender) {
+        [_dataSource mindmapView:self deleteAllIconsOfItem:mouseDownHitCell.identifier];
+    };
+
+    if (NSPointInRect(clickLocation, mouseDownHitCell.textFrame)) {
+        [self disableDeleteIconMenuItem:deleteIconMenuItem];
+        [self enableDeleteAllIconsMenuItem:deleteAllIconsMenuItem withBlock:deleteAllIconsBlock];
+
+        return menu;
+    }
+
+    __block QMIcon *hitIcon = nil;
+    [mouseDownHitCell.icons enumerateObjectsUsingBlock:^(QMIcon *icon, NSUInteger index, BOOL *stop) {
+        if (NSPointInRect(clickLocation, icon.frame)) {
+            hitIcon = icon;
+            *stop = YES;
+        }
+    }];
+
+    if (hitIcon == nil) {
+        [self disableDeleteIconMenuItem:deleteIconMenuItem];
+        [self enableDeleteAllIconsMenuItem:deleteAllIconsMenuItem withBlock:deleteAllIconsBlock];
+
+        return menu;
+    }
+
+    NSString *unicode = hitIcon.unicode;
+    if (unicode == nil) {
+        unicode = NSLocalizedString(@"delete.node.unsupported.icon", @"Unsupported Icon");
+    }
+
+    [deleteIconMenuItem setTitle:[NSString stringWithFormat:NSLocalizedString(@"delete.node.icon", @"Delete %@"), unicode]];
+    [deleteIconMenuItem setEnabled:YES];
+    [deleteIconMenuItem setBlockAction:^(id sender) {
+        NSUInteger indexOfHitIcon = [mouseDownHitCell.icons indexOfObject:hitIcon];
+        [_dataSource mindmapView:self deleteIconOfItem:mouseDownHitCell.identifier atIndex:indexOfHitIcon];
+    }];
+
+    [self enableDeleteAllIconsMenuItem:deleteAllIconsMenuItem withBlock:deleteAllIconsBlock];
+
+    return menu;
+}
+
 - (void)drawRect:(NSRect)dirtyRect {
     [super drawRect:dirtyRect];
 
@@ -893,6 +955,17 @@ we only test the begin edit part... We are being to lazy here...
 }
 
 #pragma mark Private
+- (void)enableDeleteAllIconsMenuItem:(NSMenuItem *)deleteAllIconsMenuItem withBlock:(void (^)(id))deleteAllIconsBlock {
+    [deleteAllIconsMenuItem setEnabled:YES];
+    [deleteAllIconsMenuItem setBlockAction:deleteAllIconsBlock];
+}
+
+- (void)disableDeleteIconMenuItem:(NSMenuItem *)deleteIconItem {
+    [deleteIconItem setTitle:NSLocalizedString(@"delete.node.icon.generic", @"Delete Icon")];
+    [deleteIconItem setEnabled:NO];
+    [deleteIconItem setBlockAction:nil];
+}
+
 - (void)clearMouseTrackLoopFlags {
     _dragging = NO;
     _keepMouseTrackOn = NO;
@@ -1091,13 +1164,13 @@ we only test the begin edit part... We are being to lazy here...
     }
 
     NSSize oldScale = [self convertSize:qUnitSize toView:nil];
-    _newScale = NSMakeSize(oldScale.width * factor, oldScale.height * factor);
+    NSSize newScale = NSMakeSize(oldScale.width * factor, oldScale.height * factor);
 
-    if (_newScale.width < qMinZoomFactor) {
+    if (newScale.width < qMinZoomFactor) {
         return;
     }
 
-    if (_newScale.width > qMaxZoomFactor) {
+    if (newScale.width > qMaxZoomFactor) {
         return;
     }
 
@@ -1112,7 +1185,7 @@ we only test the begin edit part... We are being to lazy here...
     NSSize oldDist = NewSize(locInView.x - oldScrollPt.x, locInView.y - oldScrollPt.y);
 
     [self resetScaling];
-    [self scaleUnitSquareToSize:_newScale];
+    [self scaleUnitSquareToSize:newScale];
 
     NSSize newParentSize = [self convertSize:clipViewFrameSize fromView:clipView];
     NSPoint newMapOrigin = [self rootCellOriginForParentSize:newParentSize];

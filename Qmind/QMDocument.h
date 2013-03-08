@@ -61,6 +61,8 @@ static NSString * const qMindmapDocumentType = @"Mindmap";
 - (void)setStringValue:(NSString *)str ofItem:(id)item;
 - (void)setFont:(NSFont *)font ofItem:(id)item;
 - (void)addIcon:(NSString *)iconCode toItem:(id)item;
+- (void)deleteIconOfItem:(id)item atIndex:(NSUInteger)index;
+- (void)deleteAllIconsOfItem:(id)item;
 
 - (BOOL)itemIsNewlyCreated:(id)item;
 
