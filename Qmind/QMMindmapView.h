@@ -87,8 +87,6 @@ static const int qDeleteAllIconsMenuItemTag = 1100;
 #pragma mark NSResponder
 - (void)keyDown:(NSEvent *)theEvent;
 - (void)mouseDown:(NSEvent *)event;
-- (void)mouseDragged:(NSEvent *)event;
-- (void)mouseUp:(NSEvent *)event;
 - (void)scrollWheel:(NSEvent *)event;
 - (void)magnifyWithEvent:(NSEvent *)event;
 - (BOOL)acceptsFirstResponder;

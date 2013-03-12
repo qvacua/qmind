@@ -89,7 +89,7 @@ TB_MANUALWIRE_WITH_INSTANCE_VAR(iconManager, _iconManager)
 
 #pragma mark IBActions
 - (IBAction)zoomByMode:(id)sender {
-    int clickedSegment = [sender selectedSegment];
+    NSInteger clickedSegment = [sender selectedSegment];
 
     switch (clickedSegment) {
         case 0:

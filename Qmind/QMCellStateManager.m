@@ -75,7 +75,7 @@
     [self addSingleCell:cellToAdd];
 }
 
-- (void)removeCellFromSelection:(QMCell *)cellToRemove modifier:(int)modifier {
+- (void)removeCellFromSelection:(QMCell *)cellToRemove modifier:(NSUInteger)modifier {
     if (modifier & NSCommandKeyMask & NSShiftKeyMask) {
         // both modifiers
         return;

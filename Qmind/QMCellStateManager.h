@@ -24,7 +24,7 @@
 - (BOOL)hasSelectedCells;
 - (QMCell *)objectInSelectedCellsAtIndex:(NSUInteger)index;
 - (void)addCellToSelection:(QMCell *)cellToAdd modifier:(NSUInteger)modifier;
-- (void)removeCellFromSelection:(QMCell *)cellToRemove modifier:(int)modifier;
+- (void)removeCellFromSelection:(QMCell *)cellToRemove modifier:(NSUInteger)modifier;
 - (void)clearSelection;
 
 - (void)clearCellsForDrag;

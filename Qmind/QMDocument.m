@@ -40,8 +40,8 @@ TB_MANUALWIRE_WITH_INSTANCE_VAR(mindmapWriter, _mindmapWriter)
 }
 
 - (void)cutItemsToPasteboard:(NSArray *)items {
-    id const anyItem = [items lastObject];
-    QMNode *parent = [anyItem parent];
+    QMNode *anyItem = [items lastObject];
+    QMNode *parent = anyItem.parent;
 
     [_windowController clearSelection:self];
 
