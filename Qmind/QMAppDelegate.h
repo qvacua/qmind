@@ -17,5 +17,10 @@
 
 @property (weak) IBOutlet NSMenuItem *insertNewChildNodeMenuItem;
 @property (weak) IBOutlet NSMenuItem *insertNewLeftChildNodeMenuItem;
+@property (weak) IBOutlet NSButton *automaticUpdateCheckbox;
+@property (weak) IBOutlet NSTextField *lastCheckedLabel;
+@property (unsafe_unretained) IBOutlet NSWindow *preferencesWindow;
+
+- (IBAction)checkForUpdateNow:(id)sender;
 
 @end
