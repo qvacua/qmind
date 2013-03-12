@@ -22,5 +22,6 @@
 @property (unsafe_unretained) IBOutlet NSWindow *preferencesWindow;
 
 - (IBAction)checkForUpdateNow:(id)sender;
+- (IBAction)showPreferencesWindow:(id)sender;
 
 @end
