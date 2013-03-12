@@ -2512,6 +2512,14 @@
 					</object>
 					<int key="connectionID">626</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">toggleAutomaticUpdateCheck:</string>
+						<reference key="source" ref="1060956976"/>
+						<reference key="destination" ref="877139742"/>
+					</object>
+					<int key="connectionID">627</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -3907,7 +3915,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">626</int>
+			<int key="maxID">627</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -3935,6 +3943,7 @@
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="checkForUpdateNow:">id</string>
 						<string key="showPreferencesWindow:">id</string>
+						<string key="toggleAutomaticUpdateCheck:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
 						<object class="IBActionInfo" key="checkForUpdateNow:">
@@ -3943,6 +3952,10 @@
 						</object>
 						<object class="IBActionInfo" key="showPreferencesWindow:">
 							<string key="name">showPreferencesWindow:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="toggleAutomaticUpdateCheck:">
+							<string key="name">toggleAutomaticUpdateCheck:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 					</dictionary>

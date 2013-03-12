@@ -21,6 +21,10 @@
 @property (weak) IBOutlet NSTextField *lastCheckedLabel;
 @property (unsafe_unretained) IBOutlet NSWindow *preferencesWindow;
 
+@property NSUserDefaults *userDefaults;
+@property NSBundle *mainBundle;
+
+- (IBAction)toggleAutomaticUpdateCheck:(id)sender;
 - (IBAction)checkForUpdateNow:(id)sender;
 - (IBAction)showPreferencesWindow:(id)sender;
 

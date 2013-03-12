@@ -7,11 +7,43 @@
  */
 
 #import "QMAppDelegate.h"
+#import "TBCacao/TBCacao.h"
 
 @implementation QMAppDelegate
 
+TB_MANUALWIRE_WITH_INSTANCE_VAR(userDefaults, _userDefaults)
+TB_MANUALWIRE_WITH_INSTANCE_VAR(mainBundle, _mainBundle)
+
 @synthesize insertNewChildNodeMenuItem = _insertNewChildNodeMenuItem;
 @synthesize insertNewLeftChildNodeMenuItem = _insertNewLeftChildNodeMenuItem;
+@synthesize lastCheckedLabel = _lastCheckedLabel;
+@synthesize preferencesWindow = _preferencesWindow;
+@synthesize automaticUpdateCheckbox = _automaticUpdateCheckbox;
+
+#pragma mark IBActions
+
+- (IBAction)checkForUpdateNow:(id)sender {
+
+}
+
+- (IBAction)showPreferencesWindow:(id)sender {
+    [self.preferencesWindow makeKeyAndOrderFront:self];
+}
+
+- (IBAction)toggleAutomaticUpdateCheck:(id)sender {
+
+}
+
+#pragma mark NSObject
+- (id)init {
+    self = [super init];
+    if (self) {
+        [[TBContext sharedContext] autowireSeed:self];
+    }
+
+    return self;
+}
+
 
 #pragma mark NSApplicationDelegate
 - (BOOL)applicationShouldOpenUntitledFile:(NSApplication *)sender {
