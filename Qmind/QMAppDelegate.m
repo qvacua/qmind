@@ -9,10 +9,16 @@
 #import "QMAppDelegate.h"
 #import "TBCacao/TBCacao.h"
 
+static NSString *const qBundleVersionKey = @"CFBundleVersion";
+static NSString *const qDefaultsVersionKey = @"version";
+static NSString *const qDefaultsAutomaticallyCheckUpdate = @"automatically-check-update";
+static NSString *const qDefaultsLastUpdateCheckDate = @"last-update-check-date";
+
 @implementation QMAppDelegate
 
 TB_MANUALWIRE_WITH_INSTANCE_VAR(userDefaults, _userDefaults)
 TB_MANUALWIRE_WITH_INSTANCE_VAR(mainBundle, _mainBundle)
+TB_MANUALWIRE_WITH_INSTANCE_VAR(documentController, _documentController)
 
 @synthesize insertNewChildNodeMenuItem = _insertNewChildNodeMenuItem;
 @synthesize insertNewLeftChildNodeMenuItem = _insertNewLeftChildNodeMenuItem;
@@ -55,17 +61,31 @@ TB_MANUALWIRE_WITH_INSTANCE_VAR(mainBundle, _mainBundle)
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
+    NSInteger currentVersion = [[self.mainBundle objectForInfoDictionaryKey:qBundleVersionKey] integerValue];
+    [self readPreferencesWithCurrentVersion:currentVersion];
+
 #ifdef DEBUG
     NSString *template = [NSString stringWithFormat:@"%@%@", NSHomeDirectory(), @"/Projects/qmind/Meta/TestFiles/%d.mm"];
 
     int count = 7;
-
     for (int i = 6; i < count; i++) {
-        [[NSDocumentController sharedDocumentController]
-                openDocumentWithContentsOfURL:[NSURL fileURLWithPath:[NSString stringWithFormat:template, i]]
-                                      display:YES error:nil];
+        [self.documentController openDocumentWithContentsOfURL:[NSURL fileURLWithPath:[NSString stringWithFormat:template, i]] display:YES error:nil];
     }
 #endif
+}
+
+#pragma mark Private
+- (void)readPreferencesWithCurrentVersion:(NSInteger)currentVersion {
+    NSInteger versionOfDefaults = [self.userDefaults integerForKey:qDefaultsVersionKey];
+
+    if (versionOfDefaults == 0) {
+        // user defaults does not exist
+        [self.userDefaults setInteger:currentVersion forKey:qDefaultsVersionKey];
+        [self.userDefaults setBool:YES forKey:qDefaultsAutomaticallyCheckUpdate];
+        [self.userDefaults setObject:[NSDate date] forKey:qDefaultsLastUpdateCheckDate];
+
+        [self checkForUpdateNow:self];
+    }
 }
 
 @end

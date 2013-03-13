@@ -18,6 +18,7 @@
                 [TBBeanContainer beanContainerWithBean:[NSFontManager sharedFontManager]],
                 [TBBeanContainer beanContainerWithBean:[NSUserDefaults standardUserDefaults]],
                 [TBBeanContainer beanContainerWithBean:[NSBundle mainBundle]],
+                [TBBeanContainer beanContainerWithBean:[NSDocumentController sharedDocumentController]],
         ];
     }
 

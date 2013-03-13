@@ -23,6 +23,7 @@
 
 @property NSUserDefaults *userDefaults;
 @property NSBundle *mainBundle;
+@property NSDocumentController *documentController;
 
 - (IBAction)toggleAutomaticUpdateCheck:(id)sender;
 - (IBAction)checkForUpdateNow:(id)sender;

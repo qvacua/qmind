@@ -13,7 +13,7 @@
 #import "QMRootNode.h"
 
 static NSString * const qMapKey = @"map";
-static NSString * const qVersionKey = @"version";
+static NSString * const qDefaultsVersionKey = @"version";
 static NSString * const qNodeKey = @"node";
 
 @implementation QMMindmapReader {
@@ -53,7 +53,7 @@ TB_BEAN
 
     if ([elementName isEqualToString:qMapKey]) {
         // This is the map node which contains everything
-        NSString *version = [attributeDict objectForKey:qVersionKey];
+        NSString *version = [attributeDict objectForKey:qDefaultsVersionKey];
         log4Debug(@"MindMap version: %@", version);
 
         return;
