@@ -8,6 +8,13 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class QMUpdateManager;
+
+static NSString *const qBundleVersionKey = @"CFBundleVersion";
+static NSString *const qDefaultsVersionKey = @"Version";
+static NSString *const qDefaultsAutomaticallyCheckUpdate = @"AutomaticallyCheckUpdate";
+static NSString *const qDefaultsLastUpdateCheckDate = @"LastUpdateCheckDate";
+
 /**
 * The NSApp delegate.
 *
@@ -24,6 +31,7 @@
 @property NSUserDefaults *userDefaults;
 @property NSBundle *mainBundle;
 @property NSDocumentController *documentController;
+@property QMUpdateManager *updateManager;
 
 - (IBAction)toggleAutomaticUpdateCheck:(id)sender;
 - (IBAction)checkForUpdateNow:(id)sender;

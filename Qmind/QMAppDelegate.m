@@ -8,17 +8,14 @@
 
 #import "QMAppDelegate.h"
 #import "TBCacao/TBCacao.h"
-
-static NSString *const qBundleVersionKey = @"CFBundleVersion";
-static NSString *const qDefaultsVersionKey = @"version";
-static NSString *const qDefaultsAutomaticallyCheckUpdate = @"automatically-check-update";
-static NSString *const qDefaultsLastUpdateCheckDate = @"last-update-check-date";
+#import "QMUpdateManager.h"
 
 @implementation QMAppDelegate
 
-TB_MANUALWIRE_WITH_INSTANCE_VAR(userDefaults, _userDefaults)
-TB_MANUALWIRE_WITH_INSTANCE_VAR(mainBundle, _mainBundle)
-TB_MANUALWIRE_WITH_INSTANCE_VAR(documentController, _documentController)
+TB_MANUALWIRE(userDefaults)
+TB_MANUALWIRE(mainBundle)
+TB_MANUALWIRE(documentController)
+TB_MANUALWIRE(updateManager)
 
 @synthesize insertNewChildNodeMenuItem = _insertNewChildNodeMenuItem;
 @synthesize insertNewLeftChildNodeMenuItem = _insertNewLeftChildNodeMenuItem;
@@ -27,9 +24,8 @@ TB_MANUALWIRE_WITH_INSTANCE_VAR(documentController, _documentController)
 @synthesize automaticUpdateCheckbox = _automaticUpdateCheckbox;
 
 #pragma mark IBActions
-
 - (IBAction)checkForUpdateNow:(id)sender {
-
+    [self.updateManager checkForUpdate];
 }
 
 - (IBAction)showPreferencesWindow:(id)sender {

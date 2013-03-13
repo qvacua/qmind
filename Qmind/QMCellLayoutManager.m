@@ -15,7 +15,7 @@
 @implementation QMCellLayoutManager
 
 TB_BEAN
-TB_AUTOWIRE_WITH_INSTANCE_VAR(settings, _settings)
+TB_AUTOWIRE(settings)
 
 #pragma mark Public
 - (QMCellRegion)regionOfCell:(QMCell *)cell atPoint:(NSPoint)locationInView {

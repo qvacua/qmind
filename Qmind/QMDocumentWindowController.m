@@ -40,8 +40,8 @@ static NSInteger const qIconsPaneMenuItemTag = 301;
     CGFloat _lastIconsPaneWidth;
 }
 
-TB_MANUALWIRE_WITH_INSTANCE_VAR(settings, _settings)
-TB_MANUALWIRE_WITH_INSTANCE_VAR(iconManager, _iconManager)
+TB_MANUALWIRE(settings)
+TB_MANUALWIRE(iconManager)
 
 @synthesize mindmapView = _mindmapView;
 @synthesize availableIconsArray = _availableIconsArray;

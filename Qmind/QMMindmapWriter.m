@@ -16,7 +16,7 @@
 @implementation QMMindmapWriter
 
 TB_BEAN
-TB_AUTOWIRE_WITH_INSTANCE_VAR(fontConverter, _fontConverter)
+TB_AUTOWIRE(fontConverter)
 
 #pragma mark Public
 - (NSData *)dataForRootNode:(QMRootNode *)rootNode {
