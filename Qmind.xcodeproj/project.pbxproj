@@ -61,7 +61,7 @@
 		4B5CB64D15E11AA500E05BD7 /* QMBaseTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B5CB58215E110B300E05BD7 /* QMBaseTestCase.m */; };
 		4B5CB64E15E11AA500E05BD7 /* QMBaseTestCase+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFCD7AC14F3E32A00850985 /* QMBaseTestCase+Util.m */; };
 		4B5CB64F15E11AA500E05BD7 /* IconManagerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFCD7AC14F3E32A00850941 /* IconManagerTest.m */; };
-		4B5CB65015E11B2200E05BD7 /* MindmapDataSourceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFCD7AC14F3E32A008509AB /* MindmapDataSourceTest.m */; };
+		4B5CB65015E11B2200E05BD7 /* QMMindmapViewDataSourceImplTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFCD7AC14F3E32A008509AB /* QMMindmapViewDataSourceImplTest.m */; };
 		4B5CB65115E11B2E00E05BD7 /* DocumentWindowControllerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B85653514E46D6800C6FF5B /* DocumentWindowControllerTest.m */; };
 		4B5CB65215E11B3D00E05BD7 /* FontConverterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFCD7AC14F3E32A00850949 /* FontConverterTest.m */; };
 		4B5CB65615E11B6200E05BD7 /* DocumentTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B85653514E46D6800C6FF34 /* DocumentTest.m */; };
@@ -379,7 +379,7 @@
 		4BFCD7AC14F3E32A00850997 /* CellEditorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellEditorTest.m; sourceTree = "<group>"; };
 		4BFCD7AC14F3E32A008509A6 /* QMMindmapViewDataSourceImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMMindmapViewDataSourceImpl.m; sourceTree = "<group>"; };
 		4BFCD7AC14F3E32A008509AA /* QMMindmapViewDataSourceImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMMindmapViewDataSourceImpl.h; sourceTree = "<group>"; };
-		4BFCD7AC14F3E32A008509AB /* MindmapDataSourceTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MindmapDataSourceTest.m; sourceTree = "<group>"; };
+		4BFCD7AC14F3E32A008509AB /* QMMindmapViewDataSourceImplTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMMindmapViewDataSourceImplTest.m; sourceTree = "<group>"; };
 		4BFCD7AC14F3E32A008509BD /* document-test-fail-open.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "document-test-fail-open.mm"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -745,7 +745,7 @@
 		4B85653514E46D6800C6FF5A /* Window Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				4BFCD7AC14F3E32A008509AB /* MindmapDataSourceTest.m */,
+				4BFCD7AC14F3E32A008509AB /* QMMindmapViewDataSourceImplTest.m */,
 				4BFCD7AC14F3E32A00850941 /* IconManagerTest.m */,
 				4B85653514E46D6800C6FF5B /* DocumentWindowControllerTest.m */,
 			);
@@ -1011,7 +1011,7 @@
 				4B5CB65615E11B6200E05BD7 /* DocumentTest.m in Sources */,
 				4B5CB65215E11B3D00E05BD7 /* FontConverterTest.m in Sources */,
 				4B5CB65115E11B2E00E05BD7 /* DocumentWindowControllerTest.m in Sources */,
-				4B5CB65015E11B2200E05BD7 /* MindmapDataSourceTest.m in Sources */,
+				4B5CB65015E11B2200E05BD7 /* QMMindmapViewDataSourceImplTest.m in Sources */,
 				4B5CB64D15E11AA500E05BD7 /* QMBaseTestCase.m in Sources */,
 				4B5CB64E15E11AA500E05BD7 /* QMBaseTestCase+Util.m in Sources */,
 				4B5CB64F15E11AA500E05BD7 /* IconManagerTest.m in Sources */,

@@ -18,7 +18,7 @@
 #import "QMCacaoTestCase.h"
 #import "QMIcon.h"
 
-@interface MindmapDataSourceTest : QMCacaoTestCase {
+@interface QMMindmapViewDataSourceImplTest : QMCacaoTestCase {
     QMMindmapViewDataSourceImpl *dataSource;
 
     QMDocument *doc;
@@ -32,7 +32,7 @@
 
 @end
 
-@implementation MindmapDataSourceTest {
+@implementation QMMindmapViewDataSourceImplTest {
     QMCell *rootCell;
     QMAppSettings *settings;
 }
@@ -86,6 +86,7 @@
     [dataSource mindmapView:view deleteAllIconsOfItem:item];
 
     [verify(undoManager) beginUndoGrouping];
+    [verify(undoManager) setActionName:NSLocalizedString(@"undo.node.icon.all.delete", @"Delete All Icons")];
     [verify(doc) deleteAllIconsOfItem:item];
     [verify(undoManager) endUndoGrouping];
 }
