@@ -26,6 +26,9 @@ static NSString *const qDefaultsLastUpdateCheckDate = @"LastUpdateCheckDate";
 @property (weak) IBOutlet NSMenuItem *insertNewLeftChildNodeMenuItem;
 @property (weak) IBOutlet NSButton *automaticUpdateCheckbox;
 @property (weak) IBOutlet NSTextField *lastCheckedLabel;
+@property (weak) IBOutlet NSTextField *versionInfoLabel;
+@property (weak) IBOutlet NSButton *downloadButton;
+
 @property (unsafe_unretained) IBOutlet NSWindow *preferencesWindow;
 
 @property NSUserDefaults *userDefaults;
@@ -36,5 +39,6 @@ static NSString *const qDefaultsLastUpdateCheckDate = @"LastUpdateCheckDate";
 - (IBAction)toggleAutomaticUpdateCheck:(id)sender;
 - (IBAction)checkForUpdateNow:(id)sender;
 - (IBAction)showPreferencesWindow:(id)sender;
+- (IBAction)downloadNewerVersion:(id)sender;
 
 @end

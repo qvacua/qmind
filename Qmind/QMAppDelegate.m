@@ -32,6 +32,9 @@ TB_MANUALWIRE(updateManager)
     [self.preferencesWindow makeKeyAndOrderFront:self];
 }
 
+- (IBAction)downloadNewerVersion:(id)sender {
+}
+
 - (IBAction)toggleAutomaticUpdateCheck:(id)sender {
 
 }
@@ -45,7 +48,6 @@ TB_MANUALWIRE(updateManager)
 
     return self;
 }
-
 
 #pragma mark NSApplicationDelegate
 - (BOOL)applicationShouldOpenUntitledFile:(NSApplication *)sender {
@@ -79,9 +81,9 @@ TB_MANUALWIRE(updateManager)
         [self.userDefaults setInteger:currentVersion forKey:qDefaultsVersionKey];
         [self.userDefaults setBool:YES forKey:qDefaultsAutomaticallyCheckUpdate];
         [self.userDefaults setObject:[NSDate date] forKey:qDefaultsLastUpdateCheckDate];
-
-        [self checkForUpdateNow:self];
     }
+
+    [self.updateManager startToAutomaticallyCheck];
 }
 
 @end

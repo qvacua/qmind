@@ -10,6 +10,7 @@
 
 @interface QMUpdateManager : NSObject
 
+- (void)startToAutomaticallyCheck;
 - (void)checkForUpdate;
 
 @end

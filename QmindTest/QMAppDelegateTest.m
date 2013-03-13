@@ -46,7 +46,21 @@ static const int CURRENT_VERSION = 15;
     [verify(userDefaults) setBool:YES forKey:qDefaultsAutomaticallyCheckUpdate];
     [verify(userDefaults) setObject:instanceOf([NSDate class]) forKey:qDefaultsLastUpdateCheckDate];
 
-    [verify(updateManager) checkForUpdate];
+    [verify(updateManager) startToAutomaticallyCheck];
+}
+
+- (void)testAppFinishedLaunching {
+    [given([userDefaults integerForKey:qDefaultsVersionKey]) willReturnInteger:CURRENT_VERSION];
+
+    NSDate *now = [NSDate date];
+    NSDate *lastCheckDate = [now dateByAddingTimeInterval:-3600];
+    [given([userDefaults integerForKey:qDefaultsVersionKey]) willReturnInteger:CURRENT_VERSION];
+    [given([userDefaults boolForKey:qDefaultsAutomaticallyCheckUpdate]) willReturnBool:YES];
+    [given([userDefaults objectForKey:qDefaultsLastUpdateCheckDate]) willReturn:lastCheckDate];
+
+    [appDelegate applicationDidFinishLaunching:nil];
+
+    FAIL;
 }
 
 @end

@@ -15,6 +15,10 @@
 
 TB_BEAN
 
+- (void)startToAutomaticallyCheck {
+
+}
+
 - (void)checkForUpdate {
 
 }
