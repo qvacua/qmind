@@ -8,35 +8,16 @@
 
 #import "QMAppDelegate.h"
 #import "TBCacao/TBCacao.h"
-#import "QMUpdateManager.h"
 
 @implementation QMAppDelegate
 
 TB_MANUALWIRE(userDefaults)
 TB_MANUALWIRE(mainBundle)
 TB_MANUALWIRE(documentController)
-TB_MANUALWIRE(updateManager)
-
-@synthesize insertNewChildNodeMenuItem = _insertNewChildNodeMenuItem;
-@synthesize insertNewLeftChildNodeMenuItem = _insertNewLeftChildNodeMenuItem;
-@synthesize lastCheckedLabel = _lastCheckedLabel;
-@synthesize preferencesWindow = _preferencesWindow;
-@synthesize automaticUpdateCheckbox = _automaticUpdateCheckbox;
 
 #pragma mark IBActions
-- (IBAction)checkForUpdateNow:(id)sender {
-    [self.updateManager checkForUpdate];
-}
-
 - (IBAction)showPreferencesWindow:(id)sender {
     [self.preferencesWindow makeKeyAndOrderFront:self];
-}
-
-- (IBAction)downloadNewerVersion:(id)sender {
-}
-
-- (IBAction)toggleAutomaticUpdateCheck:(id)sender {
-
 }
 
 #pragma mark NSObject
@@ -79,11 +60,7 @@ TB_MANUALWIRE(updateManager)
     if (versionOfDefaults == 0) {
         // user defaults does not exist
         [self.userDefaults setInteger:currentVersion forKey:qDefaultsVersionKey];
-        [self.userDefaults setBool:YES forKey:qDefaultsAutomaticallyCheckUpdate];
-        [self.userDefaults setObject:[NSDate date] forKey:qDefaultsLastUpdateCheckDate];
     }
-
-    [self.updateManager startToAutomaticallyCheck];
 }
 
 @end
