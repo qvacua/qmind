@@ -47,7 +47,7 @@ static NSInteger const qEscUnicode = 27;
     QShadowedView *_containerView;
 }
 
-TB_MANUALWIRE_WITH_INSTANCE_VAR(settings, _settings)
+TB_MANUALWIRE(settings)
 
 @synthesize view = _view;
 @synthesize delegate = _delegate;

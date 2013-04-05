@@ -23,8 +23,8 @@
     __weak QMMindmapView *_view;
 }
 
-TB_MANUALWIRE_WITH_INSTANCE_VAR(settings, _settings)
-TB_MANUALWIRE_WITH_INSTANCE_VAR(iconManager, _iconManager)
+TB_MANUALWIRE(settings)
+TB_MANUALWIRE(iconManager)
 
 #pragma mark Public
 - (BOOL)mindmapView:(QMMindmapView *)mindmapView isItemLeft:(id)item {
@@ -105,7 +105,7 @@ TB_MANUALWIRE_WITH_INSTANCE_VAR(iconManager, _iconManager)
 }
 
 - (void)mindmapView:(QMMindmapView *)mindmapView deleteAllIconsOfItem:(id)item {
-    [self doInsideUndoGroup:NSLocalizedString(@"undo.node.icon.delete", @"Delete Icon") usingBlock:^{
+    [self doInsideUndoGroup:NSLocalizedString(@"undo.node.icon.all.delete", @"Delete Icon") usingBlock:^{
         [_doc deleteAllIconsOfItem:item];
     }];
 }

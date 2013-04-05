@@ -15,7 +15,10 @@
 
     if (manualBeans == nil) {
         manualBeans = @[
-                [TBBeanContainer beanContainerWithBean:[NSFontManager sharedFontManager]]
+                [TBBeanContainer beanContainerWithBean:[NSFontManager sharedFontManager]],
+                [TBBeanContainer beanContainerWithBean:[NSUserDefaults standardUserDefaults]],
+                [TBBeanContainer beanContainerWithBean:[NSBundle mainBundle]],
+                [TBBeanContainer beanContainerWithBean:[NSDocumentController sharedDocumentController]],
         ];
     }
 

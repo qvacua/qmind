@@ -18,8 +18,10 @@
 
 "undo.node.icon.add" = "Insert Icon";
 "undo.node.icon.delete" = "Delete Icon";
+"undo.node.icon.all.delete" = "Delete All Icons";
 
 "delete.node.icon" = "Delete %@";
 "delete.node.icon.generic" = "Delete Icon";
 "delete.node.unsupported.icon" = "Unsupported Icon";
+
 

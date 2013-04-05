@@ -25,9 +25,9 @@ static NSString * const qDocumentNibName = @"Document";
     QMDocumentWindowController *_windowController;
 }
 
-TB_MANUALWIRE_WITH_INSTANCE_VAR(settings, _settings)
-TB_MANUALWIRE_WITH_INSTANCE_VAR(mindmapReader, _mindmapReader)
-TB_MANUALWIRE_WITH_INSTANCE_VAR(mindmapWriter, _mindmapWriter)
+TB_MANUALWIRE(settings)
+TB_MANUALWIRE(mindmapReader)
+TB_MANUALWIRE(mindmapWriter)
 
 @synthesize windowController = _windowController;
 
@@ -40,8 +40,8 @@ TB_MANUALWIRE_WITH_INSTANCE_VAR(mindmapWriter, _mindmapWriter)
 }
 
 - (void)cutItemsToPasteboard:(NSArray *)items {
-    id const anyItem = [items lastObject];
-    QMNode *parent = [anyItem parent];
+    QMNode *anyItem = [items lastObject];
+    QMNode *parent = anyItem.parent;
 
     [_windowController clearSelection:self];
 

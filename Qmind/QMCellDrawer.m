@@ -19,10 +19,11 @@
 @implementation QMCellDrawer
 
 TB_BEAN
-TB_AUTOWIRE_WITH_INSTANCE_VAR(textLayoutManager, _textLayoutManager)
-TB_AUTOWIRE_WITH_INSTANCE_VAR(cellLayoutManager, _cellLayoutManager)
-TB_AUTOWIRE_WITH_INSTANCE_VAR(textDrawer, _textDrawer)
-TB_AUTOWIRE_WITH_INSTANCE_VAR(settings, _settings)
+
+TB_AUTOWIRE(textLayoutManager)
+TB_AUTOWIRE(cellLayoutManager)
+TB_AUTOWIRE(textDrawer)
+TB_AUTOWIRE(settings)
 
 #pragma mark Public
 - (void)drawContentForCell:(QMCell *)cell rect:(NSRect)dirtyRect {

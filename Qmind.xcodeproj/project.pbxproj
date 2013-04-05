@@ -13,6 +13,7 @@
 		1929B29FA3F12195D97593A5 /* IconCollectionViewItemTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929B743A0D8FAB8C620E299 /* IconCollectionViewItemTest.m */; };
 		1929B2FF6732AAB197D8DFB9 /* CellComponentTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929B7664B7E4A08B9E7118B /* CellComponentTest.m */; };
 		1929B676F4A74F9E9F96AB42 /* QMIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929BA02C47D9D0A43F49EFA /* QMIcon.m */; };
+		1929B6CD03918BC1B86A59B2 /* QMAppDelegateTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929B8EC62FC0C2BF75EC675 /* QMAppDelegateTest.m */; };
 		1929B91E380C89A49F956097 /* QMUiDrawer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929B20B51839B9482813969 /* QMUiDrawer.m */; };
 		1929BB168680A05751E3F4C4 /* QMIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929BA02C47D9D0A43F49EFA /* QMIcon.m */; };
 		1929BB6FEB32F64962B24562 /* QMManualBeanProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929B43F698543362E51BAB9 /* QMManualBeanProvider.m */; };
@@ -60,7 +61,7 @@
 		4B5CB64D15E11AA500E05BD7 /* QMBaseTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B5CB58215E110B300E05BD7 /* QMBaseTestCase.m */; };
 		4B5CB64E15E11AA500E05BD7 /* QMBaseTestCase+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFCD7AC14F3E32A00850985 /* QMBaseTestCase+Util.m */; };
 		4B5CB64F15E11AA500E05BD7 /* IconManagerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFCD7AC14F3E32A00850941 /* IconManagerTest.m */; };
-		4B5CB65015E11B2200E05BD7 /* MindmapDataSourceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFCD7AC14F3E32A008509AB /* MindmapDataSourceTest.m */; };
+		4B5CB65015E11B2200E05BD7 /* QMMindmapViewDataSourceImplTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFCD7AC14F3E32A008509AB /* QMMindmapViewDataSourceImplTest.m */; };
 		4B5CB65115E11B2E00E05BD7 /* DocumentWindowControllerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B85653514E46D6800C6FF5B /* DocumentWindowControllerTest.m */; };
 		4B5CB65215E11B3D00E05BD7 /* FontConverterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFCD7AC14F3E32A00850949 /* FontConverterTest.m */; };
 		4B5CB65615E11B6200E05BD7 /* DocumentTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B85653514E46D6800C6FF34 /* DocumentTest.m */; };
@@ -106,6 +107,9 @@
 		4B9DE3341569367500AAF5C1 /* QmindIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4B9DE3331569367500AAF5C1 /* QmindIcon.icns */; };
 		4BA52C2B14FA52F5000EB8E5 /* cell-population-test.mm in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4BFCD7AC14F3E32A00850952 /* cell-population-test.mm */; };
 		4BCA0466158CB94B0034CB4A /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BCA0464158CB94B0034CB4A /* SenTestingKit.framework */; };
+		4BDA7810170F8097000AB84A /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BDA7804170F8080000AB84A /* Sparkle.framework */; };
+		4BDA7811170F80B9000AB84A /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4BDA7804170F8080000AB84A /* Sparkle.framework */; };
+		4BDA7813170F80F5000AB84A /* sparkle-pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 4BDA7812170F80F5000AB84A /* sparkle-pub.pem */; };
 		4BDC9D901524EEAD008CEB8E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4BDC9D8E1524EEAD008CEB8E /* Localizable.strings */; };
 		4BDC9D921524EEAD008CEB8E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4BDC9D8E1524EEAD008CEB8E /* Localizable.strings */; };
 		4BE684AB16922E9100789892 /* IconCollectionViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BE684A916922E9000789892 /* IconCollectionViewItem.xib */; };
@@ -206,6 +210,48 @@
 			remoteGlobalIDString = 4B5CB4F715E1069400E05BD7;
 			remoteInfo = QTestKit;
 		};
+		4BDA7803170F8080000AB84A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4BDA77FA170F8080000AB84A /* Sparkle.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
+			remoteInfo = Sparkle;
+		};
+		4BDA7805170F8080000AB84A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4BDA77FA170F8080000AB84A /* Sparkle.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61B5F90209C4CEE200B25A18;
+			remoteInfo = "Sparkle Test App";
+		};
+		4BDA7807170F8080000AB84A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4BDA77FA170F8080000AB84A /* Sparkle.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 612279D90DB5470200AB99EA;
+			remoteInfo = "Sparkle Unit Tests";
+		};
+		4BDA7809170F8080000AB84A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4BDA77FA170F8080000AB84A /* Sparkle.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5D06E8D00FD68C7C005AE3F6;
+			remoteInfo = BinaryDelta;
+		};
+		4BDA780B170F8080000AB84A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4BDA77FA170F8080000AB84A /* Sparkle.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 55C14BB7136EEF1500649790;
+			remoteInfo = finish_installation;
+		};
+		4BDA780E170F8092000AB84A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4BDA77FA170F8080000AB84A /* Sparkle.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
+			remoteInfo = Sparkle;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -217,6 +263,7 @@
 			files = (
 				4B15777916A2F02D0048480E /* Qkit.framework in CopyFiles */,
 				4B03B24E1628725900E5ECA2 /* TBCacao.framework in CopyFiles */,
+				4BDA7811170F80B9000AB84A /* Sparkle.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -262,6 +309,7 @@
 		1929B743A0D8FAB8C620E299 /* IconCollectionViewItemTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IconCollectionViewItemTest.m; sourceTree = "<group>"; };
 		1929B7664B7E4A08B9E7118B /* CellComponentTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellComponentTest.m; sourceTree = "<group>"; };
 		1929B83740C95CACCC412474 /* IconGridViewTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IconGridViewTest.m; sourceTree = "<group>"; };
+		1929B8EC62FC0C2BF75EC675 /* QMAppDelegateTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMAppDelegateTest.m; sourceTree = "<group>"; };
 		1929B95442D0BCBE01A02608 /* QMIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMIcon.h; sourceTree = "<group>"; };
 		1929BA02C47D9D0A43F49EFA /* QMIcon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMIcon.m; sourceTree = "<group>"; };
 		1929BC2901D96DABE95AE4BB /* IconTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IconTest.m; sourceTree = "<group>"; };
@@ -332,6 +380,8 @@
 		4B85653514E46D6800C6FF78 /* CellLayoutManagerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellLayoutManagerTest.m; sourceTree = "<group>"; };
 		4B9DE3331569367500AAF5C1 /* QmindIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = QmindIcon.icns; path = Resources/QmindIcon.icns; sourceTree = "<group>"; };
 		4BCA0464158CB94B0034CB4A /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = /Applications/Xcode.app/Contents/Developer/Library/Frameworks/SenTestingKit.framework; sourceTree = "<absolute>"; };
+		4BDA77FA170F8080000AB84A /* Sparkle.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Sparkle.xcodeproj; path = sparke/Sparkle.xcodeproj; sourceTree = "<group>"; };
+		4BDA7812170F80F5000AB84A /* sparkle-pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "sparkle-pub.pem"; path = "Resources/sparkle-pub.pem"; sourceTree = "<group>"; };
 		4BDC9D8F1524EEAD008CEB8E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4BE684AA16922E9000789892 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/IconCollectionViewItem.xib; sourceTree = "<group>"; };
 		4BE684B116922F1200789892 /* QMIconCollectionViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMIconCollectionViewItem.h; sourceTree = "<group>"; };
@@ -377,7 +427,7 @@
 		4BFCD7AC14F3E32A00850997 /* CellEditorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellEditorTest.m; sourceTree = "<group>"; };
 		4BFCD7AC14F3E32A008509A6 /* QMMindmapViewDataSourceImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMMindmapViewDataSourceImpl.m; sourceTree = "<group>"; };
 		4BFCD7AC14F3E32A008509AA /* QMMindmapViewDataSourceImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMMindmapViewDataSourceImpl.h; sourceTree = "<group>"; };
-		4BFCD7AC14F3E32A008509AB /* MindmapDataSourceTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MindmapDataSourceTest.m; sourceTree = "<group>"; };
+		4BFCD7AC14F3E32A008509AB /* QMMindmapViewDataSourceImplTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMMindmapViewDataSourceImplTest.m; sourceTree = "<group>"; };
 		4BFCD7AC14F3E32A008509BD /* document-test-fail-open.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "document-test-fail-open.mm"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -386,6 +436,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4BDA7810170F8097000AB84A /* Sparkle.framework in Frameworks */,
 				4B15777816A2F01E0048480E /* Qkit.framework in Frameworks */,
 				4B03B24D1628725300E5ECA2 /* TBCacao.framework in Frameworks */,
 				4B8564C614E461DC00C6FF0A /* Cocoa.framework in Frameworks */,
@@ -409,6 +460,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1929BED367864EB044943591 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				1929B8EC62FC0C2BF75EC675 /* QMAppDelegateTest.m */,
+			);
+			name = Application;
+			sourceTree = "<group>";
+		};
 		4B03B2401628724000E5ECA2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -443,6 +502,7 @@
 		4B39307C14EC41A400A9D541 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4BDA7812170F80F5000AB84A /* sparkle-pub.pem */,
 				4B9DE3331569367500AAF5C1 /* QmindIcon.icns */,
 				4BDC9D8E1524EEAD008CEB8E /* Localizable.strings */,
 				4BFCD7AC14F3E32A00850938 /* IconsFreeMindToQmind.plist */,
@@ -490,6 +550,7 @@
 				4B8564FD14E4688900C6FF0A /* QmindTest */,
 				4B15776516A2EFEF0048480E /* Qkit.xcodeproj */,
 				4B03B23F1628724000E5ECA2 /* TBCacao.xcodeproj */,
+				4BDA77FA170F8080000AB84A /* Sparkle.xcodeproj */,
 				4B8564C414E461DC00C6FF0A /* Frameworks */,
 				4B8564C214E461DC00C6FF0A /* Products */,
 			);
@@ -576,6 +637,7 @@
 				4B85653514E46D6800C6FF49 /* View */,
 				4B85653514E46D6800C6FF54 /* Test Support */,
 				4B85653514E46D6800C6FF5A /* Window Controllers */,
+				1929BED367864EB044943591 /* Application */,
 			);
 			path = QmindTest;
 			sourceTree = "<group>";
@@ -734,11 +796,23 @@
 		4B85653514E46D6800C6FF5A /* Window Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				4BFCD7AC14F3E32A008509AB /* MindmapDataSourceTest.m */,
+				4BFCD7AC14F3E32A008509AB /* QMMindmapViewDataSourceImplTest.m */,
 				4BFCD7AC14F3E32A00850941 /* IconManagerTest.m */,
 				4B85653514E46D6800C6FF5B /* DocumentWindowControllerTest.m */,
 			);
 			name = "Window Controllers";
+			sourceTree = "<group>";
+		};
+		4BDA77FB170F8080000AB84A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4BDA7804170F8080000AB84A /* Sparkle.framework */,
+				4BDA7806170F8080000AB84A /* Sparkle Test App.app */,
+				4BDA7808170F8080000AB84A /* Sparkle Unit Tests.octest */,
+				4BDA780A170F8080000AB84A /* BinaryDelta */,
+				4BDA780C170F8080000AB84A /* finish_installation.app */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		4BE684B016922ED800789892 /* Icons Pane */ = {
@@ -780,6 +854,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				4BDA780F170F8092000AB84A /* PBXTargetDependency */,
 				4B1752E716A5F655002FAFC4 /* PBXTargetDependency */,
 				4B03B24C1628724F00E5ECA2 /* PBXTargetDependency */,
 			);
@@ -835,6 +910,10 @@
 					ProjectRef = 4B15776516A2EFEF0048480E /* Qkit.xcodeproj */;
 				},
 				{
+					ProductGroup = 4BDA77FB170F8080000AB84A /* Products */;
+					ProjectRef = 4BDA77FA170F8080000AB84A /* Sparkle.xcodeproj */;
+				},
+				{
 					ProductGroup = 4B03B2401628724000E5ECA2 /* Products */;
 					ProjectRef = 4B03B23F1628724000E5ECA2 /* TBCacao.xcodeproj */;
 				},
@@ -883,6 +962,41 @@
 			remoteRef = 4B15777216A2EFEF0048480E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		4BDA7804170F8080000AB84A /* Sparkle.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Sparkle.framework;
+			remoteRef = 4BDA7803170F8080000AB84A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4BDA7806170F8080000AB84A /* Sparkle Test App.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "Sparkle Test App.app";
+			remoteRef = 4BDA7805170F8080000AB84A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4BDA7808170F8080000AB84A /* Sparkle Unit Tests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Sparkle Unit Tests.octest";
+			remoteRef = 4BDA7807170F8080000AB84A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4BDA780A170F8080000AB84A /* BinaryDelta */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = BinaryDelta;
+			remoteRef = 4BDA7809170F8080000AB84A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4BDA780C170F8080000AB84A /* finish_installation.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = finish_installation.app;
+			remoteRef = 4BDA780B170F8080000AB84A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -905,6 +1019,7 @@
 				4BDC9D901524EEAD008CEB8E /* Localizable.strings in Resources */,
 				4B9DE3341569367500AAF5C1 /* QmindIcon.icns in Resources */,
 				4BE684AB16922E9100789892 /* IconCollectionViewItem.xib in Resources */,
+				4BDA7813170F80F5000AB84A /* sparkle-pub.pem in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1000,7 +1115,7 @@
 				4B5CB65615E11B6200E05BD7 /* DocumentTest.m in Sources */,
 				4B5CB65215E11B3D00E05BD7 /* FontConverterTest.m in Sources */,
 				4B5CB65115E11B2E00E05BD7 /* DocumentWindowControllerTest.m in Sources */,
-				4B5CB65015E11B2200E05BD7 /* MindmapDataSourceTest.m in Sources */,
+				4B5CB65015E11B2200E05BD7 /* QMMindmapViewDataSourceImplTest.m in Sources */,
 				4B5CB64D15E11AA500E05BD7 /* QMBaseTestCase.m in Sources */,
 				4B5CB64E15E11AA500E05BD7 /* QMBaseTestCase+Util.m in Sources */,
 				4B5CB64F15E11AA500E05BD7 /* IconManagerTest.m in Sources */,
@@ -1036,6 +1151,7 @@
 				1929BF0203FEF5FAAC4C4C25 /* QMIconsPaneView.m in Sources */,
 				1929BFD7B74324D2B8724842 /* IconGridViewTest.m in Sources */,
 				1929B29FA3F12195D97593A5 /* IconCollectionViewItemTest.m in Sources */,
+				1929B6CD03918BC1B86A59B2 /* QMAppDelegateTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1066,6 +1182,11 @@
 			isa = PBXTargetDependency;
 			name = QTestKit;
 			targetProxy = 4B1752EA16A5F667002FAFC4 /* PBXContainerItemProxy */;
+		};
+		4BDA780F170F8092000AB84A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Sparkle;
+			targetProxy = 4BDA780E170F8092000AB84A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

@@ -25,8 +25,8 @@ static NSString * const qTimesFontName = @"Times";
 }
 
 TB_BEAN
-TB_AUTOWIRE_WITH_INSTANCE_VAR(settings, _settings)
-TB_AUTOWIRE_WITH_INSTANCE_VAR(fontManager, _fontManager)
+TB_AUTOWIRE(settings)
+TB_AUTOWIRE(fontManager)
 
 #pragma mark Public
 - (NSFont *)fontFromFontAttrDict:(NSDictionary *)fontAttrDict {

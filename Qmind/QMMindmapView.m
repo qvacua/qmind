@@ -51,10 +51,10 @@ static inline BOOL modifier_check(NSUInteger value, NSUInteger modifier) {
     NSUInteger _mouseDownModifier;
 }
 
-TB_MANUALWIRE_WITH_INSTANCE_VAR(cellSelector, _cellSelector)
-TB_MANUALWIRE_WITH_INSTANCE_VAR(cellLayoutManager, _cellLayoutManager)
-TB_MANUALWIRE_WITH_INSTANCE_VAR(settings, _settings)
-TB_MANUALWIRE_WITH_INSTANCE_VAR(uiDrawer, _uiDrawer)
+TB_MANUALWIRE(cellSelector)
+TB_MANUALWIRE(cellLayoutManager)
+TB_MANUALWIRE(settings)
+TB_MANUALWIRE(uiDrawer)
 
 @synthesize dataSource = _dataSource;
 @synthesize rootCell = _rootCell;
