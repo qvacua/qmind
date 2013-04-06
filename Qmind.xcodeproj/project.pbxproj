@@ -13,7 +13,6 @@
 		1929B29FA3F12195D97593A5 /* IconCollectionViewItemTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929B743A0D8FAB8C620E299 /* IconCollectionViewItemTest.m */; };
 		1929B2FF6732AAB197D8DFB9 /* CellComponentTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929B7664B7E4A08B9E7118B /* CellComponentTest.m */; };
 		1929B676F4A74F9E9F96AB42 /* QMIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929BA02C47D9D0A43F49EFA /* QMIcon.m */; };
-		1929B6CD03918BC1B86A59B2 /* QMAppDelegateTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929B8EC62FC0C2BF75EC675 /* QMAppDelegateTest.m */; };
 		1929B91E380C89A49F956097 /* QMUiDrawer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929B20B51839B9482813969 /* QMUiDrawer.m */; };
 		1929BB168680A05751E3F4C4 /* QMIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929BA02C47D9D0A43F49EFA /* QMIcon.m */; };
 		1929BB6FEB32F64962B24562 /* QMManualBeanProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929B43F698543362E51BAB9 /* QMManualBeanProvider.m */; };
@@ -309,7 +308,6 @@
 		1929B743A0D8FAB8C620E299 /* IconCollectionViewItemTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IconCollectionViewItemTest.m; sourceTree = "<group>"; };
 		1929B7664B7E4A08B9E7118B /* CellComponentTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellComponentTest.m; sourceTree = "<group>"; };
 		1929B83740C95CACCC412474 /* IconGridViewTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IconGridViewTest.m; sourceTree = "<group>"; };
-		1929B8EC62FC0C2BF75EC675 /* QMAppDelegateTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMAppDelegateTest.m; sourceTree = "<group>"; };
 		1929B95442D0BCBE01A02608 /* QMIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMIcon.h; sourceTree = "<group>"; };
 		1929BA02C47D9D0A43F49EFA /* QMIcon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMIcon.m; sourceTree = "<group>"; };
 		1929BC2901D96DABE95AE4BB /* IconTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IconTest.m; sourceTree = "<group>"; };
@@ -460,14 +458,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1929BED367864EB044943591 /* Application */ = {
-			isa = PBXGroup;
-			children = (
-				1929B8EC62FC0C2BF75EC675 /* QMAppDelegateTest.m */,
-			);
-			name = Application;
-			sourceTree = "<group>";
-		};
 		4B03B2401628724000E5ECA2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -637,7 +627,6 @@
 				4B85653514E46D6800C6FF49 /* View */,
 				4B85653514E46D6800C6FF54 /* Test Support */,
 				4B85653514E46D6800C6FF5A /* Window Controllers */,
-				1929BED367864EB044943591 /* Application */,
 			);
 			path = QmindTest;
 			sourceTree = "<group>";
@@ -1151,7 +1140,6 @@
 				1929BF0203FEF5FAAC4C4C25 /* QMIconsPaneView.m in Sources */,
 				1929BFD7B74324D2B8724842 /* IconGridViewTest.m in Sources */,
 				1929B29FA3F12195D97593A5 /* IconCollectionViewItemTest.m in Sources */,
-				1929B6CD03918BC1B86A59B2 /* QMAppDelegateTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
