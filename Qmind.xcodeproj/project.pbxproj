@@ -102,6 +102,14 @@
 		4B85653514E46D6800C6FF42 /* QMTextLayoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B85653514E46D6800C6FF41 /* QMTextLayoutManager.m */; };
 		4B85653514E46D6800C6FF60 /* QMTextDrawer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B85653514E46D6800C6FF5F /* QMTextDrawer.m */; };
 		4B85653514E46D6800C6FF69 /* QMCellLayoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B85653514E46D6800C6FF68 /* QMCellLayoutManager.m */; };
+		4B992EF41735176D00C5844E /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B992EF31735176D00C5844E /* QuickLook.framework */; };
+		4B992EF61735176D00C5844E /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B992EF51735176D00C5844E /* ApplicationServices.framework */; };
+		4B992EF81735176D00C5844E /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B992EF71735176D00C5844E /* CoreServices.framework */; };
+		4B992EFA1735176D00C5844E /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B992EF91735176D00C5844E /* CoreFoundation.framework */; };
+		4B992F001735176D00C5844E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4B992EFE1735176D00C5844E /* InfoPlist.strings */; };
+		4B992F021735176D00C5844E /* GenerateThumbnailForURL.c in Sources */ = {isa = PBXBuildFile; fileRef = 4B992F011735176D00C5844E /* GenerateThumbnailForURL.c */; };
+		4B992F041735176D00C5844E /* GeneratePreviewForURL.c in Sources */ = {isa = PBXBuildFile; fileRef = 4B992F031735176D00C5844E /* GeneratePreviewForURL.c */; };
+		4B992F061735176D00C5844E /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 4B992F051735176D00C5844E /* main.c */; };
 		4B9D981016878B0F00222D03 /* CellSizeManagerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929B209E6C81B9C03DE0505 /* CellSizeManagerTest.m */; };
 		4B9DE3341569367500AAF5C1 /* QmindIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4B9DE3331569367500AAF5C1 /* QmindIcon.icns */; };
 		4BA52C2B14FA52F5000EB8E5 /* cell-population-test.mm in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4BFCD7AC14F3E32A00850952 /* cell-population-test.mm */; };
@@ -376,6 +384,17 @@
 		4B85653514E46D6800C6FF68 /* QMCellLayoutManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMCellLayoutManager.m; sourceTree = "<group>"; };
 		4B85653514E46D6800C6FF6B /* QMCellLayoutManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMCellLayoutManager.h; sourceTree = "<group>"; };
 		4B85653514E46D6800C6FF78 /* CellLayoutManagerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellLayoutManagerTest.m; sourceTree = "<group>"; };
+		4B992EF21735176D00C5844E /* QmindLook.qlgenerator */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QmindLook.qlgenerator; sourceTree = BUILT_PRODUCTS_DIR; };
+		4B992EF31735176D00C5844E /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
+		4B992EF51735176D00C5844E /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
+		4B992EF71735176D00C5844E /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
+		4B992EF91735176D00C5844E /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		4B992EFD1735176D00C5844E /* QmindLook-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "QmindLook-Info.plist"; sourceTree = "<group>"; };
+		4B992EFF1735176D00C5844E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		4B992F011735176D00C5844E /* GenerateThumbnailForURL.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = GenerateThumbnailForURL.c; sourceTree = "<group>"; };
+		4B992F031735176D00C5844E /* GeneratePreviewForURL.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = GeneratePreviewForURL.c; sourceTree = "<group>"; };
+		4B992F051735176D00C5844E /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		4B992F071735176D00C5844E /* QmindLook-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "QmindLook-Prefix.pch"; sourceTree = "<group>"; };
 		4B9DE3331569367500AAF5C1 /* QmindIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = QmindIcon.icns; path = Resources/QmindIcon.icns; sourceTree = "<group>"; };
 		4BCA0464158CB94B0034CB4A /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = /Applications/Xcode.app/Contents/Developer/Library/Frameworks/SenTestingKit.framework; sourceTree = "<absolute>"; };
 		4BDA77FA170F8080000AB84A /* Sparkle.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Sparkle.xcodeproj; path = sparke/Sparkle.xcodeproj; sourceTree = "<group>"; };
@@ -438,6 +457,17 @@
 				4B15777816A2F01E0048480E /* Qkit.framework in Frameworks */,
 				4B03B24D1628725300E5ECA2 /* TBCacao.framework in Frameworks */,
 				4B8564C614E461DC00C6FF0A /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4B992EED1735176D00C5844E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4B992EF41735176D00C5844E /* QuickLook.framework in Frameworks */,
+				4B992EF61735176D00C5844E /* ApplicationServices.framework in Frameworks */,
+				4B992EF81735176D00C5844E /* CoreServices.framework in Frameworks */,
+				4B992EFA1735176D00C5844E /* CoreFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -541,6 +571,7 @@
 				4B15776516A2EFEF0048480E /* Qkit.xcodeproj */,
 				4B03B23F1628724000E5ECA2 /* TBCacao.xcodeproj */,
 				4BDA77FA170F8080000AB84A /* Sparkle.xcodeproj */,
+				4B992EFB1735176D00C5844E /* QmindLook */,
 				4B8564C414E461DC00C6FF0A /* Frameworks */,
 				4B8564C214E461DC00C6FF0A /* Products */,
 			);
@@ -551,6 +582,7 @@
 			children = (
 				4B8564C114E461DC00C6FF0A /* Qmind.app */,
 				4BFCD75614F3D34700850924 /* QmindSenTesting.octest */,
+				4B992EF21735176D00C5844E /* QmindLook.qlgenerator */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -562,6 +594,10 @@
 				4B85653514E46D6800C6FF5D /* OCMockito.framework */,
 				4B85653514E46D6800C6FF1D /* OCHamcrest.framework */,
 				4B8564C514E461DC00C6FF0A /* Cocoa.framework */,
+				4B992EF31735176D00C5844E /* QuickLook.framework */,
+				4B992EF51735176D00C5844E /* ApplicationServices.framework */,
+				4B992EF71735176D00C5844E /* CoreServices.framework */,
+				4B992EF91735176D00C5844E /* CoreFoundation.framework */,
 				4B8564C714E461DC00C6FF0A /* Other Frameworks */,
 			);
 			name = Frameworks;
@@ -792,6 +828,27 @@
 			name = "Window Controllers";
 			sourceTree = "<group>";
 		};
+		4B992EFB1735176D00C5844E /* QmindLook */ = {
+			isa = PBXGroup;
+			children = (
+				4B992F011735176D00C5844E /* GenerateThumbnailForURL.c */,
+				4B992F031735176D00C5844E /* GeneratePreviewForURL.c */,
+				4B992F051735176D00C5844E /* main.c */,
+				4B992EFC1735176D00C5844E /* Supporting Files */,
+			);
+			path = QmindLook;
+			sourceTree = "<group>";
+		};
+		4B992EFC1735176D00C5844E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				4B992EFD1735176D00C5844E /* QmindLook-Info.plist */,
+				4B992EFE1735176D00C5844E /* InfoPlist.strings */,
+				4B992F071735176D00C5844E /* QmindLook-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		4BDA77FB170F8080000AB84A /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -830,6 +887,16 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		4B992EEE1735176D00C5844E /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
 		4B8564C014E461DC00C6FF0A /* Qmind */ = {
 			isa = PBXNativeTarget;
@@ -851,6 +918,25 @@
 			productName = Qmind;
 			productReference = 4B8564C114E461DC00C6FF0A /* Qmind.app */;
 			productType = "com.apple.product-type.application";
+		};
+		4B992EF11735176D00C5844E /* QmindLook */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4B992F081735176D00C5844E /* Build configuration list for PBXNativeTarget "QmindLook" */;
+			buildPhases = (
+				4B992EEC1735176D00C5844E /* Sources */,
+				4B992EED1735176D00C5844E /* Frameworks */,
+				4B992EEE1735176D00C5844E /* Headers */,
+				4B992EEF1735176D00C5844E /* Resources */,
+				4B992EF01735176D00C5844E /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = QmindLook;
+			productName = QmindLook;
+			productReference = 4B992EF21735176D00C5844E /* QmindLook.qlgenerator */;
+			productType = "com.apple.product-type.bundle";
 		};
 		4BFCD75514F3D34700850924 /* QmindSenTesting */ = {
 			isa = PBXNativeTarget;
@@ -911,6 +997,7 @@
 			targets = (
 				4B8564C014E461DC00C6FF0A /* Qmind */,
 				4BFCD75514F3D34700850924 /* QmindSenTesting */,
+				4B992EF11735176D00C5844E /* QmindLook */,
 			);
 		};
 /* End PBXProject section */
@@ -1012,6 +1099,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4B992EEF1735176D00C5844E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4B992F001735176D00C5844E /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4BFCD75314F3D34700850924 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1023,6 +1118,16 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXRezBuildPhase section */
+		4B992EF01735176D00C5844E /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXRezBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		4BFCD75414F3D34700850924 /* ShellScript */ = {
@@ -1075,6 +1180,16 @@
 				4BE684B716922F6E00789892 /* QMIconGridView.m in Sources */,
 				1929B059162A10744EF02985 /* QMIconsPaneView.m in Sources */,
 				1929BB6FEB32F64962B24562 /* QMManualBeanProvider.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4B992EEC1735176D00C5844E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4B992F021735176D00C5844E /* GenerateThumbnailForURL.c in Sources */,
+				4B992F041735176D00C5844E /* GeneratePreviewForURL.c in Sources */,
+				4B992F061735176D00C5844E /* main.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1219,6 +1334,14 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
+		4B992EFE1735176D00C5844E /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4B992EFF1735176D00C5844E /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		4BDC9D8E1524EEAD008CEB8E /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1259,9 +1382,8 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx10.7;
 				VALID_ARCHS = x86_64;
 			};
 			name = Debug;
@@ -1281,8 +1403,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				SDKROOT = macosx10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				VALID_ARCHS = x86_64;
 			};
 			name = Release;
@@ -1314,6 +1435,50 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/tbcacao\"/** \"${PROJECT_DIR}/qkit\"/**";
 				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		4B992F091735176D00C5844E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "QmindLook/QmindLook-Prefix.pch";
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				INFOPLIST_FILE = "QmindLook/QmindLook-Info.plist";
+				INSTALL_PATH = /Library/QuickLook;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = qlgenerator;
+			};
+			name = Debug;
+		};
+		4B992F0A1735176D00C5844E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "QmindLook/QmindLook-Prefix.pch";
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				INFOPLIST_FILE = "QmindLook/QmindLook-Info.plist";
+				INSTALL_PATH = /Library/QuickLook;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = qlgenerator;
 			};
 			name = Release;
 		};
@@ -1371,6 +1536,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		4B992F081735176D00C5844E /* Build configuration list for PBXNativeTarget "QmindLook" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4B992F091735176D00C5844E /* Debug */,
+				4B992F0A1735176D00C5844E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		4BFCD76314F3D34700850924 /* Build configuration list for PBXNativeTarget "QmindSenTesting" */ = {
 			isa = XCConfigurationList;
