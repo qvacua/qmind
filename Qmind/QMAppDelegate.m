@@ -6,6 +6,7 @@
  * See LICENSE
  */
 
+#import <Qkit/QLog.h>
 #import "QMAppDelegate.h"
 #import "TBCacao/TBCacao.h"
 

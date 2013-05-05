@@ -4,6 +4,3 @@
 [submodule "tbcacao"]
 	path = tbcacao
 	url = git@github.com:qvacua/tbcacao.git
-[submodule "sparke"]
-	path = sparke
-	url = git://github.com/andymatuschak/Sparkle.git
