@@ -29,12 +29,12 @@
     QMCellPropertiesManager *cellPropertiesManager = [[QMCellPropertiesManager alloc] initWithDataSource:dataSource];
 
     QMRootCell *rootCell = (QMRootCell *) [cellPropertiesManager cellWithParent:nil itemOfParent:nil];
-    rootCell.familyOrigin = NSMakePoint(0, 0);
+    rootCell.familyOrigin = NSZeroPoint;
     [rootCell computeGeometry];
 
     NSSize canvasSize = rootCell.familySize;
-    canvasSize.width += 25;
-    canvasSize.height += 25;
+    canvasSize.width += qMindmapOrigin.x;
+    canvasSize.height += qMindmapOrigin.y;
 
     return rootCell;
 }

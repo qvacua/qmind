@@ -8,6 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 
+static NSPoint qMindmapOrigin = {10, 10};
+
 @class QMRootCell;
 
 @interface QMLookUtil : NSObject

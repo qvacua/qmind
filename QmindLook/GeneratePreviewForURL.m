@@ -1,5 +1,4 @@
 #include <QuickLook/QuickLook.h>
-#import "QMDocument.h"
 #import "QMRootCell.h"
 #import "QMLookUtil.h"
 
@@ -17,6 +16,17 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
             return noErr;
         }
 
+        /**
+        * When I use
+        * [NSGraphicsContext graphicsContextWithGraphicsPort:(void *) cgContext flipped:YES]
+        * and draw the mindmap, the whole mindmap is drawn upside down.
+        * When I use flipped:NO, then the NSLayoutManager is correctly flipped, but drawings of other primitive objects
+        * are not flipped => wrong rendering.
+        * Thus, we flip the whole CGContext which is the base of the NSGraphicsContext. Not very elegant, but it works.
+        */
+        CGAffineTransform verticalFlipTrafo = CGAffineTransformMake(1, 0, 0, -1, 0, canvasSize.height);
+        CGContextConcatCTM(cgContext, verticalFlipTrafo);
+
         NSGraphicsContext *context = [NSGraphicsContext graphicsContextWithGraphicsPort:(void *) cgContext flipped:YES];
         if (!context) {
             return noErr;
@@ -25,7 +35,7 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
         [NSGraphicsContext saveGraphicsState];
         [NSGraphicsContext setCurrentContext:context];
 
-        [rootCell drawRect:NSMakeRect(0, 0, canvasSize.width, canvasSize.height)];
+        [rootCell drawRect:NSMakeRect(qMindmapOrigin.x, qMindmapOrigin.y, canvasSize.width, canvasSize.height)];
 
         [NSGraphicsContext restoreGraphicsState];
 
