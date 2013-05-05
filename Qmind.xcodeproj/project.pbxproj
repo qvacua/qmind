@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1929B057FE485599D1E5D1C6 /* QMCellPropertiesManagerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929B918241E1ACDCDC89AA2 /* QMCellPropertiesManagerTest.m */; };
 		1929B059162A10744EF02985 /* QMIconsPaneView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929B2FCB4A407CCC68D9D45 /* QMIconsPaneView.m */; };
+		1929B0EDA68642C93FA1B352 /* QMLookUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929B3AAAFA6CF293F45F812 /* QMLookUtil.m */; };
 		1929B194FE5529B11EAFE7DA /* QMCellSizeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929B353C299640D7D91AA9D /* QMCellSizeManager.m */; };
 		1929B24EA8328150C669DA66 /* QMCellSizeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929B353C299640D7D91AA9D /* QMCellSizeManager.m */; };
 		1929B29FA3F12195D97593A5 /* IconCollectionViewItemTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929B743A0D8FAB8C620E299 /* IconCollectionViewItemTest.m */; };
@@ -19,6 +20,7 @@
 		1929B676F4A74F9E9F96AB42 /* QMIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929BA02C47D9D0A43F49EFA /* QMIcon.m */; };
 		1929B73FE0028E09C26705DC /* QMCellPropertiesManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 1929B49C1022861E4672965B /* QMCellPropertiesManager.h */; };
 		1929B91E380C89A49F956097 /* QMUiDrawer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929B20B51839B9482813969 /* QMUiDrawer.m */; };
+		1929B92CBF92FC4F2EFCAF0E /* QMLookUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 1929B07398BED585370DE664 /* QMLookUtil.h */; };
 		1929BB168680A05751E3F4C4 /* QMIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929BA02C47D9D0A43F49EFA /* QMIcon.m */; };
 		1929BB6FEB32F64962B24562 /* QMManualBeanProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929B43F698543362E51BAB9 /* QMManualBeanProvider.m */; };
 		1929BF0203FEF5FAAC4C4C25 /* QMIconsPaneView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929B2FCB4A407CCC68D9D45 /* QMIconsPaneView.m */; };
@@ -335,10 +337,12 @@
 /* Begin PBXFileReference section */
 		1929B03F77F02BDFB060054E /* QMCacaoTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMCacaoTestCase.m; sourceTree = "<group>"; };
 		1929B0594A00B0CBF7573BD1 /* MindmapViewDraggingTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MindmapViewDraggingTest.m; sourceTree = "<group>"; };
+		1929B07398BED585370DE664 /* QMLookUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMLookUtil.h; sourceTree = "<group>"; };
 		1929B209E6C81B9C03DE0505 /* CellSizeManagerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellSizeManagerTest.m; sourceTree = "<group>"; };
 		1929B20B51839B9482813969 /* QMUiDrawer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMUiDrawer.m; sourceTree = "<group>"; };
 		1929B2FCB4A407CCC68D9D45 /* QMIconsPaneView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMIconsPaneView.m; sourceTree = "<group>"; };
 		1929B353C299640D7D91AA9D /* QMCellSizeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMCellSizeManager.m; sourceTree = "<group>"; };
+		1929B3AAAFA6CF293F45F812 /* QMLookUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMLookUtil.m; sourceTree = "<group>"; };
 		1929B43F698543362E51BAB9 /* QMManualBeanProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMManualBeanProvider.m; sourceTree = "<group>"; };
 		1929B49C1022861E4672965B /* QMCellPropertiesManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMCellPropertiesManager.h; sourceTree = "<group>"; };
 		1929B4E814EA183B1791462A /* QMUiDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMUiDrawer.h; sourceTree = "<group>"; };
@@ -874,6 +878,8 @@
 				4B992F031735176D00C5844E /* GeneratePreviewForURL.m */,
 				4B992F051735176D00C5844E /* main.m */,
 				4B992EFC1735176D00C5844E /* Supporting Files */,
+				1929B3AAAFA6CF293F45F812 /* QMLookUtil.m */,
+				1929B07398BED585370DE664 /* QMLookUtil.h */,
 			);
 			path = QmindLook;
 			sourceTree = "<group>";
@@ -920,6 +926,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1929B73FE0028E09C26705DC /* QMCellPropertiesManager.h in Headers */,
+				1929B92CBF92FC4F2EFCAF0E /* QMLookUtil.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1204,6 +1211,7 @@
 				4B992F041735176D00C5844E /* GeneratePreviewForURL.m in Sources */,
 				4B992F061735176D00C5844E /* main.m in Sources */,
 				1929B3A02CC1561045BF1FEC /* QMCellPropertiesManager.m in Sources */,
+				1929B0EDA68642C93FA1B352 /* QMLookUtil.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
