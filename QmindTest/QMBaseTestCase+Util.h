@@ -24,6 +24,9 @@ static int const NUMBER_OF_LEFT_GRAND_CHILD = 10;
 
 - (QMRootNode *)rootNodeForTest;
 - (QMRootCell *)rootCellForTestWithView:(QMMindmapView *)view;
+
+- (BOOL)deepCompareStructureOfCell:(id)cell withNode:(id)node ignoringFoldedChildren:(BOOL)ignoreFolded usingBlock:(BOOL (^)(QMCell *, QMNode *))compare;
+
 - (NSURL *)urlForResource:(NSString *)fileNameWoExt extension:(NSString *)extension;
 - (NSFileWrapper *)fileWrapperForResource:(NSString *)fileNameWoExt extension:(NSString *)extension;
 

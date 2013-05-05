@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "QMMindmapViewDataSource.h"
 
-@class QMDocument, QMIconManager;
+@class QMDocument, QMIconManager, QMAppSettings;
 
 @interface QMMindmapViewDataSourceImpl : NSObject <QMMindmapViewDataSource>
 

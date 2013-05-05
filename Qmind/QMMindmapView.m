@@ -20,6 +20,7 @@
 #import "QMCellLayoutManager.h"
 #import "QMNode.h"
 #import "QMIcon.h"
+#import "QMCellPropertiesManager.h"
 
 static const CGFloat qZoomScrollWheelStep = 0.25;
 
@@ -40,6 +41,12 @@ static inline BOOL sign(CGFloat x) {
 static inline BOOL modifier_check(NSUInteger value, NSUInteger modifier) {
     return (value & modifier) == modifier;
 }
+
+@interface QMMindmapView ()
+
+@property QMCellPropertiesManager *cellPropertiesManager;
+
+@end
 
 @implementation QMMindmapView {
     QMCellEditor *_cellEditor;
@@ -252,7 +259,7 @@ TB_MANUALWIRE(uiDrawer)
     for (int i = 0; i < countOfOldIcons; i++) {
         [cellToUpdate removeObjectFromIconsAtIndex:0];
     }
-    [self fillIconsOfCell:cellToUpdate];
+    [self.cellPropertiesManager fillIconsOfCell:cellToUpdate];
 
     [self updateCanvasSize];
     [self setNeedsDisplay:YES];
@@ -401,8 +408,8 @@ we only test the begin edit part... We are being to lazy here...
 
     QMCell *cellToInsert = [[QMCell alloc] initWithView:self];
     cellToInsert.left = parentIsLeft;
-    [self fillCellPropertiesWithIdentifier:itemToInsert cell:cellToInsert];
-    [self fillAllChildrenWithIdentifier:itemToInsert cell:cellToInsert];
+    [self.cellPropertiesManager fillCellPropertiesWithIdentifier:itemToInsert cell:cellToInsert];
+    [self.cellPropertiesManager fillAllChildrenWithIdentifier:itemToInsert cell:cellToInsert];
 
     [parentCell insertObject:cellToInsert inChildrenAtIndex:indexToInsert];
 
@@ -442,8 +449,8 @@ we only test the begin edit part... We are being to lazy here...
     QMCell *cellToInsert = [[QMCell alloc] initWithView:self];
     cellToInsert.left = YES;
 
-    [self fillCellPropertiesWithIdentifier:itemToInsert cell:cellToInsert];
-    [self fillAllChildrenWithIdentifier:itemToInsert cell:cellToInsert];
+    [self.cellPropertiesManager fillCellPropertiesWithIdentifier:itemToInsert cell:cellToInsert];
+    [self.cellPropertiesManager fillAllChildrenWithIdentifier:itemToInsert cell:cellToInsert];
 
     [_rootCell insertObject:cellToInsert inLeftChildrenAtIndex:indexToInsert];
 
@@ -453,8 +460,9 @@ we only test the begin edit part... We are being to lazy here...
 
 - (void)initMindmapViewWithDataSource:(id <QMMindmapViewDataSource>)aDataSource {
     _dataSource = aDataSource;
+    _cellPropertiesManager = [[QMCellPropertiesManager alloc] initWithDataSource:aDataSource];
 
-    [self populateCellWithParent:nil item:nil];
+    _rootCell = (QMRootCell *) [self.cellPropertiesManager cellWithParent:nil itemOfParent:nil];
     [self registerForDraggedTypes:@[qNodeUti]];
 
     NSSize parentSize = self.superview.frame.size;
@@ -1265,63 +1273,6 @@ we only test the begin edit part... We are being to lazy here...
 
 - (void)editCell:(QMCell *)cellToEdit {
     [_cellEditor beginEditStringValueForCell:cellToEdit];
-}
-
-- (void)fillCellPropertiesWithIdentifier:(id)givenItem cell:(QMCell *)cell {
-    cell.identifier = [_dataSource mindmapView:self identifierForItem:givenItem];
-    cell.stringValue = [_dataSource mindmapView:self stringValueOfItem:givenItem];
-    cell.font = [_dataSource mindmapView:self fontOfItem:givenItem];
-    cell.folded = [_dataSource mindmapView:self isItemFolded:givenItem];
-
-    [self fillIconsOfCell:cell];
-}
-
-- (void)fillIconsOfCell:(QMCell *)cell {
-    NSArray *iconsOfItem = [_dataSource mindmapView:self iconsOfItem:cell.identifier];
-    for (id icon in iconsOfItem) {
-        [cell insertObject:icon inIconsAtIndex:cell.icons.count];
-    }
-}
-
-- (void)fillAllChildrenWithIdentifier:(id)givenItem cell:(QMCell *)cell {
-    NSInteger childrenCount = [_dataSource mindmapView:self numberOfChildrenOfItem:givenItem];
-    for (NSUInteger i = 0; i < childrenCount; i++) {
-        id childItem = [_dataSource mindmapView:self child:i ofItem:givenItem];
-        [self populateCellWithParent:cell item:childItem];
-    }
-
-    if (cell.isRoot) {
-        NSInteger leftChildrenCount = [_dataSource mindmapView:self numberOfLeftChildrenOfItem:givenItem];
-        for (NSUInteger i = 0; i < leftChildrenCount; i++) {
-            id childItem = [_dataSource mindmapView:self leftChild:i ofItem:givenItem];
-            [self populateCellWithParent:cell item:childItem];
-        }
-    }
-}
-
-- (void)populateCellWithParent:(QMCell *)parentCell item:(id)itemOfParent {
-    QMCell *cell;
-
-    if (itemOfParent == nil) {
-        _rootCell = [[QMRootCell alloc] initWithView:self];
-        cell = _rootCell;
-    } else {
-        cell = [[QMCell alloc] initWithView:self];
-
-        if (parentCell.isRoot) {
-            BOOL isItemLeft = [_dataSource mindmapView:self isItemLeft:itemOfParent];
-            if (isItemLeft) {
-                [(QMRootCell *) parentCell addObjectInLeftChildren:cell];
-            } else {
-                [parentCell addObjectInChildren:cell];
-            }
-        } else {
-            [parentCell addObjectInChildren:cell];
-        }
-    }
-
-    [self fillCellPropertiesWithIdentifier:itemOfParent cell:cell];
-    [self fillAllChildrenWithIdentifier:itemOfParent cell:cell];
 }
 
 - (void)scrollToCenter {

@@ -47,6 +47,15 @@ id left_item_coord(id root, ...) {
     return item;
 }
 
+void wireRootNodeOfDoc(QMDocument *doc, QMRootNode *rootNode) {
+    QMRootNode *oldRootNode = [doc instanceVarOfClass:[QMRootNode class]];
+    [oldRootNode removeObserver:doc];
+
+    [doc setInstanceVarTo:rootNode];
+
+    objc_msgSend(doc, @selector(initRootNodeProperties));
+}
+
 @implementation QMCell (Testing)
 - (void)setFamilySize:(NSSize)aSize {
     _familySize = aSize;
@@ -160,13 +169,48 @@ static inline id copy_item(id source, NSString *str) {
     return rootCell;
 }
 
-void wireRootNodeOfDoc(QMDocument *doc, QMRootNode *rootNode) {
-    QMRootNode *oldRootNode = [doc instanceVarOfClass:[QMRootNode class]];
-    [oldRootNode removeObserver:doc];
+- (BOOL)deepCompareStructureOfCell:(id)cell
+                          withNode:(id)node
+            ignoringFoldedChildren:(BOOL)ignoreFolded
+                        usingBlock:(BOOL (^)(QMCell *, QMNode *))compare {
 
-    [doc setInstanceVarTo:rootNode];
+    if (compare(cell, node) == NO) {
+        return NO;
+    }
 
-    objc_msgSend(doc, @selector(initRootNodeProperties));
+    if ([cell isFolded] && ignoreFolded) {
+        return YES;
+    }
+
+    NSArray *sourceChildCells;
+    NSArray *targetChildCells;
+
+    if ([cell isRoot]) {
+        sourceChildCells = [[cell children] arrayByAddingObjectsFromArray:[cell leftChildren]];
+        targetChildCells = [[node children] arrayByAddingObjectsFromArray:[node leftChildren]];
+    } else {
+        sourceChildCells = [cell children];
+        targetChildCells = [node children];
+    }
+
+    id childCell;
+    id childNode;
+
+    for (NSUInteger i = 0; i < [sourceChildCells count]; i++) {
+        childCell = [sourceChildCells objectAtIndex:i];
+        childNode = [targetChildCells objectAtIndex:i];
+
+        BOOL resultOfChildren = [self deepCompareStructureOfCell:childCell
+                                                        withNode:childNode
+                                          ignoringFoldedChildren:ignoreFolded
+                                                      usingBlock:compare];
+
+        if (resultOfChildren == NO) {
+            return NO;
+        }
+    }
+
+    return YES;
 }
 
 @end

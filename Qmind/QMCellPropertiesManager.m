@@ -6,18 +6,18 @@
  * See LICENSE
  */
 
-#import "QMCellPopulator.h"
+#import "QMCellPropertiesManager.h"
 #import "QMCell.h"
 #import "QMMindmapViewDataSource.h"
 #import "QMRootCell.h"
 
-@interface QMCellPopulator ()
+@interface QMCellPropertiesManager ()
 
 @property id <QMMindmapViewDataSource> dataSource;
 
 @end
 
-@implementation QMCellPopulator
+@implementation QMCellPropertiesManager
 
 #pragma mark Public
 - (id)initWithDataSource:(id <QMMindmapViewDataSource>)dataSource {
@@ -56,7 +56,6 @@
     return cell;
 }
 
-#pragma mark Private
 - (void)fillCellPropertiesWithIdentifier:(id)givenItem cell:(QMCell *)cell {
     cell.identifier = [_dataSource mindmapView:nil identifierForItem:givenItem];
     cell.stringValue = [_dataSource mindmapView:nil stringValueOfItem:givenItem];

@@ -11,9 +11,12 @@
 @protocol QMMindmapViewDataSource;
 @class QMCell;
 
-@interface QMCellPopulator : NSObject
+@interface QMCellPropertiesManager : NSObject
 
 - (id)initWithDataSource:(id <QMMindmapViewDataSource>)dataSource;
-
 - (QMCell *)cellWithParent:(QMCell *)parentCell itemOfParent:(id)itemOfParent;
+- (void)fillCellPropertiesWithIdentifier:(id)givenItem cell:(QMCell *)cell;
+- (void)fillIconsOfCell:(QMCell *)cell;
+- (void)fillAllChildrenWithIdentifier:(id)givenItem cell:(QMCell *)cell;
+
 @end
