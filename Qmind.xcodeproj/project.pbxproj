@@ -148,6 +148,7 @@
 		4BB460081736A03F00B2B15D /* QMMindmapViewDataSourceImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFCD7AC14F3E32A008509A6 /* QMMindmapViewDataSourceImpl.m */; };
 		4BB460091736A03F00B2B15D /* QMDocumentWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B85653514E46D6800C6FF22 /* QMDocumentWindowController.m */; };
 		4BCA0466158CB94B0034CB4A /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BCA0464158CB94B0034CB4A /* SenTestingKit.framework */; };
+		4BD8C1291736F43200DC4B6F /* IconsFreeMindToQmind.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4BFCD7AC14F3E32A00850938 /* IconsFreeMindToQmind.plist */; };
 		4BDA7813170F80F5000AB84A /* sparkle-pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 4BDA7812170F80F5000AB84A /* sparkle-pub.pem */; };
 		4BDC9D901524EEAD008CEB8E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4BDC9D8E1524EEAD008CEB8E /* Localizable.strings */; };
 		4BDC9D921524EEAD008CEB8E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4BDC9D8E1524EEAD008CEB8E /* Localizable.strings */; };
@@ -1103,6 +1104,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4BD8C1291736F43200DC4B6F /* IconsFreeMindToQmind.plist in Resources */,
 				4B992F001735176D00C5844E /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
