@@ -1,4 +1,3 @@
-//
-// Prefix header for all source files of the 'QmindLook' target in the 'QmindLook' project
-//
-
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif

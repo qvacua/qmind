@@ -16,6 +16,7 @@
 #include <CoreFoundation/CFPlugInCOM.h>
 #include <CoreServices/CoreServices.h>
 #include <QuickLook/QuickLook.h>
+#import <TBCacao/TBCacao.h>
 
 // -----------------------------------------------------------------------------
 //	constants
@@ -41,7 +42,7 @@ OSStatus GenerateThumbnailForURL(void *thisInterface, QLThumbnailRequestRef thum
 void CancelThumbnailGeneration(void* thisInterface, QLThumbnailRequestRef thumbnail);
 
 // The preview generation function to be implemented in GeneratePreviewForURL.c
-OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview, CFURLRef url, CFStringRef contentTypeUTI, CFDictionaryRef options);
+OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview, CFURLRef cfUrl, CFStringRef contentTypeUTI, CFDictionaryRef options);
 void CancelPreviewGeneration(void *thisInterface, QLPreviewRequestRef preview);
 
 // The layout for an instance of QuickLookGeneratorPlugIn
@@ -106,6 +107,12 @@ QuickLookGeneratorPluginType *AllocQuickLookGeneratorPluginType(CFUUIDRef inFact
 
         /* This function returns the IUnknown interface so set the refCount to one. */
     theNewInstance->refCount = 1;
+
+    /**
+     * Custom init code
+     */
+    [[TBContext sharedContext] initContext];
+
     return theNewInstance;
 }
 
