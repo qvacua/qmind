@@ -19,14 +19,14 @@
 			<string>Editor</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>com.qvacua.mindmap</string>
+				<string>net.freemind.mindmap</string>
 				<string>public.objective-c-plus-plus-source</string>
 			</array>
 			<key>NSDocumentClass</key>
 			<string>QMDocument</string>
 			<key>NSExportableTypes</key>
 			<array>
-				<string>com.qvacua.mindmap</string>
+				<string>net.freemind.mindmap</string>
 				<string>public.objective-c-plus-plus-source</string>
 			</array>
 		</dict>
@@ -73,7 +73,9 @@
 			<key>UTTypeDescription</key>
 			<string>Mindmap</string>
 			<key>UTTypeIdentifier</key>
-			<string>com.qvacua.mindmap</string>
+			<string>net.freemind.mindmap</string>
+			<key>UTTypeReferenceURL</key>
+			<string>http://freemind.sf.net</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>

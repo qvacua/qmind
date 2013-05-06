@@ -11,7 +11,7 @@
 			<string>QLGenerator</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>com.qvacua.mindmap</string>
+				<string>net.freemind.mindmap</string>
 				<string>public.objective-c-plus-plus-source</string>
 			</array>
 		</dict>

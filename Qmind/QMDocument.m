@@ -501,7 +501,10 @@ TB_MANUALWIRE(mindmapWriter)
 */
 - (id)initWithType:(NSString *)typeName error:(NSError **)outError {
 
-    if (![typeName isEqualToString:qMindmapUti]) {
+    /**
+    * public.objective-c-plus-plus-source wins over net.freemind.mindmap
+    */
+    if (![typeName isEqualToString:qMindmapUti] && ![typeName isEqualToString:qObjectiveCppUti]) {
         log4Warn(@"Trying to open an unsupported file: %@", typeName);
         return nil;
     }
@@ -546,6 +549,9 @@ TB_MANUALWIRE(mindmapWriter)
 }
 
 - (NSFileWrapper *)fileWrapperOfType:(NSString *)typeName error:(NSError **)outError {
+    /**
+    * public.objective-c-plus-plus-source wins over net.freemind.mindmap.
+    */
     if (![typeName isEqualToString:qMindmapUti] && ![typeName isEqualToString:qObjectiveCppUti]) {
         log4Warn(@"Trying to save an unsupported file: %@", typeName);
         return nil;

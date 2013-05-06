@@ -10,7 +10,7 @@
 #import "QMMindmapViewDataSource.h"
 
 static NSString * const qMindmapVersion = @"0.9.0";
-static NSString * const qMindmapUti = @"com.qvacua.mindmap";
+static NSString * const qMindmapUti = @"net.freemind.mindmap";
 static NSString * const qObjectiveCppUti = @"public.objective-c-plus-plus-source";
 
 @class QMDocumentWindowController;
