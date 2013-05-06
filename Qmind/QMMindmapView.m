@@ -460,7 +460,7 @@ we only test the begin edit part... We are being to lazy here...
 
 - (void)initMindmapViewWithDataSource:(id <QMMindmapViewDataSource>)aDataSource {
     _dataSource = aDataSource;
-    _cellPropertiesManager = [[QMCellPropertiesManager alloc] initWithDataSource:self];
+    _cellPropertiesManager = [[QMCellPropertiesManager alloc] initWithMindmapView:self];
 
     _rootCell = (QMRootCell *) [self.cellPropertiesManager cellWithParent:nil itemOfParent:nil];
     [self registerForDraggedTypes:@[qNodeUti]];

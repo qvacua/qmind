@@ -501,7 +501,7 @@ TB_MANUALWIRE(mindmapWriter)
 */
 - (id)initWithType:(NSString *)typeName error:(NSError **)outError {
 
-    if (![typeName isEqualToString:qMindmapDocumentType]) {
+    if (![typeName isEqualToString:qMindmapUti]) {
         log4Warn(@"Trying to open an unsupported file: %@", typeName);
         return nil;
     }
@@ -546,7 +546,7 @@ TB_MANUALWIRE(mindmapWriter)
 }
 
 - (NSFileWrapper *)fileWrapperOfType:(NSString *)typeName error:(NSError **)outError {
-    if (![typeName isEqualToString:qMindmapDocumentType]) {
+    if (![typeName isEqualToString:qMindmapUti] && ![typeName isEqualToString:qObjectiveCppUti]) {
         log4Warn(@"Trying to save an unsupported file: %@", typeName);
         return nil;
     }

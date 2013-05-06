@@ -22,11 +22,21 @@
 @implementation QMCellPropertiesManager
 
 #pragma mark Public
-- (id)initWithDataSource:(QMMindmapView *)view {
+- (id)initWithMindmapView:(QMMindmapView *)view {
     self = [super init];
     if (self) {
         _view = view;
         _dataSource = _view.dataSource;
+    }
+
+    return self;
+}
+
+- (id)initWithDataSource:(id <QMMindmapViewDataSource>)dataSource {
+    self = [super init];
+    if (self) {
+        _view = nil;
+        _dataSource = dataSource;
     }
 
     return self;

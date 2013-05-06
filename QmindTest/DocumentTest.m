@@ -447,7 +447,7 @@ static NSString * const MINDMAP_EXTENSION = @"mm";
 - (void)testNodeDao {
     NSFont *font = [NSFont boldSystemFontOfSize:20];
 
-    doc = [[QMDocument alloc] initWithType:qMindmapDocumentType error:NULL];
+    doc = [[QMDocument alloc] initWithType:qMindmapUti error:NULL];
     [doc setInstanceVarTo:reader];
 
     rootNode.stringValue = @"root";
@@ -464,7 +464,7 @@ static NSString * const MINDMAP_EXTENSION = @"mm";
 
     [given([reader rootNodeForFileUrl:instanceOf(NSURL.class)]) willReturn:rootNode];
     [doc setFileURL:[self urlForResource:MINDMAP_FILE_NAME extension:MINDMAP_EXTENSION]];
-    [doc readFromFileWrapper:[self fileWrapperForResource:MINDMAP_FILE_NAME extension:MINDMAP_EXTENSION] ofType:qMindmapDocumentType error:NULL];
+    [doc readFromFileWrapper:[self fileWrapperForResource:MINDMAP_FILE_NAME extension:MINDMAP_EXTENSION] ofType:qMindmapUti error:NULL];
 
     assertThatInteger([doc numberOfChildrenOfNode:nil], equalToInt(NUMBER_OF_CHILD));
     assertThatInteger([doc numberOfLeftChildrenOfNode:nil], equalToInt(NUMBER_OF_LEFT_CHILD));
@@ -626,13 +626,13 @@ static NSString * const MINDMAP_EXTENSION = @"mm";
 }
 
 - (void)testNewDoc {
-    doc = [[QMDocument alloc] initWithType:qMindmapDocumentType error:NULL];
+    doc = [[QMDocument alloc] initWithType:qMindmapUti error:NULL];
     assertThat(doc, notNilValue());
     assertThat([doc instanceVarOfClass:[QMRootNode class]], isNot(nilValue()));
 }
 
 - (void)testMakeWindowControllers {
-    doc = [[QMDocument alloc] initWithType:qMindmapDocumentType error:NULL];
+    doc = [[QMDocument alloc] initWithType:qMindmapUti error:NULL];
     [doc makeWindowControllers];
 
     assertThat(doc.windowController, notNilValue());
@@ -645,12 +645,12 @@ static NSString * const MINDMAP_EXTENSION = @"mm";
 }
 
 - (void)testOpenDoc {
-    doc = [[QMDocument alloc] initWithType:qMindmapDocumentType error:NULL];
+    doc = [[QMDocument alloc] initWithType:qMindmapUti error:NULL];
     [doc setInstanceVarTo:reader];
 
     [given([reader rootNodeForFileUrl:anything()]) willReturn:rootNode];
 
-    [doc readFromFileWrapper:[self fileWrapperForResource:MINDMAP_FILE_NAME extension:MINDMAP_EXTENSION] ofType:qMindmapDocumentType error:NULL];
+    [doc readFromFileWrapper:[self fileWrapperForResource:MINDMAP_FILE_NAME extension:MINDMAP_EXTENSION] ofType:qMindmapUti error:NULL];
 
     assertThat(rootNode.undoManager, equalTo(doc.undoManager));
     assertThat([NODE(1) undoManager], equalTo(doc.undoManager));
@@ -658,17 +658,17 @@ static NSString * const MINDMAP_EXTENSION = @"mm";
 }
 
 - (void)testOpenDocWithError {
-    doc = [[QMDocument alloc] initWithType:qMindmapDocumentType error:NULL];
+    doc = [[QMDocument alloc] initWithType:qMindmapUti error:NULL];
     [doc setInstanceVarTo:reader];
 
     [given([reader rootNodeForFileUrl:anything()]) willReturn:nil];
     NSFileWrapper *const wrapper = [self fileWrapperForResource:@"document-test-fail-open" extension:MINDMAP_EXTENSION];
 
-    assertThatBool([doc readFromFileWrapper:wrapper ofType:qMindmapDocumentType error:NULL], isFalse);
+    assertThatBool([doc readFromFileWrapper:wrapper ofType:qMindmapUti error:NULL], isFalse);
 }
 
 - (void)testNewDocObserver {
-    doc = [[QMDocument alloc] initWithType:qMindmapDocumentType error:NULL];
+    doc = [[QMDocument alloc] initWithType:qMindmapUti error:NULL];
     [doc setWindowController:controller];
     [doc setUndoManager:undoManager];
 
@@ -696,7 +696,7 @@ static NSString * const MINDMAP_EXTENSION = @"mm";
     [doc setWindowController:controller];
 
     [given([reader rootNodeForFileUrl:anything()]) willReturn:rootNode];
-    [doc readFromFileWrapper:[self fileWrapperForResource:MINDMAP_FILE_NAME extension:MINDMAP_EXTENSION] ofType:qMindmapDocumentType error:NULL];
+    [doc readFromFileWrapper:[self fileWrapperForResource:MINDMAP_FILE_NAME extension:MINDMAP_EXTENSION] ofType:qMindmapUti error:NULL];
 
     QObserverInfo *strInfo = [[QObserverInfo alloc] initWithObserver:doc keyPath:qNodeStringValueKey];
     QObserverInfo *fontInfo = [[QObserverInfo alloc] initWithObserver:doc keyPath:qNodeFontKey];
@@ -711,15 +711,15 @@ static NSString * const MINDMAP_EXTENSION = @"mm";
 }
 
 - (void)testWriteDoc {
-    doc = [[QMDocument alloc] initWithType:qMindmapDocumentType error:NULL];
+    doc = [[QMDocument alloc] initWithType:qMindmapUti error:NULL];
     [doc setInstanceVarTo:reader];
     [doc setInstanceVarTo:writer];
 
     [given([reader rootNodeForFileUrl:instanceOf(NSURL.class)]) willReturn:[[QMRootNode alloc] init]];
     [doc setFileURL:[self urlForResource:MINDMAP_FILE_NAME extension:MINDMAP_EXTENSION]];
-    [doc readFromFileWrapper:[self fileWrapperForResource:MINDMAP_FILE_NAME extension:MINDMAP_EXTENSION] ofType:qMindmapDocumentType error:NULL];
+    [doc readFromFileWrapper:[self fileWrapperForResource:MINDMAP_FILE_NAME extension:MINDMAP_EXTENSION] ofType:qMindmapUti error:NULL];
 
-    [doc fileWrapperOfType:qMindmapDocumentType error:NULL];
+    [doc fileWrapperOfType:qMindmapUti error:NULL];
     [verify(writer) dataForRootNode:instanceOf(QMNode.class)];
 }
 

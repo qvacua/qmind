@@ -158,6 +158,7 @@
 		4BE684B716922F6E00789892 /* QMIconGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BE684B616922F6D00789892 /* QMIconGridView.m */; };
 		4BE684B816922F6E00789892 /* QMIconGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BE684B616922F6D00789892 /* QMIconGridView.m */; };
 		4BE9D5C014F5A76A00FC8248 /* cell-layout-test.mm in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4BFCD7AC14F3E32A0085092D /* cell-layout-test.mm */; };
+		4BF11362173836DF0029C032 /* dummy.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 4BFCD7AC14F3E32A00850936 /* dummy.pdf */; };
 		4BFCD74F14F3D33600850924 /* QMAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFCD74E14F3D33600850924 /* QMAppDelegate.m */; };
 		4BFCD75814F3D34700850924 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B8564C514E461DC00C6FF0A /* Cocoa.framework */; };
 		4BFCD76E14F3D53300850924 /* OCMockito.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B85653514E46D6800C6FF5D /* OCMockito.framework */; };
@@ -1104,6 +1105,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4BF11362173836DF0029C032 /* dummy.pdf in Resources */,
 				4BD8C1291736F43200DC4B6F /* IconsFreeMindToQmind.plist in Resources */,
 				4B992F001735176D00C5844E /* InfoPlist.strings in Resources */,
 			);

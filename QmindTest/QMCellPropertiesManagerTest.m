@@ -40,7 +40,7 @@
     dataSource = [[QMMindmapViewDataSourceImpl alloc] initWithDoc:doc view:view];
     [given([view dataSource]) willReturn:dataSource];
 
-    populator = [[QMCellPropertiesManager alloc] initWithDataSource:view];
+    populator = [[QMCellPropertiesManager alloc] initWithMindmapView:view];
     rootCell = (QMRootCell *) [populator cellWithParent:nil itemOfParent:nil];
 }
 
