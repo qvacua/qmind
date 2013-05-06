@@ -10,20 +10,23 @@
 #import "QMCell.h"
 #import "QMMindmapViewDataSource.h"
 #import "QMRootCell.h"
+#import "QMMindmapView.h"
 
 @interface QMCellPropertiesManager ()
 
 @property id <QMMindmapViewDataSource> dataSource;
+@property QMMindmapView *view;
 
 @end
 
 @implementation QMCellPropertiesManager
 
 #pragma mark Public
-- (id)initWithDataSource:(id <QMMindmapViewDataSource>)dataSource {
+- (id)initWithDataSource:(QMMindmapView *)view {
     self = [super init];
     if (self) {
-        _dataSource = dataSource;
+        _view = view;
+        _dataSource = _view.dataSource;
     }
 
     return self;
@@ -33,13 +36,13 @@
     QMCell *cell;
 
     if (itemOfParent == nil) {
-        QMRootCell *rootCell = [[QMRootCell alloc] initWithView:nil];
+        QMRootCell *rootCell = [[QMRootCell alloc] initWithView:self.view];
         cell = rootCell;
     } else {
-        cell = [[QMCell alloc] initWithView:nil];
+        cell = [[QMCell alloc] initWithView:self.view];
 
         if (parentCell.isRoot) {
-            BOOL isItemLeft = [_dataSource mindmapView:nil isItemLeft:itemOfParent];
+            BOOL isItemLeft = [_dataSource mindmapView:self.view isItemLeft:itemOfParent];
             if (isItemLeft) {
                 [(QMRootCell *) parentCell addObjectInLeftChildren:cell];
             } else {
@@ -57,25 +60,25 @@
 }
 
 - (void)fillCellPropertiesWithIdentifier:(id)givenItem cell:(QMCell *)cell {
-    cell.identifier = [_dataSource mindmapView:nil identifierForItem:givenItem];
-    cell.stringValue = [_dataSource mindmapView:nil stringValueOfItem:givenItem];
-    cell.font = [_dataSource mindmapView:nil fontOfItem:givenItem];
-    cell.folded = [_dataSource mindmapView:nil isItemFolded:givenItem];
+    cell.identifier = [_dataSource mindmapView:self.view identifierForItem:givenItem];
+    cell.stringValue = [_dataSource mindmapView:self.view stringValueOfItem:givenItem];
+    cell.font = [_dataSource mindmapView:self.view fontOfItem:givenItem];
+    cell.folded = [_dataSource mindmapView:self.view isItemFolded:givenItem];
 
     [self fillIconsOfCell:cell];
 }
 
 - (void)fillIconsOfCell:(QMCell *)cell {
-    NSArray *iconsOfItem = [_dataSource mindmapView:nil iconsOfItem:cell.identifier];
+    NSArray *iconsOfItem = [_dataSource mindmapView:self.view iconsOfItem:cell.identifier];
     for (id icon in iconsOfItem) {
         [cell insertObject:icon inIconsAtIndex:cell.icons.count];
     }
 }
 
 - (void)fillAllChildrenWithIdentifier:(id)givenItem cell:(QMCell *)cell {
-    NSInteger childrenCount = [_dataSource mindmapView:nil numberOfChildrenOfItem:givenItem];
+    NSInteger childrenCount = [_dataSource mindmapView:self.view numberOfChildrenOfItem:givenItem];
     for (NSUInteger i = 0; i < childrenCount; i++) {
-        id childItem = [_dataSource mindmapView:nil child:i ofItem:givenItem];
+        id childItem = [_dataSource mindmapView:self.view child:i ofItem:givenItem];
         [self cellWithParent:cell itemOfParent:childItem];
     }
 
@@ -83,9 +86,9 @@
         return;
     }
 
-    NSInteger leftChildrenCount = [_dataSource mindmapView:nil numberOfLeftChildrenOfItem:givenItem];
+    NSInteger leftChildrenCount = [_dataSource mindmapView:self.view numberOfLeftChildrenOfItem:givenItem];
     for (NSUInteger i = 0; i < leftChildrenCount; i++) {
-        id childItem = [_dataSource mindmapView:nil leftChild:i ofItem:givenItem];
+        id childItem = [_dataSource mindmapView:self.view leftChild:i ofItem:givenItem];
         [self cellWithParent:cell itemOfParent:childItem];
     }
 }

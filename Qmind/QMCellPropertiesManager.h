@@ -8,12 +8,12 @@
 
 #import <Cocoa/Cocoa.h>
 
-@protocol QMMindmapViewDataSource;
 @class QMCell;
+@class QMMindmapView;
 
 @interface QMCellPropertiesManager : NSObject
 
-- (id)initWithDataSource:(id <QMMindmapViewDataSource>)dataSource;
+- (id)initWithDataSource:(QMMindmapView *)view;
 - (QMCell *)cellWithParent:(QMCell *)parentCell itemOfParent:(id)itemOfParent;
 - (void)fillCellPropertiesWithIdentifier:(id)givenItem cell:(QMCell *)cell;
 - (void)fillIconsOfCell:(QMCell *)cell;

@@ -1,4 +1,5 @@
-/**
+#import "QMRootCell.h"
+#import "QMMindmapView.h"/**
  * Tae Won Ha
  * http://qvacua.com
  * https://github.com/qvacua
@@ -23,6 +24,7 @@
     QMDocument *doc;
     id <QMMindmapViewDataSource> dataSource;
     QMCellPropertiesManager *populator;
+    QMMindmapView *view;
 
     QMRootCell *rootCell;
 }
@@ -34,16 +36,23 @@
     wireRootNodeOfDoc(doc, rootNode);
     [doc setUndoManager:mock([NSUndoManager class])];
 
-    dataSource = [[QMMindmapViewDataSourceImpl alloc] initWithDoc:doc view:nil];
+    view = mock(QMMindmapView.class);
+    dataSource = [[QMMindmapViewDataSourceImpl alloc] initWithDoc:doc view:view];
+    [given([view dataSource]) willReturn:dataSource];
 
-    populator = [[QMCellPropertiesManager alloc] initWithDataSource:dataSource];
+    populator = [[QMCellPropertiesManager alloc] initWithDataSource:view];
     rootCell = (QMRootCell *) [populator cellWithParent:nil itemOfParent:nil];
 }
 
 /**
 * The following test tests all public methods of QMCellPropertiesManager
+*
+* @bug
+* cell.view was nil
 */
 - (void)testPopulateCells {
+    assertThat(rootCell.view, is(view));
+
     BOOL (^checkCellAndNode)(QMCell *, QMNode *) = ^(QMCell *cell, QMNode *node) {
         assertThat(cell.identifier, is(node));
         assertThat(@(cell.isFolded), is(@(node.isFolded)));
@@ -51,6 +60,7 @@
         assertThat(cell.stringValue, equalTo(node.stringValue));
         assertThat(cell.children, hasSize(node.children.count));
         assertThat(cell.icons, hasSize(node.icons.count));
+        assertThat(cell.view, is(view));
         if (cell.font != nil) {
             assertThat(node.font, notNilValue());
         }
