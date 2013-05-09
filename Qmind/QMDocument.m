@@ -16,38 +16,38 @@
 #import "QMAppSettings.h"
 #import "QMCell.h"
 
-static NSString * const qDocumentNibName = @"Document";
+static NSString *const qDocumentNibName = @"Document";
 
-@implementation QMDocument {
-    __weak NSPasteboard *_pasteboard;
+@interface QMDocument ()
 
-    QMRootNode *_rootNode;
-    QMDocumentWindowController *_windowController;
-}
+@property(weak) NSPasteboard *pasteboard;
+@property QMRootNode *rootNode;
+
+@end
+
+@implementation QMDocument
 
 TB_MANUALWIRE(settings)
 TB_MANUALWIRE(mindmapReader)
 TB_MANUALWIRE(mindmapWriter)
 
-@synthesize windowController = _windowController;
-
 #pragma mark Public
 - (void)copyItemsToPasteboard:(NSArray *)items {
     NSArray *const copyItems = [[NSArray alloc] initWithArray:items copyItems:YES];
 
-    [_pasteboard clearContents];
-    [_pasteboard writeObjects:copyItems];
+    [self.pasteboard clearContents];
+    [self.pasteboard writeObjects:copyItems];
 }
 
 - (void)cutItemsToPasteboard:(NSArray *)items {
-    QMNode *anyItem = [items lastObject];
+    QMNode *anyItem = items.lastObject;
     QMNode *parent = anyItem.parent;
 
-    [_windowController clearSelection:self];
+    [self.windowController clearSelection:self];
 
-    if ([parent isRoot] && [self isNodeLeft:anyItem]) {
+    if (parent.root && [self isNodeLeft:anyItem]) {
         for (QMNode *child in items) {
-            [_rootNode removeObjectFromLeftChildrenAtIndex:[_rootNode.leftChildren indexOfObject:child]];
+            [self.rootNode removeObjectFromLeftChildrenAtIndex:[self.rootNode.leftChildren indexOfObject:child]];
         }
     } else {
         for (QMNode *child in items) {
@@ -55,8 +55,8 @@ TB_MANUALWIRE(mindmapWriter)
         }
     }
 
-    [_pasteboard clearContents];
-    [_pasteboard writeObjects:items];
+    [self.pasteboard clearContents];
+    [self.pasteboard writeObjects:items];
 }
 
 - (void)appendItemsFromPBoard:(NSPasteboard *)pasteboard asChildrenToItem:(QMNode *)item {
@@ -70,7 +70,7 @@ TB_MANUALWIRE(mindmapWriter)
 - (void)appendItemsFromPBoard:(NSPasteboard *)pasteboard asLeftChildrenToItem:(QMNode *)item {
     [self processNodesFromPasteboard:pasteboard usingBlock:^(NSArray *itemsFromPasteboard) {
         for (QMNode *aNode in itemsFromPasteboard) {
-            [_rootNode addObjectInLeftChildren:aNode];
+            [self.rootNode addObjectInLeftChildren:aNode];
         }
     }];
 }
@@ -82,9 +82,9 @@ TB_MANUALWIRE(mindmapWriter)
         NSUInteger indexOfItem;
 
         if ([self isNodeLeft:item]) {
-            indexOfItem = [_rootNode.leftChildren indexOfObject:item];
+            indexOfItem = [self.rootNode.leftChildren indexOfObject:item];
             for (QMNode *aNode in itemsFromPBoard) {
-                [_rootNode insertObject:aNode inLeftChildrenAtIndex:indexOfItem];
+                [self.rootNode insertObject:aNode inLeftChildrenAtIndex:indexOfItem];
                 indexOfItem++;
             }
 
@@ -102,13 +102,13 @@ TB_MANUALWIRE(mindmapWriter)
 - (void)appendItemsFromPBoard:(NSPasteboard *)pasteboard asNextSiblingToItem:(QMNode *)item {
     // mind the root node
     [self processNodesFromPasteboard:pasteboard usingBlock:^(NSArray *itemsToPaste) {
-        QMNode *parent = [item parent];
+        QMNode *parent = item.parent;
         NSUInteger indexOfItem;
 
         if ([self isNodeLeft:item]) {
-            indexOfItem = [_rootNode.leftChildren indexOfObject:item];
+            indexOfItem = [self.rootNode.leftChildren indexOfObject:item];
             for (QMNode *aNode in itemsToPaste) {
-                [_rootNode insertObject:aNode inLeftChildrenAtIndex:indexOfItem + 1];
+                [self.rootNode insertObject:aNode inLeftChildrenAtIndex:indexOfItem + 1];
                 indexOfItem++;
             }
 
@@ -125,7 +125,7 @@ TB_MANUALWIRE(mindmapWriter)
 
 - (id)identifierForItem:(QMNode *)item {
     if (item == nil) {
-        return _rootNode;
+        return self.rootNode;
     }
 
     return item;
@@ -136,14 +136,14 @@ TB_MANUALWIRE(mindmapWriter)
 }
 
 - (void)setStringValue:(NSString *)str ofItem:(QMNode *)item {
-    QMNode *node = item == nil ? _rootNode : item;
+    QMNode *node = item == nil ? self.rootNode : item;
 
     node.stringValue = str;
 }
 
 - (void)setFont:(NSFont *)font ofItem:(QMNode *)item {
-    if ([font isEqual:[_settings settingForKey:qSettingDefaultFont]]) {
-        [item setFont:nil];
+    if ([font isEqual:[self.settings settingForKey:qSettingDefaultFont]]) {
+        item.font = nil;
         return;
     }
 
@@ -188,7 +188,7 @@ TB_MANUALWIRE(mindmapWriter)
         if (direction == QMDirectionLeft) {
             for (QMNode *node in itemsToMove) {
                 [self deleteItem:node];
-                [_rootNode insertObject:node inLeftChildrenAtIndex:[_rootNode countOfLeftChildren]];
+                [self.rootNode insertObject:node inLeftChildrenAtIndex:[self.rootNode countOfLeftChildren]];
             }
 
             return;
@@ -209,11 +209,11 @@ TB_MANUALWIRE(mindmapWriter)
         return;
     }
 
-    BOOL targetIsLeftAndChildOfRoot = [self isNodeLeft:targetItem] && targetItem.parent == _rootNode;
+    BOOL targetIsLeftAndChildOfRoot = [self isNodeLeft:targetItem] && targetItem.parent == self.rootNode;
     NSUInteger indexOfTargetItem;
 
     if (targetIsLeftAndChildOfRoot) {
-        indexOfTargetItem = [_rootNode.leftChildren indexOfObject:targetItem];
+        indexOfTargetItem = [self.rootNode.leftChildren indexOfObject:targetItem];
     } else {
         indexOfTargetItem = [targetItem.parent.children indexOfObject:targetItem];
     }
@@ -221,7 +221,7 @@ TB_MANUALWIRE(mindmapWriter)
     if (direction == QMDirectionTop) {
         if (targetIsLeftAndChildOfRoot) {
             for (QMNode *node in [itemsToMove reverseObjectEnumerator]) {
-                [_rootNode insertObject:node inLeftChildrenAtIndex:indexOfTargetItem];
+                [self.rootNode insertObject:node inLeftChildrenAtIndex:indexOfTargetItem];
             }
         } else {
             for (QMNode *node in [itemsToMove reverseObjectEnumerator]) {
@@ -235,7 +235,7 @@ TB_MANUALWIRE(mindmapWriter)
     if (direction == QMDirectionBottom) {
         if (targetIsLeftAndChildOfRoot) {
             for (QMNode *node in [itemsToMove reverseObjectEnumerator]) {
-                [_rootNode insertObject:node inLeftChildrenAtIndex:indexOfTargetItem + 1];
+                [self.rootNode insertObject:node inLeftChildrenAtIndex:indexOfTargetItem + 1];
             }
         } else {
             for (QMNode *node in [itemsToMove reverseObjectEnumerator]) {
@@ -265,7 +265,7 @@ TB_MANUALWIRE(mindmapWriter)
 
         if (direction == QMDirectionLeft) {
             for (QMNode *node in itemsToMove) {
-                [_rootNode insertObject:[node copy] inLeftChildrenAtIndex:[_rootNode countOfLeftChildren]];
+                [self.rootNode insertObject:[node copy] inLeftChildrenAtIndex:[self.rootNode countOfLeftChildren]];
             }
 
             return;
@@ -282,11 +282,11 @@ TB_MANUALWIRE(mindmapWriter)
         return;
     }
 
-    BOOL targetIsLeftAndChildOfRoot = [self isNodeLeft:targetItem] && targetItem.parent == _rootNode;
+    BOOL targetIsLeftAndChildOfRoot = [self isNodeLeft:targetItem] && targetItem.parent == self.rootNode;
     NSUInteger indexOfTargetItem;
 
     if (targetIsLeftAndChildOfRoot) {
-        indexOfTargetItem = [_rootNode.leftChildren indexOfObject:targetItem];
+        indexOfTargetItem = [self.rootNode.leftChildren indexOfObject:targetItem];
     } else {
         indexOfTargetItem = [targetItem.parent.children indexOfObject:targetItem];
     }
@@ -294,7 +294,7 @@ TB_MANUALWIRE(mindmapWriter)
     if (direction == QMDirectionTop) {
         if (targetIsLeftAndChildOfRoot) {
             for (QMNode *node in [itemsToMove reverseObjectEnumerator]) {
-                [_rootNode insertObject:[node copy] inLeftChildrenAtIndex:indexOfTargetItem];
+                [self.rootNode insertObject:[node copy] inLeftChildrenAtIndex:indexOfTargetItem];
             }
         } else {
             for (QMNode *node in [itemsToMove reverseObjectEnumerator]) {
@@ -308,7 +308,7 @@ TB_MANUALWIRE(mindmapWriter)
     if (direction == QMDirectionBottom) {
         if (targetIsLeftAndChildOfRoot) {
             for (QMNode *node in [itemsToMove reverseObjectEnumerator]) {
-                [_rootNode insertObject:[node copy] inLeftChildrenAtIndex:indexOfTargetItem + 1];
+                [self.rootNode insertObject:[node copy] inLeftChildrenAtIndex:indexOfTargetItem + 1];
             }
         } else {
             for (QMNode *node in [itemsToMove reverseObjectEnumerator]) {
@@ -346,7 +346,7 @@ TB_MANUALWIRE(mindmapWriter)
     QMNode *parent = item.parent;
 
     if ([parent isRoot] && [self isNodeLeft:item]) {
-        [_rootNode insertObject:node inLeftChildrenAtIndex:[_rootNode.leftChildren indexOfObject:item] + 1];
+        [self.rootNode insertObject:node inLeftChildrenAtIndex:[self.rootNode.leftChildren indexOfObject:item] + 1];
         return;
     }
 
@@ -358,7 +358,7 @@ TB_MANUALWIRE(mindmapWriter)
     QMNode *parent = item.parent;
 
     if ([parent isRoot] && [self isNodeLeft:item]) {
-        [_rootNode insertObject:node inLeftChildrenAtIndex:[_rootNode.leftChildren indexOfObject:item]];
+        [self.rootNode insertObject:node inLeftChildrenAtIndex:[self.rootNode.leftChildren indexOfObject:item]];
         return;
     }
 
@@ -371,9 +371,9 @@ TB_MANUALWIRE(mindmapWriter)
     NSUInteger indexOfItemToDel;
 
     if (parent.isRoot && [self isNodeLeft:item]) {
-        children = _rootNode.leftChildren;
+        children = self.rootNode.leftChildren;
         indexOfItemToDel = [children indexOfObject:item];
-        [_rootNode removeObjectFromLeftChildrenAtIndex:indexOfItemToDel];
+        [self.rootNode removeObjectFromLeftChildrenAtIndex:indexOfItemToDel];
 
         return;
     }
@@ -384,20 +384,20 @@ TB_MANUALWIRE(mindmapWriter)
 }
 
 - (void)toggleFoldingForItem:(QMNode *)item {
-    if ([item isRoot]) {
+    if (item.root) {
         return;
     }
 
-    if ([item isLeaf]) {
+    if (item.leaf) {
         return;
     }
 
-    BOOL oldValue = [item isFolded];
-    [item setFolded:!oldValue];
+    BOOL oldValue = item.folded;
+    item.folded = !oldValue;
 }
 
 - (BOOL)isNodeLeft:(QMNode *)item {
-    if (item == nil || [item isRoot]) {
+    if (item == nil || item.root) {
         return NO;
     }
 
@@ -406,7 +406,7 @@ TB_MANUALWIRE(mindmapWriter)
 
 - (NSInteger)numberOfChildrenOfNode:(id)item {
     QMNode *node = [self nodeFromItem:item];
-    return [node countOfChildren];
+    return node.countOfChildren;
 }
 
 - (id)child:(NSInteger)index ofNode:(id)item {
@@ -416,7 +416,7 @@ TB_MANUALWIRE(mindmapWriter)
 
 - (NSInteger)numberOfLeftChildrenOfNode:(id)item {
     if (item == nil) {
-        return _rootNode.leftChildren.count;
+        return self.rootNode.leftChildren.count;
     }
 
     return 0;
@@ -424,7 +424,7 @@ TB_MANUALWIRE(mindmapWriter)
 
 - (id)leftChild:(NSInteger)index ofNode:(id)item {
     if (item == nil) {
-        return [_rootNode objectInLeftChildrenAtIndex:(NSUInteger) index];
+        return [self.rootNode objectInLeftChildrenAtIndex:(NSUInteger) index];
     }
 
     return nil;
@@ -432,12 +432,12 @@ TB_MANUALWIRE(mindmapWriter)
 
 - (BOOL)isNodeFolded:(id)item {
     QMNode *node = [self nodeFromItem:item];
-    return node.isFolded;
+    return node.folded;
 }
 
 - (BOOL)isNodeLeaf:(id)item {
     QMNode *node = [self nodeFromItem:item];
-    return node.isLeaf;
+    return node.leaf;
 }
 
 - (id)stringValueOfNode:(id)item {
@@ -460,7 +460,7 @@ TB_MANUALWIRE(mindmapWriter)
 - (void)makeWindowControllers {
     _windowController = [[QMDocumentWindowController alloc] initWithWindowNibName:qDocumentNibName];
 
-    [self addWindowController:_windowController];
+    [self addWindowController:self.windowController];
 }
 
 - (void)windowControllerDidLoadNib:(NSWindowController *)aController {
@@ -483,17 +483,17 @@ TB_MANUALWIRE(mindmapWriter)
 }
 
 - (void)dealloc {
-    [_rootNode removeObserver:self];
+    [self.rootNode removeObserver:self];
 }
 
 - (void)initRootNodeProperties {
-    _rootNode.undoManager = self.undoManager;
-    [_rootNode addObserver:self forKeyPath:qNodeStringValueKey];
-    [_rootNode addObserver:self forKeyPath:qNodeFontKey];
-    [_rootNode addObserver:self forKeyPath:qNodeChildrenKey];
-    [_rootNode addObserver:self forKeyPath:qNodeLeftChildrenKey];
-    [_rootNode addObserver:self forKeyPath:qNodeFoldingKey];
-    [_rootNode addObserver:self forKeyPath:qNodeIconsKey];
+    self.rootNode.undoManager = self.undoManager;
+    [self.rootNode addObserver:self forKeyPath:qNodeStringValueKey];
+    [self.rootNode addObserver:self forKeyPath:qNodeFontKey];
+    [self.rootNode addObserver:self forKeyPath:qNodeChildrenKey];
+    [self.rootNode addObserver:self forKeyPath:qNodeLeftChildrenKey];
+    [self.rootNode addObserver:self forKeyPath:qNodeFoldingKey];
+    [self.rootNode addObserver:self forKeyPath:qNodeIconsKey];
 }
 
 /**
@@ -528,7 +528,7 @@ TB_MANUALWIRE(mindmapWriter)
 - (BOOL)readFromFileWrapper:(NSFileWrapper *)fileWrapper ofType:(NSString *)typeName error:(NSError **)outError {
     [self.undoManager disableUndoRegistration];
 
-    _rootNode = [_mindmapReader rootNodeForFileUrl:[self fileURL]];
+    _rootNode = [self.mindmapReader rootNodeForFileUrl:[self fileURL]];
 
     if (_rootNode == nil) {
         log4Warn(@"Error reading the file %@", [[self fileURL] path]);
@@ -541,9 +541,9 @@ TB_MANUALWIRE(mindmapWriter)
 
     log4Debug(@"Successfully read the mindmap \"%@\".", [self fileURL]);
 
-    // TODO: should we do this? maybe an observation of _rootNode is the right way to do it?
+    // TODO: should we do this? maybe an observation of self.rootNode is the right way to do it?
     // when a version is restored, this is needed...
-    [_windowController reInitView];
+    [self.windowController reInitView];
 
     return YES;
 }
@@ -557,7 +557,7 @@ TB_MANUALWIRE(mindmapWriter)
         return nil;
     }
 
-    NSData *data = [_mindmapWriter dataForRootNode:_rootNode];
+    NSData *data = [self.mindmapWriter dataForRootNode:self.rootNode];
 
     return [[NSFileWrapper alloc] initRegularFileWithContents:data];
 }
@@ -578,34 +578,34 @@ TB_MANUALWIRE(mindmapWriter)
     }
 
     if ([keyPath isEqualToString:qNodeFoldingKey]) {
-        [_windowController updateCellFoldingWithIdentifier:object];
+        [self.windowController updateCellFoldingWithIdentifier:object];
         return;
     }
 
     if ([keyPath isEqualToString:qNodeStringValueKey]) {
-        [_windowController updateCellWithIdentifier:object];
+        [self.windowController updateCellWithIdentifier:object];
         return;
     }
 
     if ([keyPath isEqualToString:qNodeFontKey]) {
-        [_windowController updateCellWithIdentifier:object];
+        [self.windowController updateCellWithIdentifier:object];
         return;
     }
 
     if ([[change objectForKey:NSKeyValueChangeKindKey] unsignedIntegerValue] == NSKeyValueChangeRemoval) {
 
         if ([keyPath isEqualToString:qNodeIconsKey]) {
-            [_windowController updateCellWithIdentifier:object];
+            [self.windowController updateCellWithIdentifier:object];
             return;
         }
 
         if ([keyPath isEqualToString:qNodeChildrenKey]) {
-            [_windowController updateCellForChildRemovalWithIdentifier:object];
+            [self.windowController updateCellForChildRemovalWithIdentifier:object];
             return;
         }
 
         if ([keyPath isEqualToString:qNodeLeftChildrenKey]) {
-            [_windowController updateCellForLeftChildRemovalWithIdentifier:object];
+            [self.windowController updateCellForLeftChildRemovalWithIdentifier:object];
             return;
         }
 
@@ -614,7 +614,7 @@ TB_MANUALWIRE(mindmapWriter)
     if ([[change objectForKey:NSKeyValueChangeKindKey] unsignedIntegerValue] == NSKeyValueChangeInsertion) {
 
         if ([keyPath isEqualToString:qNodeIconsKey]) {
-            [_windowController updateCellWithIdentifier:object];
+            [self.windowController updateCellWithIdentifier:object];
             return;
         }
 
@@ -623,9 +623,9 @@ TB_MANUALWIRE(mindmapWriter)
         if ([keyPath isEqualToString:qNodeChildrenKey]) {
 
             if (insertedNode.isCreatedNewly) {
-                [_windowController updateCellWithIdentifier:object withNewChild:insertedNode];
+                [self.windowController updateCellWithIdentifier:object withNewChild:insertedNode];
             } else {
-                [_windowController updateCellForChildInsertionWithIdentifier:object];
+                [self.windowController updateCellForChildInsertionWithIdentifier:object];
             }
 
             return;
@@ -634,9 +634,9 @@ TB_MANUALWIRE(mindmapWriter)
         if ([keyPath isEqualToString:qNodeLeftChildrenKey]) {
 
             if (insertedNode.isCreatedNewly) {
-                [_windowController updateCellWithIdentifier:object withNewLeftChild:insertedNode];
+                [self.windowController updateCellWithIdentifier:object withNewLeftChild:insertedNode];
             } else {
-                [_windowController updateCellForLeftChildInsertionWithIdentifier:object];
+                [self.windowController updateCellForLeftChildInsertionWithIdentifier:object];
             }
 
             return;
@@ -659,7 +659,7 @@ TB_MANUALWIRE(mindmapWriter)
         return;
     }
 
-    id anItem = [itemsFromPb lastObject];
+    id anItem = itemsFromPb.lastObject;
     BOOL isNode = [anItem isKindOfClass:[QMNode class]];
     BOOL isText = [anItem isKindOfClass:[NSString class]];
 
@@ -679,7 +679,7 @@ TB_MANUALWIRE(mindmapWriter)
 
     // isText
     QMNode *nodeToInsert = [[QMNode alloc] init];
-    nodeToInsert.stringValue = [itemsFromPb lastObject];
+    nodeToInsert.stringValue = itemsFromPb.lastObject;
 
     block(@[nodeToInsert]);
 }
@@ -695,20 +695,20 @@ TB_MANUALWIRE(mindmapWriter)
 }
 
 - (QMNode *)nodeFromItem:(id)item {
-    return (item == nil ? _rootNode : (QMNode *) item);
+    return (item == nil ? self.rootNode : (QMNode *) item);
 }
 
 - (BOOL)item:(QMNode *)givenItem isDescendantOfItem:(QMNode *)potentialParentNode {
     QMNode *currentParent = givenItem.parent;
-    
-    while(currentParent != nil) {
+
+    while (currentParent != nil) {
         if (potentialParentNode == currentParent) {
             return YES;
         }
-        
+
         currentParent = currentParent.parent;
     }
-    
+
     return NO;
 }
 
