@@ -44,32 +44,27 @@ static inline BOOL modifier_check(NSUInteger value, NSUInteger modifier) {
 
 @interface QMMindmapView ()
 
+#pragma mark Private Instance Variables
 @property QMCellPropertiesManager *cellPropertiesManager;
+@property QMCellStateManager *cellStateManager;
+@property QMCellEditor *cellEditor;
+@property BOOL dragging;
+@property BOOL keepMouseTrackOn;
+@property NSUInteger mouseDownModifier;
 
 @end
 
-@implementation QMMindmapView {
-    QMCellEditor *_cellEditor;
-    QMCellStateManager *_cellStateManager;
-
-    BOOL _dragging;
-    BOOL _keepMouseTrackOn;
-
-    NSUInteger _mouseDownModifier;
-}
+@implementation QMMindmapView
 
 TB_MANUALWIRE(cellSelector)
 TB_MANUALWIRE(cellLayoutManager)
 TB_MANUALWIRE(settings)
 TB_MANUALWIRE(uiDrawer)
 
-@synthesize dataSource = _dataSource;
-@synthesize rootCell = _rootCell;
-
 #pragma mark Public
 - (void)endEditing {
-    if ([_cellEditor isEditing]) {
-        [_cellEditor endEditing];
+    if ([self.cellEditor isEditing]) {
+        [self.cellEditor endEditing];
     }
 }
 
@@ -82,14 +77,14 @@ TB_MANUALWIRE(uiDrawer)
 }
 
 - (void)insertChild {
-    NSArray *const selCells = [_cellStateManager selectedCells];
+    NSArray *const selCells = [self.cellStateManager selectedCells];
     if ([selCells count] > 1) {
         return;
     }
 
     QMCell *selCell;
-    if (![_cellStateManager hasSelectedCells]) {
-        selCell = _rootCell;
+    if (![self.cellStateManager hasSelectedCells]) {
+        selCell = self.rootCell;
     } else {
         selCell = [selCells lastObject];
     }
@@ -97,37 +92,37 @@ TB_MANUALWIRE(uiDrawer)
     if ([selCell isFolded]) {
         [self toggleFoldingOfSelectedCell];
     }
-    [_dataSource mindmapView:self addNewChildToItem:selCell.identifier atIndex:[selCell countOfChildren]];
+    [self.dataSource mindmapView:self addNewChildToItem:selCell.identifier atIndex:[selCell countOfChildren]];
 }
 
 - (void)insertLeftChild {
-    NSArray *const selCells = [_cellStateManager selectedCells];
+    NSArray *const selCells = [self.cellStateManager selectedCells];
     if ([selCells count] > 1) {
         return;
     }
 
-    if (![_cellStateManager hasSelectedCells]) {
-        [_dataSource mindmapView:self addNewLeftChildToItem:_rootCell.identifier atIndex:[_rootCell countOfLeftChildren]];
+    if (![self.cellStateManager hasSelectedCells]) {
+        [self.dataSource mindmapView:self addNewLeftChildToItem:self.rootCell.identifier atIndex:[self.rootCell countOfLeftChildren]];
         return;
     }
 
     QMCell *const selCell = [selCells lastObject];
     if ([selCell isRoot]) {
-        [_dataSource mindmapView:self addNewLeftChildToItem:_rootCell.identifier atIndex:[_rootCell countOfLeftChildren]];
+        [self.dataSource mindmapView:self addNewLeftChildToItem:self.rootCell.identifier atIndex:[self.rootCell countOfLeftChildren]];
     } else {
         if ([selCell isFolded]) {
             [self toggleFoldingOfSelectedCell];
         }
-        [_dataSource mindmapView:self addNewChildToItem:selCell.identifier atIndex:[selCell countOfChildren]];
+        [self.dataSource mindmapView:self addNewChildToItem:selCell.identifier atIndex:[selCell countOfChildren]];
     }
 }
 
 - (void)insertPreviousSibling {
-    if (![_cellStateManager hasSelectedCells]) {
+    if (![self.cellStateManager hasSelectedCells]) {
         return;
     }
 
-    NSArray *const selCells = [_cellStateManager selectedCells];
+    NSArray *const selCells = [self.cellStateManager selectedCells];
     if ([selCells count] > 1) {
         return;
     }
@@ -137,15 +132,15 @@ TB_MANUALWIRE(uiDrawer)
         return;
     }
 
-    [_dataSource mindmapView:self addNewPreviousSiblingToItem:selCell.identifier];
+    [self.dataSource mindmapView:self addNewPreviousSiblingToItem:selCell.identifier];
 }
 
 - (void)insertNextSibling {
-    if (![_cellStateManager hasSelectedCells]) {
+    if (![self.cellStateManager hasSelectedCells]) {
         return;
     }
 
-    NSArray *const selCells = [_cellStateManager selectedCells];
+    NSArray *const selCells = [self.cellStateManager selectedCells];
     if ([selCells count] > 1) {
         return;
     }
@@ -155,23 +150,23 @@ TB_MANUALWIRE(uiDrawer)
         return;
     }
 
-    [_dataSource mindmapView:self addNewNextSiblingToItem:selCell.identifier];
+    [self.dataSource mindmapView:self addNewNextSiblingToItem:selCell.identifier];
 }
 
 - (NSArray *)selectedCells {
-    return _cellStateManager.selectedCells;
+    return self.cellStateManager.selectedCells;
 }
 
 - (void)clearSelection {
-    [_cellStateManager clearSelection];
+    [self.cellStateManager clearSelection];
 }
 
 - (BOOL)rootCellSelected {
-    if (![_cellStateManager hasSelectedCells]) {
+    if (![self.cellStateManager hasSelectedCells]) {
         return NO;
     }
 
-    if ([[[_cellStateManager selectedCells] lastObject] identifier] == _rootCell.identifier) {
+    if ([[[self.cellStateManager selectedCells] lastObject] identifier] == self.rootCell.identifier) {
         return YES;
     }
 
@@ -184,8 +179,8 @@ TB_MANUALWIRE(uiDrawer)
 }
 
 - (void)updateCanvasSize {
-    if (_cellEditor.isEditing) {
-        [_cellEditor endEditing];
+    if (self.cellEditor.isEditing) {
+        [self.cellEditor endEditing];
     }
 
     [self setFrameSize:[self scaledBoundsSizeWithParentSize:self.superview.frame.size]];
@@ -214,11 +209,11 @@ TB_MANUALWIRE(uiDrawer)
 }
 
 - (void)updateFontOfSelectedCellsToFont:(NSFont *)newFont {
-    if (!_cellStateManager.hasSelectedCells) {
+    if (!self.cellStateManager.hasSelectedCells) {
         return;
     }
 
-    for (QMCell *cell in _cellStateManager.selectedCells) {
+    for (QMCell *cell in self.cellStateManager.selectedCells) {
         cell.font = newFont;
     }
 
@@ -227,30 +222,30 @@ TB_MANUALWIRE(uiDrawer)
 }
 
 - (void)toggleFoldingOfSelectedCell {
-    [_dataSource mindmapView:self toggleFoldingForItem:[[_cellStateManager selectedCells][0] identifier]];
+    [self.dataSource mindmapView:self toggleFoldingForItem:[[self.cellStateManager selectedCells][0] identifier]];
 }
 
 - (BOOL)hasSelectedCells {
-    return _cellStateManager.hasSelectedCells;
+    return self.cellStateManager.hasSelectedCells;
 }
 
 - (BOOL)cellIsSelected:(QMCell *)cell {
-    return [_cellStateManager cellIsSelected:cell];
+    return [self.cellStateManager cellIsSelected:cell];
 }
 
 - (BOOL)cellIsCurrentlyEdited:(QMCell *)cell {
-    return _cellEditor.currentlyEditedCell == cell;
+    return self.cellEditor.currentlyEditedCell == cell;
 }
 
 - (void)updateCellWithIdentifier:(id)identifier {
-    QMCell *cellToUpdate = [_cellSelector cellWithIdentifier:identifier fromParentCell:_rootCell];
+    QMCell *cellToUpdate = [self.cellSelector cellWithIdentifier:identifier fromParentCell:self.rootCell];
 
-    NSString *const stringValueOfItem = [_dataSource mindmapView:self stringValueOfItem:identifier];
+    NSString *const stringValueOfItem = [self.dataSource mindmapView:self stringValueOfItem:identifier];
     if (![cellToUpdate.stringValue isEqualToString:stringValueOfItem]) {
         cellToUpdate.stringValue = stringValueOfItem;
     }
 
-    NSFont *const fontOfItem = [_dataSource mindmapView:self fontOfItem:identifier];
+    NSFont *const fontOfItem = [self.dataSource mindmapView:self fontOfItem:identifier];
     if (![cellToUpdate.font isEqual:fontOfItem]) {
         cellToUpdate.font = fontOfItem;
     }
@@ -266,8 +261,8 @@ TB_MANUALWIRE(uiDrawer)
 }
 
 - (void)updateCellFoldingWithIdentifier:(id)identifier {
-    QMCell *cellToUpdate = [_cellSelector cellWithIdentifier:identifier fromParentCell:_rootCell];
-    BOOL folded = [_dataSource mindmapView:self isItemFolded:identifier];
+    QMCell *cellToUpdate = [self.cellSelector cellWithIdentifier:identifier fromParentCell:self.rootCell];
+    BOOL folded = [self.dataSource mindmapView:self isItemFolded:identifier];
     [cellToUpdate setFolded:folded];
 
     NSRect visibleRect = [self visibleRect];
@@ -282,7 +277,7 @@ TB_MANUALWIRE(uiDrawer)
         NSSize distFromVisibleRect = NewSize(cellOrigin.x - visibleOrigin.x, cellOrigin.y - visibleOrigin.y);
 
         [self updateCanvasSize];
-        QMCell *const newCell = [_cellSelector cellWithIdentifier:identifier fromParentCell:_rootCell];
+        QMCell *const newCell = [self.cellSelector cellWithIdentifier:identifier fromParentCell:self.rootCell];
 
         NSPoint newCellOrigin = newCell.origin;
         NSPoint newVisibleRectOrigin = NewPoint(newCellOrigin.x - distFromVisibleRect.width, newCellOrigin.y - distFromVisibleRect.height);
@@ -296,7 +291,7 @@ TB_MANUALWIRE(uiDrawer)
     }
 
     [self updateCanvasSize];
-    QMCell *const newCell = [_cellSelector cellWithIdentifier:identifier fromParentCell:_rootCell];
+    QMCell *const newCell = [self.cellSelector cellWithIdentifier:identifier fromParentCell:self.rootCell];
 
     [self scrollRectToVisible:newCell.familyFrame];
     [self scrollRectToVisible:newCell.frame];
@@ -308,7 +303,7 @@ TB_MANUALWIRE(uiDrawer)
     log4Debug(@"jo");
     NSArray *idArray = [self allChildrenIdentifierOfIdentifier:identifier];
 
-    QMCell *parentCell = [_cellSelector cellWithIdentifier:identifier fromParentCell:_rootCell];
+    QMCell *parentCell = [self.cellSelector cellWithIdentifier:identifier fromParentCell:self.rootCell];
     QMCell *cellToDel;
     if (idArray.count == 0) {
         cellToDel = parentCell.children.lastObject;
@@ -333,9 +328,9 @@ TB_MANUALWIRE(uiDrawer)
 
     QMCell *cellToDel;
     if (idArray.count == 0) {
-        cellToDel = [_rootCell.leftChildren lastObject];
+        cellToDel = [self.rootCell.leftChildren lastObject];
     } else {
-        for (QMCell *cell in _rootCell.leftChildren) {
+        for (QMCell *cell in self.rootCell.leftChildren) {
             if (![idArray containsObject:cell.identifier]) {
                 cellToDel = cell;
                 break;
@@ -343,7 +338,7 @@ TB_MANUALWIRE(uiDrawer)
         }
     }
 
-    [_rootCell removeChild:cellToDel];
+    [self.rootCell removeChild:cellToDel];
 
     [self updateCanvasSize];
     [self setNeedsDisplay:YES];
@@ -355,10 +350,10 @@ we only test the begin edit part. We are being to lazy here...
  */
 - (void)updateCellFamily:(id)parentId forNewCell:(id)childId {
     [self updateCellFamilyForInsertionWithIdentifier:parentId];
-    QMCell *cellToEdit = [_cellSelector cellWithIdentifier:childId fromParentCell:_rootCell];
+    QMCell *cellToEdit = [self.cellSelector cellWithIdentifier:childId fromParentCell:self.rootCell];
 
-    [_cellStateManager clearSelection];
-    [_cellStateManager addCellToSelection:cellToEdit modifier:0];
+    [self.cellStateManager clearSelection];
+    [self.cellStateManager addCellToSelection:cellToEdit modifier:0];
     [self editCell:cellToEdit];
 }
 
@@ -368,16 +363,16 @@ we only test the begin edit part... We are being to lazy here...
  */
 - (void)updateLeftCellFamily:(id)parentId forNewCell:(id)childId {
     [self updateLeftCellFamilyForInsertionWithIdentifier:parentId];
-    QMCell *cellToEdit = [_cellSelector cellWithIdentifier:childId fromParentCell:_rootCell];
+    QMCell *cellToEdit = [self.cellSelector cellWithIdentifier:childId fromParentCell:self.rootCell];
 
-    [_cellStateManager clearSelection];
-    [_cellStateManager addCellToSelection:cellToEdit modifier:0];
+    [self.cellStateManager clearSelection];
+    [self.cellStateManager addCellToSelection:cellToEdit modifier:0];
     [self editCell:cellToEdit];
 }
 
 - (void)updateCellFamilyForInsertionWithIdentifier:(id)parentId {
     NSArray *idArray = [self leftChildrenIdentifierOfIdentifier:parentId];
-    QMCell *parentCell = [_cellSelector cellWithIdentifier:parentId fromParentCell:_rootCell];
+    QMCell *parentCell = [self.cellSelector cellWithIdentifier:parentId fromParentCell:self.rootCell];
     NSUInteger maxIndex = [idArray count] - 1;
 
     __block NSUInteger indexToInsert;
@@ -404,7 +399,7 @@ we only test the begin edit part... We are being to lazy here...
         }];
     }
 
-    const BOOL parentIsLeft = [_dataSource mindmapView:self isItemLeft:parentId];
+    const BOOL parentIsLeft = [self.dataSource mindmapView:self isItemLeft:parentId];
 
     QMCell *cellToInsert = [[QMCell alloc] initWithView:self];
     cellToInsert.left = parentIsLeft;
@@ -425,7 +420,7 @@ we only test the begin edit part... We are being to lazy here...
     __block NSUInteger indexToInsert;
     __block id itemToInsert;
 
-    if (_rootCell.countOfChildren == 0) {
+    if (self.rootCell.countOfChildren == 0) {
         indexToInsert = 0;
         itemToInsert = [leftIdArray lastObject];
     } else {
@@ -437,7 +432,7 @@ we only test the begin edit part... We are being to lazy here...
                 return;
             }
 
-            if ([[_rootCell objectInLeftChildrenAtIndex:index] identifier] != item) {
+            if ([[self.rootCell objectInLeftChildrenAtIndex:index] identifier] != item) {
                 indexToInsert = index;
                 itemToInsert = item;
                 *stop = YES;
@@ -452,7 +447,7 @@ we only test the begin edit part... We are being to lazy here...
     [self.cellPropertiesManager fillCellPropertiesWithIdentifier:itemToInsert cell:cellToInsert];
     [self.cellPropertiesManager fillAllChildrenWithIdentifier:itemToInsert cell:cellToInsert];
 
-    [_rootCell insertObject:cellToInsert inLeftChildrenAtIndex:indexToInsert];
+    [self.rootCell insertObject:cellToInsert inLeftChildrenAtIndex:indexToInsert];
 
     [self updateCanvasSize];
     [self setNeedsDisplay:YES];
@@ -476,7 +471,7 @@ we only test the begin edit part... We are being to lazy here...
 - (void)editingEndedWithString:(NSAttributedString *)newAttrStr forCell:(QMCell *)editedCell byChar:(unichar)character {
     id identifier = editedCell.identifier;
 
-    [_dataSource mindmapView:self editingEndedForItem:identifier];
+    [self.dataSource mindmapView:self editingEndedForItem:identifier];
 
     NSString *const newString = [newAttrStr string];
     NSFont *const newFont = [newAttrStr fontOfTheBeginning];
@@ -486,24 +481,24 @@ we only test the begin edit part... We are being to lazy here...
     BOOL fontModified;
 
     if (oldFont == nil) {
-        fontModified = ![newFont isEqual:[_settings settingForKey:qSettingDefaultFont]];
+        fontModified = ![newFont isEqual:[self.settings settingForKey:qSettingDefaultFont]];
     } else {
         fontModified = ![newFont isEqual:oldFont];
     }
 
     if (stringModified) {
-        [_dataSource mindmapView:self setStringValue:newString ofItem:identifier];
+        [self.dataSource mindmapView:self setStringValue:newString ofItem:identifier];
     }
 
     if (fontModified) {
-        [_dataSource mindmapView:self setFont:newFont ofItems:[[NSArray alloc] initWithObjects:identifier, nil]];
+        [self.dataSource mindmapView:self setFont:newFont ofItems:[[NSArray alloc] initWithObjects:identifier, nil]];
     }
 }
 
 - (void)editingCancelledWithString:(NSAttributedString *)newAttrStr forCell:(QMCell *)editedCell {
-    [_cellStateManager clearSelection];
+    [self.cellStateManager clearSelection];
 
-    [_dataSource mindmapView:self editingCancelledForItem:editedCell.identifier withAttrString:newAttrStr];
+    [self.dataSource mindmapView:self editingCancelledForItem:editedCell.identifier withAttrString:newAttrStr];
 }
 
 #pragma mark NSDraggingSource
@@ -519,8 +514,8 @@ we only test the begin edit part... We are being to lazy here...
 - (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender {
     NSPoint currentMousePosition = [self convertPoint:[sender draggingLocation] fromView:nil];
 
-    QMCell *oldDragTargetCell = _cellStateManager.dragTargetCell;
-    QMCell *newDragTargetCell = [_cellSelector cellContainingPoint:currentMousePosition inCell:_rootCell];
+    QMCell *oldDragTargetCell = self.cellStateManager.dragTargetCell;
+    QMCell *newDragTargetCell = [self.cellSelector cellContainingPoint:currentMousePosition inCell:self.rootCell];
 
     if (oldDragTargetCell != newDragTargetCell) {
         oldDragTargetCell.dragRegion = QMCellRegionNone;
@@ -530,9 +525,9 @@ we only test the begin edit part... We are being to lazy here...
         [self setNeedsDisplay:YES];
     }
 
-    _cellStateManager.dragTargetCell = newDragTargetCell;
-    if (newDragTargetCell != nil && ![_cellStateManager cellIsBeingDragged:newDragTargetCell]) {
-        newDragTargetCell.dragRegion = [_cellLayoutManager regionOfCell:newDragTargetCell atPoint:currentMousePosition];
+    self.cellStateManager.dragTargetCell = newDragTargetCell;
+    if (newDragTargetCell != nil && ![self.cellStateManager cellIsBeingDragged:newDragTargetCell]) {
+        newDragTargetCell.dragRegion = [self.cellLayoutManager regionOfCell:newDragTargetCell atPoint:currentMousePosition];
         [self displayRect:NewRectWithOriginAndSize(newDragTargetCell.origin, newDragTargetCell.size)];
     }
 
@@ -556,34 +551,34 @@ we only test the begin edit part... We are being to lazy here...
     }
 
     // we are in the same view, the only supported mode as of now
-    QMCell *dragTargetCell = _cellStateManager.dragTargetCell;
+    QMCell *dragTargetCell = self.cellStateManager.dragTargetCell;
     if (dragTargetCell == nil) {
         return NO;
     }
 
-    if ([_cellStateManager cellIsBeingDragged:dragTargetCell]) {
+    if ([self.cellStateManager cellIsBeingDragged:dragTargetCell]) {
         return NO;
     }
 
-    if ([_cellStateManager cellIsBeingDragged:_rootCell]) {
+    if ([self.cellStateManager cellIsBeingDragged:self.rootCell]) {
         return NO;
     }
 
-    NSArray *draggedCells = _cellStateManager.draggedCells;
+    NSArray *draggedCells = self.cellStateManager.draggedCells;
     NSMutableArray *draggedItems = [[NSMutableArray alloc] initWithCapacity:[draggedCells count]];
     for (QMCell *cell in draggedCells) {
         [draggedItems addObject:cell.identifier];
     }
 
     if ([dragTargetCell isFolded]) {
-        [_dataSource mindmapView:self toggleFoldingForItem:dragTargetCell.identifier];
+        [self.dataSource mindmapView:self toggleFoldingForItem:dragTargetCell.identifier];
     }
 
     BOOL isCopying = [self dragIsCopying:[sender draggingSourceOperationMask]];
     if (isCopying) {
-        [_dataSource mindmapView:self copyItems:draggedItems toItem:dragTargetCell.identifier inDirection:[self directionFromCellRegion:dragTargetCell.dragRegion]];
+        [self.dataSource mindmapView:self copyItems:draggedItems toItem:dragTargetCell.identifier inDirection:[self directionFromCellRegion:dragTargetCell.dragRegion]];
     } else {
-        [_dataSource mindmapView:self moveItems:draggedItems toItem:dragTargetCell.identifier inDirection:[self directionFromCellRegion:dragTargetCell.dragRegion]];
+        [self.dataSource mindmapView:self moveItems:draggedItems toItem:dragTargetCell.identifier inDirection:[self directionFromCellRegion:dragTargetCell.dragRegion]];
     }
 
     dragTargetCell.dragRegion = QMCellRegionNone;
@@ -595,19 +590,19 @@ we only test the begin edit part... We are being to lazy here...
 - (void)draggingEnded:(id <NSDraggingInfo>)sender {
     /**
     * As described in -doMouseUp:, we get out of the mouse-track loop when a drag session is started. Therefore, we have
-    * to end the mouse-track loop by setting _keepMouseTrackOn.
+    * to end the mouse-track loop by setting self.keepMouseTrackOn.
     */
 
     [self clearMouseTrackLoopFlags];
 
-    [_cellStateManager clearCellsForDrag];
+    [self.cellStateManager clearCellsForDrag];
 }
 
 #pragma mark NSResponder
 - (void)keyDown:(NSEvent *)theEvent {
     // [super keyDown:] cause the app to beep since the super does not implement it
 
-    NSArray *selectedCells = [_cellStateManager selectedCells];
+    NSArray *selectedCells = [self.cellStateManager selectedCells];
     if ([selectedCells count] > 1) {
         return;
     }
@@ -627,16 +622,16 @@ we only test the begin edit part... We are being to lazy here...
         return;
     }
 
-    BOOL hasSelectedCells = [_cellStateManager hasSelectedCells];
-    QMCell *selCell = hasSelectedCells ? [selectedCells lastObject] : _rootCell;
+    BOOL hasSelectedCells = [self.cellStateManager hasSelectedCells];
+    QMCell *selCell = hasSelectedCells ? [selectedCells lastObject] : self.rootCell;
     id selIdentifier = selCell.identifier;
 
-    if ([[_settings settingForKey:qSettingNewChildNodeChars] characterIsMember:keyChar]) {
+    if ([[self.settings settingForKey:qSettingNewChildNodeChars] characterIsMember:keyChar]) {
         [self insertChild];
         return;
     }
 
-    if ([[_settings settingForKey:qSettingNewLeftChildNodeChars] characterIsMember:keyChar]) {
+    if ([[self.settings settingForKey:qSettingNewLeftChildNodeChars] characterIsMember:keyChar]) {
         [self insertLeftChild];
         return;
     }
@@ -645,7 +640,7 @@ we only test the begin edit part... We are being to lazy here...
         return;
     }
 
-    if ([[_settings settingForKey:qSettingEditSelectedNodeChars] characterIsMember:keyChar]
+    if ([[self.settings settingForKey:qSettingEditSelectedNodeChars] characterIsMember:keyChar]
             && !commandKey
             && !shiftKey) {
 
@@ -658,12 +653,12 @@ we only test the begin edit part... We are being to lazy here...
         return;
     }
 
-    if ([[_settings settingForKey:qSettingFoldingChars] characterIsMember:keyChar]) {
-        [_dataSource mindmapView:self toggleFoldingForItem:selIdentifier];
+    if ([[self.settings settingForKey:qSettingFoldingChars] characterIsMember:keyChar]) {
+        [self.dataSource mindmapView:self toggleFoldingForItem:selIdentifier];
         return;
     }
 
-    if ([[_settings settingForKey:qSettingNewSiblingNodeChars] characterIsMember:keyChar]) {
+    if ([[self.settings settingForKey:qSettingNewSiblingNodeChars] characterIsMember:keyChar]) {
 
         if (!commandKey) {
             return;
@@ -707,21 +702,21 @@ we only test the begin edit part... We are being to lazy here...
             return;
         }
 
-        if (![_cellStateManager hasSelectedCells]) {
+        if (![self.cellStateManager hasSelectedCells]) {
             return;
         }
 
-        NSArray *selCells = [_cellStateManager selectedCells];
+        NSArray *selCells = [self.cellStateManager selectedCells];
         if ([selCells count] > 1) {
             return;
         }
 
-        [_dataSource mindmapView:self toggleFoldingForItem:[selCells.lastObject identifier]];
+        [self.dataSource mindmapView:self toggleFoldingForItem:[selCells.lastObject identifier]];
     }
 
     NSEvent *currentEvent;
-    _keepMouseTrackOn = YES;
-    while (_keepMouseTrackOn) {
+    self.keepMouseTrackOn = YES;
+    while (self.keepMouseTrackOn) {
         currentEvent = [self.window nextEventMatchingMask:NSLeftMouseUpMask | NSLeftMouseDraggedMask];
 
         switch ([currentEvent type]) {
@@ -751,7 +746,7 @@ we only test the begin edit part... We are being to lazy here...
         return;
     }
 
-    if ([_cellEditor isEditing]) {
+    if ([self.cellEditor isEditing]) {
         return;
     }
 
@@ -762,7 +757,7 @@ we only test the begin edit part... We are being to lazy here...
 }
 
 - (void)magnifyWithEvent:(NSEvent *)event {
-    if ([_cellEditor isEditing]) {
+    if ([self.cellEditor isEditing]) {
         return;
     }
 
@@ -781,7 +776,7 @@ we only test the begin edit part... We are being to lazy here...
 }
 
 - (void)moveRight:(id)sender {
-    NSArray *selectedCells = [_cellStateManager selectedCells];
+    NSArray *selectedCells = [self.cellStateManager selectedCells];
     if ([selectedCells count] != 1) {
         return;
     }
@@ -797,7 +792,7 @@ we only test the begin edit part... We are being to lazy here...
     }
 
     if ([selCell isFolded]) {
-        [_dataSource mindmapView:self toggleFoldingForItem:selCell.identifier];
+        [self.dataSource mindmapView:self toggleFoldingForItem:selCell.identifier];
     }
 
     NSArray *children = selCell.children;
@@ -811,14 +806,14 @@ we only test the begin edit part... We are being to lazy here...
 }
 
 - (void)moveLeft:(id)sender {
-    NSArray *selectedCells = [_cellStateManager selectedCells];
+    NSArray *selectedCells = [self.cellStateManager selectedCells];
     if ([selectedCells count] != 1) {
         return;
     }
 
     QMCell *selCell = selectedCells[0];
     BOOL selCellIsRoot = [selCell isRoot];
-    NSArray *children = selCellIsRoot ? _rootCell.leftChildren : selCell.children;
+    NSArray *children = selCellIsRoot ? self.rootCell.leftChildren : selCell.children;
 
     if ([selCell isLeft] || selCellIsRoot) {
         if ([children count] == 0) {
@@ -826,7 +821,7 @@ we only test the begin edit part... We are being to lazy here...
         }
 
         if ([selCell isFolded]) {
-            [_dataSource mindmapView:self toggleFoldingForItem:selCell.identifier];
+            [self.dataSource mindmapView:self toggleFoldingForItem:selCell.identifier];
         }
 
         if ([children count] == 1) {
@@ -894,7 +889,7 @@ we only test the begin edit part... We are being to lazy here...
     }
 
     NSPoint clickLocation = [self convertPoint:[event locationInWindow] fromView:nil];
-    QMCell *mouseDownHitCell = [_cellSelector cellContainingPoint:clickLocation inCell:_rootCell];
+    QMCell *mouseDownHitCell = [self.cellSelector cellContainingPoint:clickLocation inCell:self.rootCell];
 
     NSMenu *menu = [self menu];
     NSMenuItem *deleteIconMenuItem = [menu itemWithTag:qDeleteIconMenuItemTag];
@@ -910,7 +905,7 @@ we only test the begin edit part... We are being to lazy here...
     }
 
     void (^deleteAllIconsBlock)(id) = ^(id sender) {
-        [_dataSource mindmapView:self deleteAllIconsOfItem:mouseDownHitCell.identifier];
+        [self.dataSource mindmapView:self deleteAllIconsOfItem:mouseDownHitCell.identifier];
     };
 
     if (NSPointInRect(clickLocation, mouseDownHitCell.textFrame)) {
@@ -944,7 +939,7 @@ we only test the begin edit part... We are being to lazy here...
     [deleteIconMenuItem setEnabled:YES];
     [deleteIconMenuItem setBlockAction:^(id sender) {
         NSUInteger indexOfHitIcon = [mouseDownHitCell.icons indexOfObject:hitIcon];
-        [_dataSource mindmapView:self deleteIconOfItem:mouseDownHitCell.identifier atIndex:indexOfHitIcon];
+        [self.dataSource mindmapView:self deleteIconOfItem:mouseDownHitCell.identifier atIndex:indexOfHitIcon];
     }];
 
     [self enableDeleteAllIconsMenuItem:deleteAllIconsMenuItem withBlock:deleteAllIconsBlock];
@@ -955,7 +950,7 @@ we only test the begin edit part... We are being to lazy here...
 - (void)drawRect:(NSRect)dirtyRect {
     [super drawRect:dirtyRect];
 
-    [_rootCell drawRect:dirtyRect];
+    [self.rootCell drawRect:dirtyRect];
 }
 
 - (BOOL)isFlipped {
@@ -975,13 +970,13 @@ we only test the begin edit part... We are being to lazy here...
 }
 
 - (void)clearMouseTrackLoopFlags {
-    _dragging = NO;
-    _keepMouseTrackOn = NO;
+    self.dragging = NO;
+    self.keepMouseTrackOn = NO;
 }
 
 - (void)doMouseDragged:(NSEvent *)event {
     // drag scrolling
-    QMCell *mouseDownHitCell = _cellStateManager.mouseDownHitCell;
+    QMCell *mouseDownHitCell = self.cellStateManager.mouseDownHitCell;
 
     if (mouseDownHitCell == nil) {
         log4Debug(@"starting to drag scroll");
@@ -992,21 +987,21 @@ we only test the begin edit part... We are being to lazy here...
     }
 
     // already dragging cells
-    if (_dragging) {
+    if (self.dragging) {
         [[self superview] autoscroll:event];
         return;
     }
 
     // starting to dragging cells
     log4Debug(@"starting to drag a cell");
-    _dragging = YES;
+    self.dragging = YES;
 
     /**
     * The user can drag:
     * - selected cells
     * - a non-selected cell
     */
-    NSArray *selCells = [_cellStateManager selectedCells];
+    NSArray *selCells = [self.cellStateManager selectedCells];
     NSMutableArray *toBeDraggedCells = [[NSMutableArray alloc] init];
     if ([selCells containsObject:mouseDownHitCell]) {
         [toBeDraggedCells addObjectsFromArray:selCells];
@@ -1014,7 +1009,7 @@ we only test the begin edit part... We are being to lazy here...
         [toBeDraggedCells addObject:mouseDownHitCell];
     }
 
-    [_dataSource mindmapView:self prepareDragAndDropWithCells:toBeDraggedCells];
+    [self.dataSource mindmapView:self prepareDragAndDropWithCells:toBeDraggedCells];
 
     NSPoint origin = [self convertPoint:NewPoint(mouseDownHitCell.origin.x, mouseDownHitCell.origin.y + mouseDownHitCell.size.height)
                                fromView:self];
@@ -1040,7 +1035,7 @@ we only test the begin edit part... We are being to lazy here...
         [self handleSingleMouseUp];
     }
 
-    _cellStateManager.mouseDownHitCell = nil;
+    self.cellStateManager.mouseDownHitCell = nil;
 }
 
 - (QMDirection)directionFromCellRegion:(QMCellRegion)cellRegion {
@@ -1094,7 +1089,7 @@ we only test the begin edit part... We are being to lazy here...
     [badgeImg lockFocusFlipped:NO];
 
     [hitCellImg drawAtPoint:NewPoint(qSizeOfBadge.width + margin, sizeOfFinalImg.height - [hitCellImg size].height) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:0.65];
-    [_uiDrawer drawBadgeWithNumber:numberOfSelCells atPoint:NewPoint(4, height - 4 - qSizeOfBadge.height)];
+    [self.uiDrawer drawBadgeWithNumber:numberOfSelCells atPoint:NewPoint(4, height - 4 - qSizeOfBadge.height)];
 
     NSDictionary *fontAttr = @{
             NSFontAttributeName : [NSFont fontWithName:@"Helvetica" size:12],
@@ -1116,25 +1111,25 @@ we only test the begin edit part... We are being to lazy here...
 }
 
 - (void)handleSingleMouseDown:(NSPoint)clickLocation modifier:(NSUInteger)modifier {
-    _mouseDownModifier = modifier;
-    QMCell *mouseDownHitCell = [_cellSelector cellContainingPoint:clickLocation inCell:_rootCell];
-    _cellStateManager.mouseDownHitCell = mouseDownHitCell;
+    self.mouseDownModifier = modifier;
+    QMCell *mouseDownHitCell = [self.cellSelector cellContainingPoint:clickLocation inCell:self.rootCell];
+    self.cellStateManager.mouseDownHitCell = mouseDownHitCell;
 
     [self setNeedsDisplay:YES];
 }
 
 - (void)handleSingleMouseUp {
-    BOOL mouseDownCommandKey = modifier_check(_mouseDownModifier, NSCommandKeyMask);;
-    BOOL mouseDownShiftKey = modifier_check(_mouseDownModifier, NSShiftKeyMask);;
+    BOOL mouseDownCommandKey = modifier_check(self.mouseDownModifier, NSCommandKeyMask);;
+    BOOL mouseDownShiftKey = modifier_check(self.mouseDownModifier, NSShiftKeyMask);;
 
-    QMCell *mouseDownHitCell = _cellStateManager.mouseDownHitCell;
+    QMCell *mouseDownHitCell = self.cellStateManager.mouseDownHitCell;
     if (mouseDownHitCell == nil) {
         /**
         * Even if there is no modifier pressed, we get here modifier == 256. Thus, we check whether we have the
         * relevant modifiers not pressed.
         */
         if (!mouseDownShiftKey && !mouseDownCommandKey) {
-            [_cellStateManager clearSelection];
+            [self.cellStateManager clearSelection];
             [self setNeedsDisplay:YES];
         }
 
@@ -1142,22 +1137,22 @@ we only test the begin edit part... We are being to lazy here...
     }
 
     if (mouseDownShiftKey || mouseDownCommandKey) {
-        if ([_cellStateManager cellIsSelected:mouseDownHitCell]) {
-            [_cellStateManager removeCellFromSelection:mouseDownHitCell modifier:_mouseDownModifier];
+        if ([self.cellStateManager cellIsSelected:mouseDownHitCell]) {
+            [self.cellStateManager removeCellFromSelection:mouseDownHitCell modifier:self.mouseDownModifier];
             [self setNeedsDisplay:YES];
 
             return;
         }
 
-        [_cellStateManager addCellToSelection:mouseDownHitCell modifier:_mouseDownModifier];
+        [self.cellStateManager addCellToSelection:mouseDownHitCell modifier:self.mouseDownModifier];
         [self setNeedsDisplay:YES];
 
         return;
     }
 
     // No relevant modifier keys pressed
-    [_cellStateManager clearSelection];
-    [_cellStateManager addCellToSelection:mouseDownHitCell modifier:0];
+    [self.cellStateManager clearSelection];
+    [self.cellStateManager addCellToSelection:mouseDownHitCell modifier:0];
 
     [self setNeedsDisplay:YES];
 }
@@ -1167,7 +1162,7 @@ we only test the begin edit part... We are being to lazy here...
 }
 
 - (void)zoomByFactor:(CGFloat)factor withFixedPoint:(NSPoint)locInView {
-    if ([_cellEditor isEditing]) {
+    if ([self.cellEditor isEditing]) {
         return;
     }
 
@@ -1211,7 +1206,7 @@ we only test the begin edit part... We are being to lazy here...
 }
 
 - (NSSize)scaledBoundsSizeWithParentSize:(NSSize)unconvertedParentSize {
-    NSSize rootFamilySize = _rootCell.familySize;
+    NSSize rootFamilySize = self.rootCell.familySize;
 
     NSSize parentSize = [self convertSize:unconvertedParentSize fromView:nil];
     NSSize newBoundsSize = NewSize(rootFamilySize.width + 2 * parentSize.width, rootFamilySize.height + 2 * parentSize.height);
@@ -1219,30 +1214,30 @@ we only test the begin edit part... We are being to lazy here...
     NSSize newBoundsSizeInParent = [self convertSize:newBoundsSize toView:nil];
 
     // TODO: maybe we only have to shift the origins of all cells and their lines.
-    _rootCell.familyOrigin = newMapOrigin;
-    [_rootCell computeGeometry];
+    self.rootCell.familyOrigin = newMapOrigin;
+    [self.rootCell computeGeometry];
 
     return newBoundsSizeInParent;
 }
 
 - (NSArray *)allChildrenIdentifierOfIdentifier:(id)identifier {
     NSMutableArray *idArray = [[NSMutableArray alloc] init];
-    BOOL parentIsRoot = (identifier == _rootCell.identifier);
+    BOOL parentIsRoot = (identifier == self.rootCell.identifier);
 
     if (parentIsRoot) {
-        NSUInteger countOfChildren = (NSUInteger) [_dataSource mindmapView:self numberOfChildrenOfItem:nil];
+        NSUInteger countOfChildren = (NSUInteger) [self.dataSource mindmapView:self numberOfChildrenOfItem:nil];
         for (int i = 0; i < countOfChildren; i++) {
-            [idArray addObject:[_dataSource mindmapView:self child:i ofItem:nil]];
+            [idArray addObject:[self.dataSource mindmapView:self child:i ofItem:nil]];
         }
 
-        NSUInteger countOfLeftChildren = (NSUInteger) [_dataSource mindmapView:self numberOfLeftChildrenOfItem:nil];
+        NSUInteger countOfLeftChildren = (NSUInteger) [self.dataSource mindmapView:self numberOfLeftChildrenOfItem:nil];
         for (int i = 0; i < countOfLeftChildren; i++) {
-            [idArray addObject:[_dataSource mindmapView:self leftChild:i ofItem:nil]];
+            [idArray addObject:[self.dataSource mindmapView:self leftChild:i ofItem:nil]];
         }
     } else {
-        NSUInteger countOfChildren = (NSUInteger) [_dataSource mindmapView:self numberOfChildrenOfItem:identifier];
+        NSUInteger countOfChildren = (NSUInteger) [self.dataSource mindmapView:self numberOfChildrenOfItem:identifier];
         for (int i = 0; i < countOfChildren; i++) {
-            [idArray addObject:[_dataSource mindmapView:self child:i ofItem:identifier]];
+            [idArray addObject:[self.dataSource mindmapView:self child:i ofItem:identifier]];
         }
     }
 
@@ -1252,9 +1247,9 @@ we only test the begin edit part... We are being to lazy here...
 - (NSArray *)leftChildrenIdentifierOfIdentifier:(id)identifier {
     NSMutableArray *idArray = [[NSMutableArray alloc] init];
 
-    NSUInteger countOfChildren = (NSUInteger) [_dataSource mindmapView:self numberOfChildrenOfItem:identifier];
+    NSUInteger countOfChildren = (NSUInteger) [self.dataSource mindmapView:self numberOfChildrenOfItem:identifier];
     for (int i = 0; i < countOfChildren; i++) {
-        [idArray addObject:[_dataSource mindmapView:self child:i ofItem:identifier]];
+        [idArray addObject:[self.dataSource mindmapView:self child:i ofItem:identifier]];
     }
 
     return idArray;
@@ -1263,16 +1258,16 @@ we only test the begin edit part... We are being to lazy here...
 - (NSArray *)leftChildrenIdentifierOfRootCell {
     NSMutableArray *idArray = [[NSMutableArray alloc] init];
 
-    NSUInteger countOfChildren = (NSUInteger) [_dataSource mindmapView:self numberOfLeftChildrenOfItem:nil];
+    NSUInteger countOfChildren = (NSUInteger) [self.dataSource mindmapView:self numberOfLeftChildrenOfItem:nil];
     for (int i = 0; i < countOfChildren; i++) {
-        [idArray addObject:[_dataSource mindmapView:self leftChild:i ofItem:nil]];
+        [idArray addObject:[self.dataSource mindmapView:self leftChild:i ofItem:nil]];
     }
 
     return idArray;
 }
 
 - (void)editCell:(QMCell *)cellToEdit {
-    [_cellEditor beginEditStringValueForCell:cellToEdit];
+    [self.cellEditor beginEditStringValueForCell:cellToEdit];
 }
 
 - (void)scrollToCenter {
@@ -1280,8 +1275,8 @@ we only test the begin edit part... We are being to lazy here...
     NSSize parentSize = clipView.frame.size;
     NSSize parentSizeInView = [self convertSize:parentSize fromView:nil];
 
-    NSPoint rootOrigin = _rootCell.origin;
-    NSSize rootSize = _rootCell.size;
+    NSPoint rootOrigin = self.rootCell.origin;
+    NSSize rootSize = self.rootCell.size;
 
     NSPoint scrollPt = NewPoint(rootOrigin.x - parentSizeInView.width / 2 + rootSize.width / 2, rootOrigin.y - parentSizeInView.height / 2 + rootSize.height / 2);
     [self scrollPoint:scrollPt];
@@ -1303,8 +1298,8 @@ we only test the begin edit part... We are being to lazy here...
 }
 
 - (void)replaceSelectionWithCellAndRedisplay:(QMCell *)cell {
-    [_cellStateManager clearSelection];
-    [_cellStateManager addCellToSelection:cell modifier:0];
+    [self.cellStateManager clearSelection];
+    [self.cellStateManager addCellToSelection:cell modifier:0];
     [self scrollToMakeVisibleCell:cell];
     [self setNeedsDisplay:YES];
 }
@@ -1329,7 +1324,7 @@ we only test the begin edit part... We are being to lazy here...
                               positionOfCell:(QMCell * (^)(NSArray *))positionOfCell
                                 cellSelector:(QMCell * (^)(NSArray *))cellSelector {
 
-    NSArray *selectedCells = [_cellStateManager selectedCells];
+    NSArray *selectedCells = [self.cellStateManager selectedCells];
     if ([selectedCells count] != 1) {
         return;
     }
@@ -1348,7 +1343,7 @@ we only test the begin edit part... We are being to lazy here...
 
     QMCell *cellIterator = selCell.parent;
     QMCell *nextLevelRootCell = nil;
-    while (cellIterator != _rootCell && nextLevelRootCell == nil) {
+    while (cellIterator != self.rootCell && nextLevelRootCell == nil) {
         if (positionOfCell([cellIterator containingArray]) == cellIterator) {
             cellIterator = cellIterator.parent;
             continue;
@@ -1359,7 +1354,7 @@ we only test the begin edit part... We are being to lazy here...
     }
 
     // case 5
-    if (cellIterator == _rootCell || nextLevelRootCell == nil) {
+    if (cellIterator == self.rootCell || nextLevelRootCell == nil) {
         return;
     }
 
