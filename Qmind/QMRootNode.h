@@ -11,15 +11,12 @@
 
 static NSString * const qNodeLeftChildrenKey = @"leftChildren";
 
-@interface QMRootNode : QMNode {
-@protected
-    NSMutableArray *_leftChildren;
-}
+@interface QMRootNode : QMNode
 
 /**
 * Returns the children on the LEFT side.
 */
-@property (readonly, strong) NSArray *leftChildren;
+@property (readonly) NSArray *leftChildren;
 
 @property (readonly, weak) NSArray *allChildren;
 

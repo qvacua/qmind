@@ -8,10 +8,18 @@
 
 #import "QMRootNode.h"
 
-@implementation QMRootNode
+@interface QMRootNode ()
+
+@property (readonly) NSMutableArray *mutableLeftChildren;
+
+@end
+
+@implementation QMRootNode {
+    NSMutableArray *_leftChildren;
+}
 
 @dynamic allChildren;
-@synthesize leftChildren = _leftChildren;
+@dynamic mutableLeftChildren;
 
 + (BOOL)automaticallyNotifiesObserversForKey:(NSString *)key {
     if ([key isEqualToString:qNodeLeftChildrenKey]) {
@@ -34,10 +42,10 @@
     result.stringValue = self.stringValue;
     result.font = self.font;
     result.unsupportedChildren = [[NSMutableArray alloc] initWithArray:self.unsupportedChildren copyItems:YES];
-    for (QMNode *child in _children) {
+    for (QMNode *child in self.children) {
         [result addObjectInChildren:[child copy]];
     }
-    for (QMNode *child in _leftChildren) {
+    for (QMNode *child in self.leftChildren) {
         [result addObjectInChildren:[child copy]];
     }
     for (NSString *icon in _icons) {
@@ -56,19 +64,6 @@
     [super addObserver:observer forKeyPath:keyPath];
 }
 
-- (void)encodeWithCoder:(NSCoder *)coder {
-    [super encodeWithCoder:coder];
-    [coder encodeObject:_leftChildren forKey:qNodeLeftChildrenArchiveKey];
-}
-
-- (id)initWithCoder:(NSCoder *)decoder {
-    if ((self = [super initWithCoder:decoder])) {
-        _leftChildren = [decoder decodeObjectForKey:qNodeLeftChildrenArchiveKey];
-    }
-
-    return self;
-}
-
 - (BOOL)isRoot {
     return YES;
 }
@@ -78,19 +73,19 @@
 }
 
 - (NSUInteger)countOfLeftChildren {
-    return _leftChildren.count;
+    return self.leftChildren.count;
 }
 
 - (QMNode *)objectInLeftChildrenAtIndex:(NSUInteger)index {
-    return [_leftChildren objectAtIndex:index];
+    return [self.leftChildren objectAtIndex:index];
 }
 
 - (void)insertObject:(QMNode *)childNode inLeftChildrenAtIndex:(NSUInteger)index {
-    [[_undoManager prepareWithInvocationTarget:self] removeObjectFromLeftChildrenAtIndex:index];
+    [[self.undoManager prepareWithInvocationTarget:self] removeObjectFromLeftChildrenAtIndex:index];
 
     childNode.parent = self;
-    childNode.undoManager = _undoManager;
-    [_leftChildren insertObject:childNode atIndex:index];
+    childNode.undoManager = self.undoManager;
+    [self.mutableLeftChildren insertObject:childNode atIndex:index];
 
     [self.observerInfos enumerateObjectsUsingBlock:^(QObserverInfo *info, BOOL *stop) {
         [childNode addObserver:info.observer forKeyPath:info.keyPath];
@@ -98,18 +93,18 @@
 }
 
 - (void)removeObjectFromLeftChildrenAtIndex:(NSUInteger)index {
-    QMNode *nodeToDel = [_leftChildren objectAtIndex:index];
+    QMNode *nodeToDel = [self.leftChildren objectAtIndex:index];
     nodeToDel.parent = nil;
 
-    [[_undoManager prepareWithInvocationTarget:self] insertObject:nodeToDel inLeftChildrenAtIndex:index];
+    [[self.undoManager prepareWithInvocationTarget:self] insertObject:nodeToDel inLeftChildrenAtIndex:index];
 
-    [_leftChildren removeObjectAtIndex:index];
+    [self.mutableLeftChildren removeObjectAtIndex:index];
 
     [nodeToDel removeObserver:[[self.observerInfos anyObject] observer]];
 }
 
 - (void)addObjectInLeftChildren:(QMNode *)childNode {
-    [self insertObject:childNode inLeftChildrenAtIndex:_leftChildren.count];
+    [self insertObject:childNode inLeftChildrenAtIndex:self.leftChildren.count];
 }
 
 - (NSUInteger)countOfAllChildren {
@@ -117,7 +112,7 @@
 }
 
 - (NSArray *)allChildren {
-    return [_children arrayByAddingObjectsFromArray:_leftChildren];
+    return [self.children arrayByAddingObjectsFromArray:self.leftChildren];
 }
 
 - (id)init {
@@ -132,5 +127,25 @@
     return self;
 }
 
+#pragma mark NSCoding
+- (void)encodeWithCoder:(NSCoder *)coder {
+    [super encodeWithCoder:coder];
+    [coder encodeObject:_leftChildren forKey:qNodeLeftChildrenArchiveKey];
+}
+
+- (id)initWithCoder:(NSCoder *)decoder {
+    if ((self = [super initWithCoder:decoder])) {
+        _leftChildren = [decoder decodeObjectForKey:qNodeLeftChildrenArchiveKey];
+    }
+
+    return self;
+}
+
+#pragma mark Private
+- (NSMutableArray *)mutableLeftChildren {
+    @synchronized (self) {
+        return _leftChildren;
+    }
+}
 
 @end
