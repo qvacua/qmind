@@ -21,22 +21,7 @@
 @dynamic allChildren;
 @dynamic mutableLeftChildren;
 
-+ (BOOL)automaticallyNotifiesObserversForKey:(NSString *)key {
-    if ([key isEqualToString:qNodeLeftChildrenKey]) {
-        return YES;
-    }
-
-    return [super automaticallyNotifiesObserversForKey:key];
-}
-
-- (BOOL)isFolded {
-    return NO;
-}
-
-- (void)setFolded {
-    // noop
-}
-
+#pragma mark Public
 - (QMNode *)node {
     QMNode *result = [[QMNode alloc] init];
     result.stringValue = self.stringValue;
@@ -48,28 +33,11 @@
     for (QMNode *child in self.leftChildren) {
         [result addObjectInChildren:[child copy]];
     }
-    for (NSString *icon in _icons) {
+    for (NSString *icon in self.icons) {
         [result addObjectInIcons:[icon copy]];
     }
 
     return result;
-}
-
-- (void)addObserver:(id)observer forKeyPath:(NSString *)keyPath {
-    if ([keyPath isEqualToString:qNodeLeftChildrenKey]) {
-        [self addObserver:observer forKeyPath:keyPath options:NSKeyValueObservingOptionNew context:NULL];
-        return;
-    }
-
-    [super addObserver:observer forKeyPath:keyPath];
-}
-
-- (BOOL)isRoot {
-    return YES;
-}
-
-- (BOOL)isLeaf {
-    return self.allChildren.count == 0;
 }
 
 - (NSUInteger)countOfLeftChildren {
@@ -107,6 +75,23 @@
     [self insertObject:childNode inLeftChildrenAtIndex:self.leftChildren.count];
 }
 
+#pragma mark QMNode
+- (BOOL)isFolded {
+    return NO;
+}
+
+- (void)setFolded {
+    // noop
+}
+
+- (BOOL)isRoot {
+    return YES;
+}
+
+- (BOOL)isLeaf {
+    return self.allChildren.count == 0;
+}
+
 - (NSUInteger)countOfAllChildren {
     return self.allChildren.count;
 }
@@ -115,6 +100,26 @@
     return [self.children arrayByAddingObjectsFromArray:self.leftChildren];
 }
 
+#pragma mark QObservedObject
+- (void)addObserver:(id)observer forKeyPath:(NSString *)keyPath {
+    if ([keyPath isEqualToString:qNodeLeftChildrenKey]) {
+        [self addObserver:observer forKeyPath:keyPath options:NSKeyValueObservingOptionNew context:NULL];
+        return;
+    }
+
+    [super addObserver:observer forKeyPath:keyPath];
+}
+
+#pragma mark NSKeyValueObservingCustomization
++ (BOOL)automaticallyNotifiesObserversForKey:(NSString *)key {
+    if ([key isEqualToString:qNodeLeftChildrenKey]) {
+        return YES;
+    }
+
+    return [super automaticallyNotifiesObserversForKey:key];
+}
+
+#pragma mark Initializer
 - (id)init {
     return [self initWithAttributes:nil];
 }
@@ -130,7 +135,7 @@
 #pragma mark NSCoding
 - (void)encodeWithCoder:(NSCoder *)coder {
     [super encodeWithCoder:coder];
-    [coder encodeObject:_leftChildren forKey:qNodeLeftChildrenArchiveKey];
+    [coder encodeObject:self.leftChildren forKey:qNodeLeftChildrenArchiveKey];
 }
 
 - (id)initWithCoder:(NSCoder *)decoder {
