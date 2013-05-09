@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "QMNode.h"
 
-static NSString * const qNodeLeftChildrenKey = @"leftChildren";
+extern NSString * const qNodeLeftChildrenKey;
 
 @interface QMRootNode : QMNode
 

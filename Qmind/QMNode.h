@@ -9,25 +9,25 @@
 #import <Foundation/Foundation.h>
 #import <Qkit/Qkit.h>
 
-static NSString * const qNodeTextAttributeKey = @"TEXT";
-static NSString * const qNodeFoldedAttributeKey = @"FOLDED";
-static NSString * const qNodePositionAttributeKey = @"POSITION";
+extern NSString * const qNodeTextAttributeKey;
+extern NSString * const qNodeFoldedAttributeKey;
+extern NSString * const qNodePositionAttributeKey;
 
-static NSString * const qNodeParentArchiveKey = @"parent";
-static NSString * const qNodeChildrenArchiveKey = @"children";
-static NSString * const qNodeLeftChildrenArchiveKey = @"leftChildren";
-static NSString * const qNodeAttributesArchiveKey = @"attributes";
-static NSString * const qNodeUnsupportedChildrenArchiveKey = @"unsupportedChildren";
-static NSString * const qNodeFontArchiveKey = @"font";
-static NSString * const qNodeIconsArchiveKey = @"icons";
+extern NSString * const qNodeParentArchiveKey;
+extern NSString * const qNodeChildrenArchiveKey;
+extern NSString * const qNodeLeftChildrenArchiveKey;
+extern NSString * const qNodeAttributesArchiveKey;
+extern NSString * const qNodeUnsupportedChildrenArchiveKey;
+extern NSString * const qNodeFontArchiveKey;
+extern NSString * const qNodeIconsArchiveKey;
 
-static NSString * const qNodeUti = @"com.qvacua.mindmap.node";
+extern NSString * const qNodeUti;
 
-static NSString * const qNodeStringValueKey = @"stringValue";
-static NSString * const qNodeChildrenKey = @"children";
-static NSString * const qNodeFontKey = @"font";
-static NSString * const qNodeIconsKey = @"icons";
-static NSString * const qNodeFoldingKey = @"folded";
+extern NSString * const qNodeStringValueKey;
+extern NSString * const qNodeChildrenKey;
+extern NSString * const qNodeFontKey;
+extern NSString * const qNodeIconsKey;
+extern NSString * const qNodeFoldingKey;
 
 /**
 * Model representation of a Mindmap's node.

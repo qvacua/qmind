@@ -8,6 +8,8 @@
 
 #import "QMRootNode.h"
 
+NSString * const qNodeLeftChildrenKey = @"leftChildren";
+
 @interface QMRootNode ()
 
 @property (readonly) NSMutableArray *mutableLeftChildren;

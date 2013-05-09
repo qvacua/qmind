@@ -8,8 +8,28 @@
 
 #import "QMNode.h"
 
-static NSString * const qNonTextualNodeText = @"NON TEXTUAL NODE";
-static NSString * const qTrueStringValue = @"true";
+NSString * const qNodeTextAttributeKey = @"TEXT";
+NSString * const qNodeFoldedAttributeKey = @"FOLDED";
+NSString * const qNodePositionAttributeKey = @"POSITION";
+
+NSString * const qNodeParentArchiveKey = @"parent";
+NSString * const qNodeChildrenArchiveKey = @"children";
+NSString * const qNodeLeftChildrenArchiveKey = @"leftChildren";
+NSString * const qNodeAttributesArchiveKey = @"attributes";
+NSString * const qNodeUnsupportedChildrenArchiveKey = @"unsupportedChildren";
+NSString * const qNodeFontArchiveKey = @"font";
+NSString * const qNodeIconsArchiveKey = @"icons";
+
+NSString * const qNodeUti = @"com.qvacua.mindmap.node";
+
+NSString * const qNodeStringValueKey = @"stringValue";
+NSString * const qNodeChildrenKey = @"children";
+NSString * const qNodeFontKey = @"font";
+NSString * const qNodeIconsKey = @"icons";
+NSString * const qNodeFoldingKey = @"folded";
+
+NSString * const qNonTextualNodeText = @"NON TEXTUAL NODE";
+NSString * const qTrueStringValue = @"true";
 
 @interface QMNode ()
 
