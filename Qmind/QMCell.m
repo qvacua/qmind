@@ -78,10 +78,6 @@
     }
 }
 
-- (NSSize)familySize {
-    return [self sizeOfKind:&_familySize];
-}
-
 - (BOOL)isFolded {
     @synchronized (self) {
         return _folded;
@@ -99,21 +95,42 @@
     }
 }
 
+- (NSSize)familySize {
+    @synchronized (self) {
+        [self computeAllSizesIfNecessary];
+        return _familySize;
+    }
+}
+
 - (NSSize)size {
     @synchronized (self) {
-        return [self sizeOfKind:&_size];
+        [self computeAllSizesIfNecessary];
+        return _size;
     }
 }
 
 - (NSSize)iconSize {
     @synchronized (self) {
-        return [self sizeOfKind:&_iconSize];
+        [self computeAllSizesIfNecessary];
+        return _iconSize;
     }
 }
 
 - (NSSize)textSize {
     @synchronized (self) {
-        return [self sizeOfKind:&_textSize];
+        [self computeAllSizesIfNecessary];
+        return _textSize;
+    }
+}
+
+- (NSSize)childrenFamilySize {
+    @synchronized (self) {
+        if (self.leaf || self.folded) {
+            return NewSize(0.0, 0.0);
+        }
+
+        [self computeAllSizesIfNecessary];
+        return _childrenFamilySize;
     }
 }
 
@@ -133,16 +150,6 @@
 - (NSRect)textFrame {
     @synchronized (self) {
         return NewRectWithOriginAndSize(self.textOrigin, self.textSize);
-    }
-}
-
-- (NSSize)childrenFamilySize {
-    @synchronized (self) {
-        if (self.isLeaf || self.isFolded) {
-            return NewSize(0.0, 0.0);
-        }
-
-        return [self sizeOfKind:&_childrenFamilySize];
     }
 }
 
@@ -359,20 +366,19 @@
 }
 
 #pragma mark Private
-- (NSSize)sizeOfKind:(NSSize *)sizeToCompute {
+- (void)computeAllSizesIfNecessary {
     if (!self.needsToRecomputeSize) {
-        return *sizeToCompute;
+        return;
     }
 
     self.needsToRecomputeSize = NO;
 
     _iconSize = [self.cellSizeManager sizeOfIconsOfCell:self];
     _textSize = [self.cellSizeManager sizeOfTextOfCell:self];
-    _childrenFamilySize = [self.cellSizeManager sizeOfChildrenFamily:self.children];
     _size = [self.cellSizeManager sizeOfCell:self];
-    _familySize = [self.cellSizeManager sizeOfFamilyOfCell:self];
 
-    return *sizeToCompute;
+    _childrenFamilySize = [self.cellSizeManager sizeOfChildrenFamily:self.children];
+    _familySize = [self.cellSizeManager sizeOfFamilyOfCell:self];
 }
 
 - (NSMutableArray *)mutableChildren {

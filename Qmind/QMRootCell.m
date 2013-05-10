@@ -61,8 +61,25 @@
             return NewSize(0, 0);
         }
 
-        return [self sizeOfKind:&_leftChildrenFamilySize];
+        [self computeAllSizesIfNecessary];
+        return _leftChildrenFamilySize;
     }
+}
+
+- (void)computeAllSizesIfNecessary {
+    if (!self.needsToRecomputeSize) {
+        return;
+    }
+
+    self.needsToRecomputeSize = NO;
+
+    _iconSize = [self.cellSizeManager sizeOfIconsOfCell:self];
+    _textSize = [self.cellSizeManager sizeOfTextOfCell:self];
+    _size = [self.cellSizeManager sizeOfCell:self];
+
+    _childrenFamilySize = [self.cellSizeManager sizeOfChildrenFamily:self.children];
+    _leftChildrenFamilySize = [self.cellSizeManager sizeOfChildrenFamily:self.leftChildren];
+    _familySize = [self.cellSizeManager sizeOfFamilyOfCell:self];
 }
 
 #pragma mark QMCell
@@ -145,23 +162,6 @@
     @synchronized (self) {
         return _leftChildren;
     }
-}
-
-- (NSSize)sizeOfKind:(NSSize *)sizeToCompute {
-    if (!self.needsToRecomputeSize) {
-        return *sizeToCompute;
-    }
-
-    self.needsToRecomputeSize = NO;
-
-    _iconSize = [self.cellSizeManager sizeOfIconsOfCell:self];
-    _textSize = [self.cellSizeManager sizeOfTextOfCell:self];
-    _size = [self.cellSizeManager sizeOfCell:self];
-    _childrenFamilySize = [self.cellSizeManager sizeOfChildrenFamily:self.children];
-    _leftChildrenFamilySize = [self.cellSizeManager sizeOfChildrenFamily:self.leftChildren];
-    _familySize = [self.cellSizeManager sizeOfFamilyOfCell:self];
-
-    return *sizeToCompute;
 }
 
 @end
