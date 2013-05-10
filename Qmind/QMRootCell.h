@@ -8,13 +8,9 @@
 
 #import "QMCell.h"
 
-@interface QMRootCell : QMCell {
-@protected
-    NSMutableArray *_leftChildren;
-    NSSize _leftChildrenFamilySize;
-}
+@interface QMRootCell : QMCell
 
-@property (readonly, strong) NSArray *leftChildren;
+@property (readonly) NSArray *leftChildren;
 @property (readonly, weak) NSArray *allChildren;
 
 /**

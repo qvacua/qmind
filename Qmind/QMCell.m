@@ -320,17 +320,17 @@
 
 #pragma mark Private
 - (NSSize)sizeOfKind:(NSSize *)sizeToCompute {
-    if (!_needsToRecomputeSize) {
+    if (!self.needsToRecomputeSize) {
         return *sizeToCompute;
     }
 
     self.needsToRecomputeSize = NO;
 
-    _iconSize = [_cellSizeManager sizeOfIconsOfCell:self];
-    _textSize = [_cellSizeManager sizeOfTextOfCell:self];
-    _childrenFamilySize = [_cellSizeManager sizeOfChildrenFamily:_children];
-    _size = [_cellSizeManager sizeOfCell:self];
-    _familySize = [_cellSizeManager sizeOfFamilyOfCell:self];
+    _iconSize = [self.cellSizeManager sizeOfIconsOfCell:self];
+    _textSize = [self.cellSizeManager sizeOfTextOfCell:self];
+    _childrenFamilySize = [self.cellSizeManager sizeOfChildrenFamily:self.children];
+    _size = [self.cellSizeManager sizeOfCell:self];
+    _familySize = [self.cellSizeManager sizeOfFamilyOfCell:self];
 
     return *sizeToCompute;
 }

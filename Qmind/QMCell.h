@@ -74,36 +74,36 @@ typedef enum {
 /**
 * The QMMindmapView containing the cell.
 */
-@property (readwrite, weak) QMMindmapView *view;
+@property (weak) QMMindmapView *view;
 
 /**
 * When a cell is dragged and is hovering over this cell, -dragRegion returns where the dragged cell is, ie E, W, S, N.
 */
-@property (readwrite, assign) QMCellRegion dragRegion;
+@property QMCellRegion dragRegion;
 
 /**
 * The identifier for the node it refers to. If this were a database-based app, this would be the database ID. This is
 * used to communicate with the datasource
 */
-@property (readwrite, strong) id identifier;
+@property id identifier;
 
-@property (readwrite, weak) QMCell *parent;
-@property (readonly, strong) NSArray *children;
+@property (weak) QMCell *parent;
+@property (readonly) NSArray *children;
 
 /**
 * This is YES, when the cell is on the left side of the root cell.
 */
-@property (readwrite, getter=isLeft) BOOL left;
+@property (getter=isLeft) BOOL left;
 
 /**
 * This is the textual value of the cell.
 */
-@property (readwrite, weak) NSString *stringValue;
+@property (weak) NSString *stringValue;
 
 /**
 * The string enriched with the font information
 */
-@property (readonly, strong) NSAttributedString *attributedString;
+@property (readonly) NSAttributedString *attributedString;
 
 /**
 * Cached NSRange for the complete text. The computation of this value takes quite some time, thus caching.
@@ -113,7 +113,7 @@ typedef enum {
 /**
 * The used font of this cell. Can be nil, in which case we use the default font.
 */
-@property (readwrite, strong) NSFont *font;
+@property NSFont *font;
 
 /**
 * This array contains the icons of the cell. It can be a NSString or an NSImage.
@@ -123,7 +123,7 @@ typedef enum {
 /**
 * The line starting from the left-bottom corner of the cell and ending at the left-bottom corner of each child.
 */
-@property (readwrite, strong) NSBezierPath *line;
+@property NSBezierPath *line;
 
 /**
 * YES, if the cell has got no child.
@@ -133,7 +133,7 @@ typedef enum {
 /**
 * YES, if the cell is in folded state.
 */
-@property (readwrite, getter=isFolded) BOOL folded;
+@property (getter=isFolded) BOOL folded;
 
 /**
 * YES, if the cell is root
@@ -154,7 +154,7 @@ typedef enum {
 /**
 * The origin of the cell only, i.e. without child cells. This is the origin of the cell containing all contents and margins.
 */
-@property (readwrite) NSPoint origin;
+@property NSPoint origin;
 
 /**
 * The size of the cell only, i.e. without child cells. This is the origin of the cell containing all contents and margins.
@@ -165,7 +165,7 @@ typedef enum {
 * The origin of the cell with all of its child cells. This is different from cellOrigin since in most cases there will
 * be child cells which all together is taller than the parent cell.
 */
-@property (readwrite) NSPoint familyOrigin;
+@property NSPoint familyOrigin;
 
 /**
 * The size of the cell with all of its child cells.
@@ -185,7 +185,7 @@ typedef enum {
 /**
 * The origin of the text for the cell without any margin
 */
-@property (readwrite) NSPoint textOrigin;
+@property NSPoint textOrigin;
 
 /**
 * The size of text only without any margin
@@ -202,7 +202,7 @@ typedef enum {
 */
 @property (readonly) NSSize iconSize;
 
-@property (readwrite) BOOL needsToRecomputeSize;
+@property BOOL needsToRecomputeSize;
 
 /**
 * Designated initializer. If parent is nil, then the cell will most probably be a root node or is being copied.

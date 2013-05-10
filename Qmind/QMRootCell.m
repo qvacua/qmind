@@ -6,16 +6,66 @@
  * See LICENSE
  */
 
-#import "QMRootCell.h"
 #import <Qkit/Qkit.h>
+#import "QMRootCell.h"
 #import "QMCellDrawer.h"
 #import "QMCellSizeManager.h"
 
-@implementation QMRootCell
+@interface QMRootCell ()
 
+@property(readonly) NSMutableArray *mutableLeftChildren;
+
+@end
+
+@implementation QMRootCell {
+    NSMutableArray *_leftChildren;
+    NSSize _leftChildrenFamilySize;
+}
+
+@dynamic mutableLeftChildren;
 @dynamic leftChildrenFamilySize;
-@synthesize leftChildren = _leftChildren;
 
+- (QMCell *)objectInLeftChildrenAtIndex:(NSUInteger)index {
+    return self.leftChildren[index];
+}
+
+- (NSUInteger)countOfLeftChildren {
+    return self.leftChildren.count;
+}
+
+- (void)insertObject:(QMCell *)childCell inLeftChildrenAtIndex:(NSUInteger)index {
+    childCell.parent = self;
+    childCell.left = YES;
+    [self.mutableLeftChildren insertObject:childCell atIndex:index];
+
+    self.needsToRecomputeSize = YES;
+}
+
+- (void)removeObjectFromLeftChildrenAtIndex:(NSUInteger)index {
+    QMCell *cellToDel = [self.leftChildren objectAtIndex:index];
+    cellToDel.parent = nil;
+    cellToDel.left = NO;
+
+    [self.mutableLeftChildren removeObjectAtIndex:index];
+
+    self.needsToRecomputeSize = YES;
+}
+
+- (void)addObjectInLeftChildren:(QMCell *)childCell {
+    [self insertObject:childCell inLeftChildrenAtIndex:self.leftChildren.count];
+}
+
+- (NSSize)leftChildrenFamilySize {
+    @synchronized (self) {
+        if (self.leaf || self.folded) {
+            return NewSize(0, 0);
+        }
+
+        return [self sizeOfKind:&_leftChildrenFamilySize];
+    }
+}
+
+#pragma mark QMCell
 - (BOOL)isRoot {
     return YES;
 }
@@ -25,11 +75,11 @@
 }
 
 - (BOOL)isLeaf {
-    if (_children.count > 0) {
+    if (self.children.count > 0) {
         return NO;
     }
 
-    if (_leftChildren.count > 0) {
+    if (self.leftChildren.count > 0) {
         return NO;
     }
 
@@ -37,13 +87,13 @@
 }
 
 - (NSArray *)allChildren {
-    return [_children arrayByAddingObjectsFromArray:_leftChildren];
+    return [self.children arrayByAddingObjectsFromArray:self.leftChildren];
 }
 
 - (void)drawRect:(NSRect)dirtyRect {
-    [_cellDrawer drawCell:self rect:dirtyRect];
+    [self.cellDrawer drawCell:self rect:dirtyRect];
 
-    if (self.isLeaf || self.isFolded) {
+    if (self.leaf || self.folded) {
         return;
     }
 
@@ -71,11 +121,11 @@
 
 - (void)removeChild:(QMCell *)childCell {
     if (childCell.isLeft) {
-        [self removeObjectFromLeftChildrenAtIndex:[_leftChildren indexOfObject:childCell]];
+        [self removeObjectFromLeftChildrenAtIndex:[self.leftChildren indexOfObject:childCell]];
         return;
     }
 
-    [self removeObjectFromChildrenAtIndex:[_children indexOfObject:childCell]];
+    [self removeObjectFromChildrenAtIndex:[self.children indexOfObject:childCell]];
 }
 
 - (NSUInteger)countOfAllChildren {
@@ -84,64 +134,32 @@
 
 - (NSUInteger)indexOfChild:(QMCell *)childCell {
     if (childCell.isLeft) {
-        return [_leftChildren indexOfObject:childCell];
+        return [self.leftChildren indexOfObject:childCell];
     }
 
-    return [_children indexOfObject:childCell];
-}
-
-- (QMCell *)objectInLeftChildrenAtIndex:(NSUInteger)index {
-    return [_leftChildren objectAtIndex:index];
-}
-
-- (NSUInteger)countOfLeftChildren {
-    return _leftChildren.count;
-}
-
-- (void)insertObject:(QMCell *)childCell inLeftChildrenAtIndex:(NSUInteger)index {
-    childCell.parent = self;
-    childCell.left = YES;
-    [_leftChildren insertObject:childCell atIndex:index];
-
-    _needsToRecomputeSize = YES;
-}
-
-- (void)removeObjectFromLeftChildrenAtIndex:(NSUInteger)index {
-    QMCell *cellToDel = [_leftChildren objectAtIndex:index];
-    cellToDel.parent = nil;
-    cellToDel.left = NO;
-
-    [_leftChildren removeObjectAtIndex:index];
-
-    _needsToRecomputeSize = YES;
-}
-
-- (void)addObjectInLeftChildren:(QMCell *)childCell {
-    [self insertObject:childCell inLeftChildrenAtIndex:_leftChildren.count];
-}
-
-- (NSSize)leftChildrenFamilySize {
-    if (self.isLeaf || self.isFolded) {
-        return NewSize(0.0, 0.0);
-    }
-
-    return [self sizeOfKind:&_leftChildrenFamilySize];
+    return [self.children indexOfObject:childCell];
 }
 
 #pragma mark Private
+- (NSMutableArray *)mutableLeftChildren {
+    @synchronized (self) {
+        return _leftChildren;
+    }
+}
+
 - (NSSize)sizeOfKind:(NSSize *)sizeToCompute {
-    if (!_needsToRecomputeSize) {
+    if (!self.needsToRecomputeSize) {
         return *sizeToCompute;
     }
 
-    _needsToRecomputeSize = NO;
+    self.needsToRecomputeSize = NO;
 
-    _iconSize = [_cellSizeManager sizeOfIconsOfCell:self];
-    _textSize = [_cellSizeManager sizeOfTextOfCell:self];
-    _size = [_cellSizeManager sizeOfCell:self];
-    _childrenFamilySize = [_cellSizeManager sizeOfChildrenFamily:_children];
-    _leftChildrenFamilySize = [_cellSizeManager sizeOfChildrenFamily:_leftChildren];
-    _familySize = [_cellSizeManager sizeOfFamilyOfCell:self];
+    _iconSize = [self.cellSizeManager sizeOfIconsOfCell:self];
+    _textSize = [self.cellSizeManager sizeOfTextOfCell:self];
+    _size = [self.cellSizeManager sizeOfCell:self];
+    _childrenFamilySize = [self.cellSizeManager sizeOfChildrenFamily:self.children];
+    _leftChildrenFamilySize = [self.cellSizeManager sizeOfChildrenFamily:self.leftChildren];
+    _familySize = [self.cellSizeManager sizeOfFamilyOfCell:self];
 
     return *sizeToCompute;
 }
