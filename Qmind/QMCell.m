@@ -18,11 +18,6 @@
 
 @implementation QMCell
 
-@synthesize cellSizeManager = _cellSizeManager;
-@synthesize cellLayoutManager = _cellLayoutManager;
-@synthesize cellDrawer = _cellDrawer;
-@synthesize textLayoutManager = _textLayoutManager;
-
 @dynamic root;
 @dynamic font;
 @dynamic stringValue;
@@ -38,34 +33,25 @@
 @dynamic folded;
 @dynamic familySize;
 @dynamic needsToRecomputeSize;
-@synthesize view = _view;
-@synthesize parent = _parent;
-@synthesize children = _children;
-@synthesize origin = _origin;
-@synthesize familyOrigin = _familyOrigin;
-@synthesize attributedString = _attributedString;
-@synthesize line = _line;
-@synthesize rangeOfStringValue = _rangeOfStringValue;
-@synthesize icons = _icons;
-@synthesize left = _left;
-@synthesize textOrigin = _textOrigin;
-@synthesize identifier = _identifier;
-@synthesize dragRegion = _dragRegion;
 
 #pragma mark Public
 - (BOOL)needsToRecomputeSize {
-    return _needsToRecomputeSize;
+    @synchronized (self) {
+        return _needsToRecomputeSize;
+    }
 }
 
 - (void)setNeedsToRecomputeSize:(BOOL)flag {
-    if (_needsToRecomputeSize == flag) {
-        return;
-    }
+    @synchronized (self) {
+        if (_needsToRecomputeSize == flag) {
+            return;
+        }
 
-    _needsToRecomputeSize = flag;
+        _needsToRecomputeSize = flag;
 
-    if (flag == YES) {
-        _parent.needsToRecomputeSize = YES;
+        if (flag == YES) {
+            self.parent.needsToRecomputeSize = YES;
+        }
     }
 }
 
@@ -74,53 +60,73 @@
 }
 
 - (BOOL)isFolded {
-    return _folded;
+    @synchronized (self) {
+        return _folded;
+    }
 }
 
 - (void)setFolded:(BOOL)aFolded {
-    if (aFolded == _folded) {
-        return;
-    }
+    @synchronized (self) {
+        if (aFolded == _folded) {
+            return;
+        }
 
-    _folded = aFolded;
-    self.needsToRecomputeSize = YES;
+        _folded = aFolded;
+        self.needsToRecomputeSize = YES;
+    }
 }
 
 - (NSSize)size {
-    return [self sizeOfKind:&_size];
+    @synchronized (self) {
+        return [self sizeOfKind:&_size];
+    }
 }
 
 - (NSSize)iconSize {
-    return [self sizeOfKind:&_iconSize];
+    @synchronized (self) {
+        return [self sizeOfKind:&_iconSize];
+    }
 }
 
 - (NSSize)textSize {
-    return [self sizeOfKind:&_textSize];
+    @synchronized (self) {
+        return [self sizeOfKind:&_textSize];
+    }
 }
 
 - (NSRect)frame {
-    return NewRectWithOriginAndSize(self.origin, self.size);
+    @synchronized (self) {
+        return NewRectWithOriginAndSize(self.origin, self.size);
+    }
 }
 
 // TODO: test this for root cell
 - (NSPoint)middlePoint {
-    return NewPoint(self.origin.x + self.size.width / 2, self.origin.y + self.size.height / 2);
+    @synchronized (self) {
+        return NewPoint(self.origin.x + self.size.width / 2, self.origin.y + self.size.height / 2);
+    }
 }
 
 - (NSRect)textFrame {
-    return NewRectWithOriginAndSize(self.textOrigin, self.textSize);
+    @synchronized (self) {
+        return NewRectWithOriginAndSize(self.textOrigin, self.textSize);
+    }
 }
 
 - (NSSize)childrenFamilySize {
-    if (self.isLeaf || self.isFolded) {
-        return NewSize(0.0, 0.0);
-    }
+    @synchronized (self) {
+        if (self.isLeaf || self.isFolded) {
+            return NewSize(0.0, 0.0);
+        }
 
-    return [self sizeOfKind:&_childrenFamilySize];
+        return [self sizeOfKind:&_childrenFamilySize];
+    }
 }
 
 - (NSRect)familyFrame {
-    return NewRectWithOriginAndSize(self.familyOrigin, self.familySize);
+    @synchronized (self) {
+        return NewRectWithOriginAndSize(self.familyOrigin, self.familySize);
+    }
 }
 
 - (BOOL)isRoot {
@@ -128,9 +134,9 @@
 }
 
 - (void)drawRect:(NSRect)dirtyRect {
-    [_cellDrawer drawCell:self rect:dirtyRect];
+    [self.cellDrawer drawCell:self rect:dirtyRect];
 
-    if (self.isLeaf || self.isFolded) {
+    if (self.leaf || self.folded) {
         return;
     }
 
@@ -290,7 +296,7 @@
     NSAffineTransform *translate = [NSAffineTransform transform];
     [translate translateXBy: -cellOrigin.x yBy: -cellOrigin.y];
     [translate concat];
-    [_cellDrawer drawContentForCell:self rect:self.frame];
+    [self.cellDrawer drawContentForCell:self rect:self.frame];
     [image unlockFocus];
 
 //#ifdef DEBUG
