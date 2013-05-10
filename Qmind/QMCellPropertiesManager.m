@@ -52,7 +52,7 @@
         cell = [[QMCell alloc] initWithView:self.view];
 
         if (parentCell.isRoot) {
-            BOOL isItemLeft = [_dataSource mindmapView:self.view isItemLeft:itemOfParent];
+            BOOL isItemLeft = [self.dataSource mindmapView:self.view isItemLeft:itemOfParent];
             if (isItemLeft) {
                 [(QMRootCell *) parentCell addObjectInLeftChildren:cell];
             } else {
@@ -70,25 +70,25 @@
 }
 
 - (void)fillCellPropertiesWithIdentifier:(id)givenItem cell:(QMCell *)cell {
-    cell.identifier = [_dataSource mindmapView:self.view identifierForItem:givenItem];
-    cell.stringValue = [_dataSource mindmapView:self.view stringValueOfItem:givenItem];
-    cell.font = [_dataSource mindmapView:self.view fontOfItem:givenItem];
-    cell.folded = [_dataSource mindmapView:self.view isItemFolded:givenItem];
+    cell.identifier = [self.dataSource mindmapView:self.view identifierForItem:givenItem];
+    cell.stringValue = [self.dataSource mindmapView:self.view stringValueOfItem:givenItem];
+    cell.font = [self.dataSource mindmapView:self.view fontOfItem:givenItem];
+    cell.folded = [self.dataSource mindmapView:self.view isItemFolded:givenItem];
 
     [self fillIconsOfCell:cell];
 }
 
 - (void)fillIconsOfCell:(QMCell *)cell {
-    NSArray *iconsOfItem = [_dataSource mindmapView:self.view iconsOfItem:cell.identifier];
+    NSArray *iconsOfItem = [self.dataSource mindmapView:self.view iconsOfItem:cell.identifier];
     for (id icon in iconsOfItem) {
         [cell insertObject:icon inIconsAtIndex:cell.icons.count];
     }
 }
 
 - (void)fillAllChildrenWithIdentifier:(id)givenItem cell:(QMCell *)cell {
-    NSInteger childrenCount = [_dataSource mindmapView:self.view numberOfChildrenOfItem:givenItem];
+    NSInteger childrenCount = [self.dataSource mindmapView:self.view numberOfChildrenOfItem:givenItem];
     for (NSUInteger i = 0; i < childrenCount; i++) {
-        id childItem = [_dataSource mindmapView:self.view child:i ofItem:givenItem];
+        id childItem = [self.dataSource mindmapView:self.view child:i ofItem:givenItem];
         [self cellWithParent:cell itemOfParent:childItem];
     }
 
@@ -96,9 +96,9 @@
         return;
     }
 
-    NSInteger leftChildrenCount = [_dataSource mindmapView:self.view numberOfLeftChildrenOfItem:givenItem];
+    NSInteger leftChildrenCount = [self.dataSource mindmapView:self.view numberOfLeftChildrenOfItem:givenItem];
     for (NSUInteger i = 0; i < leftChildrenCount; i++) {
-        id childItem = [_dataSource mindmapView:self.view leftChild:i ofItem:givenItem];
+        id childItem = [self.dataSource mindmapView:self.view leftChild:i ofItem:givenItem];
         [self cellWithParent:cell itemOfParent:childItem];
     }
 }
