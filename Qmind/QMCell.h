@@ -25,46 +25,7 @@ typedef enum {
     QMCellRegionNorth,
 } QMCellRegion;
 
-@interface QMCell : NSObject {
-@protected
-    __weak QMCellLayoutManager *_cellLayoutManager;
-    __weak QMCellDrawer *_cellDrawer;
-    __weak QMTextLayoutManager *_textLayoutManager;
-    __weak QMCellSizeManager *_cellSizeManager;
-
-    __weak QMMindmapView *_view;
-
-    id _identifier;
-
-    __weak QMCell *_parent;
-    NSMutableArray *_children;
-    BOOL _left;
-
-    NSBezierPath *_line;
-    NSAttributedString *_attributedString;
-    NSFont *_font;
-    NSMutableArray *_icons;
-
-    NSRange _rangeOfStringValue;
-
-    BOOL _folded;
-    BOOL _needsToRecomputeSize;
-
-    NSPoint _origin;
-    NSSize _size;
-
-    NSPoint _textOrigin;
-    NSSize _textSize;
-
-    NSPoint _iconOrigin;
-    NSSize _iconSize;
-
-    NSPoint _familyOrigin;
-    NSSize _familySize;
-    NSSize _childrenFamilySize;
-
-    QMCellRegion _dragRegion;
-}
+@interface QMCell : NSObject
 
 @property (weak) QMCellSizeManager *cellSizeManager;
 @property (weak) QMCellLayoutManager *cellLayoutManager;

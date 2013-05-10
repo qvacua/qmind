@@ -16,7 +16,43 @@
 #import "QMCellSizeManager.h"
 #import "QMIcon.h"
 
-@implementation QMCell
+@interface QMCell ()
+
+@property NSRange rangeOfStringValue;
+
+@property (readwrite) NSAttributedString *attributedString;
+@property (readonly) NSMutableArray *mutableChildren;
+@property (readonly) NSMutableArray *mutableIcons;
+
+@end
+
+@implementation QMCell {
+    NSMutableArray *_children;
+    BOOL _left;
+
+    NSBezierPath *_line;
+    NSAttributedString *_attributedString;
+    NSFont *_font;
+    NSMutableArray *_icons;
+
+    BOOL _folded;
+    BOOL _needsToRecomputeSize;
+
+    NSPoint _origin;
+    NSSize _size;
+
+    NSPoint _textOrigin;
+    NSSize _textSize;
+
+    NSPoint _iconOrigin;
+    NSSize _iconSize;
+
+    NSPoint _familyOrigin;
+    NSSize _familySize;
+    NSSize _childrenFamilySize;
+
+    QMCellRegion _dragRegion;
+}
 
 @dynamic root;
 @dynamic font;
@@ -33,6 +69,8 @@
 @dynamic folded;
 @dynamic familySize;
 @dynamic needsToRecomputeSize;
+@dynamic mutableChildren;
+@dynamic mutableIcons;
 
 #pragma mark Public
 - (BOOL)needsToRecomputeSize {
@@ -150,7 +188,7 @@
 }
 
 - (void)removeChild:(QMCell *)childCell {
-    const NSUInteger indexOfObject = [_children indexOfObject:childCell];
+    const NSUInteger indexOfObject = [self.children indexOfObject:childCell];
     [self removeObjectFromChildrenAtIndex:indexOfObject];
 }
 
@@ -186,40 +224,49 @@
 }
 
 - (NSFont *)font {
-    return _font;
+    @synchronized (self) {
+        return _font;
+    }
 }
 
 - (void)updateAttributedStringWithString:(NSString *)string {
     NSDictionary *attrDict;
 
-    if (_font == nil) {
-        attrDict = [_textLayoutManager stringAttributesDict];
+    if (self.font == nil) {
+        attrDict = [self.textLayoutManager stringAttributesDict];
     } else {
-        attrDict = [_textLayoutManager stringAttributesDictWithFont:_font];
+        attrDict = [self.textLayoutManager stringAttributesDictWithFont:self.font];
     }
 
-    _attributedString = [[NSAttributedString alloc] initWithString:string attributes:attrDict];
-    _rangeOfStringValue = [_textLayoutManager completeRangeOfAttributedString:_attributedString];
+    self.attributedString = [[NSAttributedString alloc] initWithString:string attributes:attrDict];
+    self.rangeOfStringValue = [self.textLayoutManager completeRangeOfAttributedString:self.attributedString];
 
     self.needsToRecomputeSize = YES;
 }
 
 - (void)setFont:(NSFont *)aFont {
-    _font = aFont;
-
-    [self updateAttributedStringWithString:self.stringValue];
+    @synchronized (self) {
+        _font = aFont;
+        [self updateAttributedStringWithString:self.stringValue];
+    }
 }
 
 - (NSString *)stringValue {
-    return _attributedString.string;
+    @synchronized (self) {
+        return _attributedString.string;
+    }
 }
 
 - (void)setStringValue:(NSString *)string {
-    [self updateAttributedStringWithString:string];
+    @synchronized (self) {
+        [self updateAttributedStringWithString:string];
+    }
 }
 
 - (BOOL)isLeaf {
-    return _children.count == 0;
+    @synchronized (self) {
+        return self.children.count == 0;
+    }
 }
 
 - (NSArray *)containingArray {
@@ -231,17 +278,17 @@
 }
 
 - (QMCell *)objectInChildrenAtIndex:(NSUInteger)index {
-    return [_children objectAtIndex:index];
+    return self.children[index];
 }
 
 - (NSUInteger)countOfChildren {
-    return _children.count;
+    return self.children.count;
 }
 
 - (void)insertObject:(QMCell *)childCell inChildrenAtIndex:(NSUInteger)index {
     childCell.parent = self;
     childCell.left = self.isLeft;
-    [_children insertObject:childCell atIndex:index];
+    [self.mutableChildren insertObject:childCell atIndex:index];
 
     self.needsToRecomputeSize = YES;
 }
@@ -251,7 +298,7 @@
     cellToDel.parent = nil;
     cellToDel.left = NO;
 
-    [_children removeObjectAtIndex:index];
+    [self.mutableChildren removeObjectAtIndex:index];
 
     self.needsToRecomputeSize = YES;
 }
@@ -261,7 +308,7 @@
 }
 
 - (NSUInteger)indexOfChild:(QMCell *)childCell {
-    return [_children indexOfObject:childCell];
+    return [self.children indexOfObject:childCell];
 }
 
 - (NSUInteger)indexWithinParent {
@@ -269,21 +316,21 @@
 }
 
 - (QMIcon *)objectInIconsAtIndex:(NSUInteger)index {
-    return [_icons objectAtIndex:index];
+    return [self.icons objectAtIndex:index];
 }
 
 - (NSUInteger)countOfIcons {
-    return _icons.count;
+    return self.icons.count;
 }
 
 - (void)insertObject:(QMIcon *)icon inIconsAtIndex:(NSUInteger)index {
-    [_icons insertObject:icon atIndex:index];
+    [self.mutableIcons insertObject:icon atIndex:index];
 
     self.needsToRecomputeSize = YES;
 }
 
 - (void)removeObjectFromIconsAtIndex:(NSUInteger)index {
-    [_icons removeObjectAtIndex:index];
+    [self.mutableIcons removeObjectAtIndex:index];
 
     self.needsToRecomputeSize = YES;
 }
@@ -312,12 +359,12 @@
 }
 
 - (void)addObjectInIcons:(QMIcon *)icon {
-    [self insertObject:icon inIconsAtIndex:_icons.count];
+    [self insertObject:icon inIconsAtIndex:self.icons.count];
 }
 
 // TODO: this gets called only by rootCell
 - (void)computeGeometry {
-    [_cellLayoutManager computeGeometryAndLinesOfCell:self];
+    [self.cellLayoutManager computeGeometryAndLinesOfCell:self];
 }
 
 - (NSString *)description {
@@ -339,6 +386,18 @@
     _familySize = [self.cellSizeManager sizeOfFamilyOfCell:self];
 
     return *sizeToCompute;
+}
+
+- (NSMutableArray *)mutableChildren {
+    @synchronized (self) {
+        return _children;
+    }
+}
+
+- (NSMutableArray *)mutableIcons {
+    @synchronized (self) {
+        return _icons;
+    }
 }
 
 @end
