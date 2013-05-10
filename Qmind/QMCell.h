@@ -25,7 +25,13 @@ typedef enum {
     QMCellRegionNorth,
 } QMCellRegion;
 
-@interface QMCell : NSObject
+@interface QMCell : NSObject {
+    NSSize _size;
+    NSSize _textSize;
+    NSSize _iconSize;
+    NSSize _familySize;
+    NSSize _childrenFamilySize;
+}
 
 @property (weak) QMCellSizeManager *cellSizeManager;
 @property (weak) QMCellLayoutManager *cellLayoutManager;

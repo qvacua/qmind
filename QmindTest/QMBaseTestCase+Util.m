@@ -56,12 +56,6 @@ void wireRootNodeOfDoc(QMDocument *doc, QMRootNode *rootNode) {
     objc_msgSend(doc, @selector(initRootNodeProperties));
 }
 
-@implementation QMCell (Testing)
-- (void)setFamilySize:(NSSize)aSize {
-    _familySize = aSize;
-}
-@end
-
 @interface QMCell (Copying) <NSCopying>
 - (id)copy;
 - (id)copyWithZone:(NSZone *)zone;

@@ -37,21 +37,6 @@
 
     BOOL _folded;
     BOOL _needsToRecomputeSize;
-
-    NSPoint _origin;
-    NSSize _size;
-
-    NSPoint _textOrigin;
-    NSSize _textSize;
-
-    NSPoint _iconOrigin;
-    NSSize _iconSize;
-
-    NSPoint _familyOrigin;
-    NSSize _familySize;
-    NSSize _childrenFamilySize;
-
-    QMCellRegion _dragRegion;
 }
 
 @dynamic root;
@@ -200,29 +185,6 @@
     return self.countOfChildren;
 }
 
-- (id)initWithView:(QMMindmapView *)view {
-    if ((self = [super init])) {
-        _view = view;
-        _children = [[NSMutableArray alloc] initWithCapacity:3];
-        _icons = [[NSMutableArray alloc] initWithCapacity:1];
-
-        _folded = NO;
-
-        TBContext *context = [TBContext sharedContext];
-        // autowireSeed takes too long...
-        _cellLayoutManager = [context beanWithClass:[QMCellLayoutManager class]];
-        _cellDrawer = [context beanWithClass:[QMCellDrawer class]];
-        _textLayoutManager = [context beanWithClass:[QMTextLayoutManager class]];
-        _cellSizeManager = [context beanWithClass:[QMCellSizeManager class]];
-
-        self.stringValue = @"";
-
-        self.needsToRecomputeSize = YES;
-    }
-
-    return self;
-}
-
 - (NSFont *)font {
     @synchronized (self) {
         return _font;
@@ -367,8 +329,33 @@
     [self.cellLayoutManager computeGeometryAndLinesOfCell:self];
 }
 
+#pragma mark NSObject
 - (NSString *)description {
     return self.stringValue.stringByCropping;
+}
+
+#pragma mark Initializer
+- (id)initWithView:(QMMindmapView *)view {
+    if ((self = [super init])) {
+        _view = view;
+        _children = [[NSMutableArray alloc] initWithCapacity:3];
+        _icons = [[NSMutableArray alloc] initWithCapacity:1];
+
+        _folded = NO;
+
+        TBContext *context = [TBContext sharedContext];
+        // autowireSeed takes too long...
+        _cellLayoutManager = [context beanWithClass:[QMCellLayoutManager class]];
+        _cellDrawer = [context beanWithClass:[QMCellDrawer class]];
+        _textLayoutManager = [context beanWithClass:[QMTextLayoutManager class]];
+        _cellSizeManager = [context beanWithClass:[QMCellSizeManager class]];
+
+        self.stringValue = @"";
+
+        self.needsToRecomputeSize = YES;
+    }
+
+    return self;
 }
 
 #pragma mark Private
