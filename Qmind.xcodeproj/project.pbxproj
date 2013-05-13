@@ -86,6 +86,7 @@
 		4B5CB66515E11C9600E05BD7 /* CellLayoutManagerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B85653514E46D6800C6FF78 /* CellLayoutManagerTest.m */; };
 		4B5CB66615E11C9600E05BD7 /* CellTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B85653514E46D6800C6FF65 /* CellTest.m */; };
 		4B5CB66715E11C9600E05BD7 /* TextLayoutManagerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B85653514E46D6800C6FF4A /* TextLayoutManagerTest.m */; };
+		4B66184D174175C000C6799D /* ToolbarNewNodeTemplate@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B66184C174175C000C6799D /* ToolbarNewNodeTemplate@2x.png */; };
 		4B665F69151D1FA900F161A1 /* ToolbarZoomActualSizeTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B665F66151D1FA900F161A1 /* ToolbarZoomActualSizeTemplate.png */; };
 		4B665F6A151D1FA900F161A1 /* ToolbarZoomInTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B665F67151D1FA900F161A1 /* ToolbarZoomInTemplate.png */; };
 		4B665F6B151D1FA900F161A1 /* ToolbarZoomOutTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B665F68151D1FA900F161A1 /* ToolbarZoomOutTemplate.png */; };
@@ -370,6 +371,7 @@
 		4B5CB56E15E10F5D00E05BD7 /* DummyObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DummyObserver.m; sourceTree = "<group>"; };
 		4B5CB58115E110B300E05BD7 /* QMBaseTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMBaseTestCase.h; sourceTree = "<group>"; };
 		4B5CB58215E110B300E05BD7 /* QMBaseTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMBaseTestCase.m; sourceTree = "<group>"; };
+		4B66184C174175C000C6799D /* ToolbarNewNodeTemplate@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ToolbarNewNodeTemplate@2x.png"; path = "Resources/ToolbarNewNodeTemplate@2x.png"; sourceTree = "<group>"; };
 		4B665F66151D1FA900F161A1 /* ToolbarZoomActualSizeTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ToolbarZoomActualSizeTemplate.png; path = Resources/ToolbarZoomActualSizeTemplate.png; sourceTree = "<group>"; };
 		4B665F67151D1FA900F161A1 /* ToolbarZoomInTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ToolbarZoomInTemplate.png; path = Resources/ToolbarZoomInTemplate.png; sourceTree = "<group>"; };
 		4B665F68151D1FA900F161A1 /* ToolbarZoomOutTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ToolbarZoomOutTemplate.png; path = Resources/ToolbarZoomOutTemplate.png; sourceTree = "<group>"; };
@@ -581,6 +583,7 @@
 			children = (
 				4B6B790E151F114600E4C968 /* ToolbarDeleteNodeTemplate.png */,
 				4B6B790F151F114600E4C968 /* ToolbarNewNodeTemplate.png */,
+				4B66184C174175C000C6799D /* ToolbarNewNodeTemplate@2x.png */,
 				4B665F66151D1FA900F161A1 /* ToolbarZoomActualSizeTemplate.png */,
 				4B665F67151D1FA900F161A1 /* ToolbarZoomInTemplate.png */,
 				4B665F68151D1FA900F161A1 /* ToolbarZoomOutTemplate.png */,
@@ -1098,6 +1101,7 @@
 				4B9DE3341569367500AAF5C1 /* QmindIcon.icns in Resources */,
 				4BE684AB16922E9100789892 /* IconCollectionViewItem.xib in Resources */,
 				4BDA7813170F80F5000AB84A /* sparkle-pub.pem in Resources */,
+				4B66184D174175C000C6799D /* ToolbarNewNodeTemplate@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
