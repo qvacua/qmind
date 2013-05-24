@@ -7,15 +7,15 @@
  */
 
 #import <TBCacao/TBCacao.h>
-#import "QMNodeIdGenerator.h"
+#import "QMIdGenerator.h"
 
-@implementation QMNodeIdGenerator
+@implementation QMIdGenerator
 
 TB_BEAN
 
 #pragma mark Public
 - (NSString *)nodeId {
-    return [self uuid];
+    return [NSString stringWithFormat:@"ID_%@", [self uuid]];
 }
 
 #pragma mark Private

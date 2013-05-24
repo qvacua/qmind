@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface QMNodeIdGenerator : NSObject
+@interface QMIdGenerator : NSObject
 
 - (NSString *)nodeId;
 

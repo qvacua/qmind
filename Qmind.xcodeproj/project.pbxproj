@@ -20,11 +20,11 @@
 		1929B3A02CC1561045BF1FEC /* QMCellPropertiesManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929BBD6539D9FDEC76E6137 /* QMCellPropertiesManager.m */; };
 		1929B3DBFDDCED6A832EBA6B /* ToolbarZoomOutTemplate@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1929B38391793C25EF358118 /* ToolbarZoomOutTemplate@2x.png */; };
 		1929B502755E4F47D5612FA2 /* ToolbarDeleteNodeTemplate@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1929B7F07C814229B2270D34 /* ToolbarDeleteNodeTemplate@2x.png */; };
-		1929B5884D28A022A0F52F48 /* QMNodeIdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929BB6573724B1C6F3E369C /* QMNodeIdGenerator.m */; };
+		1929B5884D28A022A0F52F48 /* QMIdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929BB6573724B1C6F3E369C /* QMIdGenerator.m */; };
 		1929B676F4A74F9E9F96AB42 /* QMIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929BA02C47D9D0A43F49EFA /* QMIcon.m */; };
 		1929B73FE0028E09C26705DC /* QMCellPropertiesManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 1929B49C1022861E4672965B /* QMCellPropertiesManager.h */; };
-		1929B802B294E9DE23B6DF67 /* QMNodeIdGeneratorTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929B06F15A6BFDDAEF39EE7 /* QMNodeIdGeneratorTest.m */; };
-		1929B8F783EAC9032FF568B6 /* QMNodeIdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929BB6573724B1C6F3E369C /* QMNodeIdGenerator.m */; };
+		1929B802B294E9DE23B6DF67 /* QMIdGeneratorTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929B06F15A6BFDDAEF39EE7 /* QMIdGeneratorTest.m */; };
+		1929B8F783EAC9032FF568B6 /* QMIdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929BB6573724B1C6F3E369C /* QMIdGenerator.m */; };
 		1929B91E380C89A49F956097 /* QMUiDrawer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929B20B51839B9482813969 /* QMUiDrawer.m */; };
 		1929B92CBF92FC4F2EFCAF0E /* QMLookUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 1929B07398BED585370DE664 /* QMLookUtil.h */; };
 		1929BB168680A05751E3F4C4 /* QMIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929BA02C47D9D0A43F49EFA /* QMIcon.m */; };
@@ -347,11 +347,11 @@
 /* Begin PBXFileReference section */
 		1929B03F77F02BDFB060054E /* QMCacaoTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMCacaoTestCase.m; sourceTree = "<group>"; };
 		1929B0594A00B0CBF7573BD1 /* MindmapViewDraggingTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MindmapViewDraggingTest.m; sourceTree = "<group>"; };
-		1929B06F15A6BFDDAEF39EE7 /* QMNodeIdGeneratorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMNodeIdGeneratorTest.m; sourceTree = "<group>"; };
+		1929B06F15A6BFDDAEF39EE7 /* QMIdGeneratorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMIdGeneratorTest.m; sourceTree = "<group>"; };
 		1929B07398BED585370DE664 /* QMLookUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMLookUtil.h; sourceTree = "<group>"; };
 		1929B209E6C81B9C03DE0505 /* CellSizeManagerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellSizeManagerTest.m; sourceTree = "<group>"; };
 		1929B20B51839B9482813969 /* QMUiDrawer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMUiDrawer.m; sourceTree = "<group>"; };
-		1929B2B42279F40C0CE08187 /* QMNodeIdGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMNodeIdGenerator.h; sourceTree = "<group>"; };
+		1929B2B42279F40C0CE08187 /* QMIdGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMIdGenerator.h; sourceTree = "<group>"; };
 		1929B2FCB4A407CCC68D9D45 /* QMIconsPaneView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMIconsPaneView.m; sourceTree = "<group>"; };
 		1929B353C299640D7D91AA9D /* QMCellSizeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMCellSizeManager.m; sourceTree = "<group>"; };
 		1929B38391793C25EF358118 /* ToolbarZoomOutTemplate@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ToolbarZoomOutTemplate@2x.png"; path = "Resources/ToolbarZoomOutTemplate@2x.png"; sourceTree = "<group>"; };
@@ -370,7 +370,7 @@
 		1929B918241E1ACDCDC89AA2 /* QMCellPropertiesManagerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMCellPropertiesManagerTest.m; sourceTree = "<group>"; };
 		1929B95442D0BCBE01A02608 /* QMIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMIcon.h; sourceTree = "<group>"; };
 		1929BA02C47D9D0A43F49EFA /* QMIcon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMIcon.m; sourceTree = "<group>"; };
-		1929BB6573724B1C6F3E369C /* QMNodeIdGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMNodeIdGenerator.m; sourceTree = "<group>"; };
+		1929BB6573724B1C6F3E369C /* QMIdGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMIdGenerator.m; sourceTree = "<group>"; };
 		1929BBD6539D9FDEC76E6137 /* QMCellPropertiesManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMCellPropertiesManager.m; sourceTree = "<group>"; };
 		1929BC2901D96DABE95AE4BB /* IconTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IconTest.m; sourceTree = "<group>"; };
 		1929BC9E791535ADC6E79637 /* QMCacaoTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMCacaoTestCase.h; sourceTree = "<group>"; };
@@ -712,8 +712,8 @@
 				4BFCD7AC14F3E32A00850953 /* QMRootNode.m */,
 				4B8564F314E4643A00C6FF0A /* QMNode.h */,
 				4B8564F414E4643A00C6FF0A /* QMNode.m */,
-				1929BB6573724B1C6F3E369C /* QMNodeIdGenerator.m */,
-				1929B2B42279F40C0CE08187 /* QMNodeIdGenerator.h */,
+				1929BB6573724B1C6F3E369C /* QMIdGenerator.m */,
+				1929B2B42279F40C0CE08187 /* QMIdGenerator.h */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -746,7 +746,7 @@
 			children = (
 				4BFCD7AC14F3E32A00850958 /* RootNodeTest.m */,
 				4B85651514E468C100C6FF1A /* NodeTest.m */,
-				1929B06F15A6BFDDAEF39EE7 /* QMNodeIdGeneratorTest.m */,
+				1929B06F15A6BFDDAEF39EE7 /* QMIdGeneratorTest.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1214,7 +1214,7 @@
 				1929B059162A10744EF02985 /* QMIconsPaneView.m in Sources */,
 				1929BB6FEB32F64962B24562 /* QMManualBeanProvider.m in Sources */,
 				1929B32033377AB1DF3E6675 /* QMCellPropertiesManager.m in Sources */,
-				1929B5884D28A022A0F52F48 /* QMNodeIdGenerator.m in Sources */,
+				1929B5884D28A022A0F52F48 /* QMIdGenerator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1313,8 +1313,8 @@
 				1929B29FA3F12195D97593A5 /* IconCollectionViewItemTest.m in Sources */,
 				1929B36A99C420734C86E3CE /* QMCellPropertiesManager.m in Sources */,
 				1929B057FE485599D1E5D1C6 /* QMCellPropertiesManagerTest.m in Sources */,
-				1929B8F783EAC9032FF568B6 /* QMNodeIdGenerator.m in Sources */,
-				1929B802B294E9DE23B6DF67 /* QMNodeIdGeneratorTest.m in Sources */,
+				1929B8F783EAC9032FF568B6 /* QMIdGenerator.m in Sources */,
+				1929B802B294E9DE23B6DF67 /* QMIdGeneratorTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
