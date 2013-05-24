@@ -21,6 +21,8 @@
 @property (weak) QMAppSettings *settings;
 @property (unsafe_unretained) NSFontManager *fontManager;
 
+@property (readonly) NSFont *fontawesomeFont;
+
 /**
 * Returns an NSFont out of FreeMind font attributes in form of a dictionary.
 */

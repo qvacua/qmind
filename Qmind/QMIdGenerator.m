@@ -23,9 +23,7 @@
     CFStringRef cfUuidStr = CFUUIDCreateString(NULL, cfUuid);
     CFRelease(cfUuid);
 
-    NSString *result = [NSString stringWithString:(__bridge NSString *) cfUuidStr];
-    CFRelease(cfUuidStr);
-
+    NSString *result = (__bridge_transfer NSString *) cfUuidStr;
     return result;
 }
 

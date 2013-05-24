@@ -11,14 +11,14 @@
 #import <Qkit/Qkit.h>
 #import "QMAppSettings.h"
 
-static NSString * const qNameKey = @"NAME";
-static NSString * const qSizeKey = @"SIZE";
-static NSString * const qBoldKey = @"BOLD";
-static NSString * const qItalicKey = @"ITALIC";
-static NSString * const qTrueValue = @"true";
-static NSString * const qDefaultSansSerifFontName = @"SansSerif";
-static NSString * const qDefaultSerifFondName = @"Serif";
-static NSString * const qTimesFontName = @"Times";
+static NSString *const qNameKey = @"NAME";
+static NSString *const qSizeKey = @"SIZE";
+static NSString *const qBoldKey = @"BOLD";
+static NSString *const qItalicKey = @"ITALIC";
+static NSString *const qTrueValue = @"true";
+static NSString *const qDefaultSansSerifFontName = @"SansSerif";
+static NSString *const qDefaultSerifFondName = @"Serif";
+static NSString *const qTimesFontName = @"Times";
 
 @implementation QMFontManager {
     NSFont *_defaultFont;
@@ -71,13 +71,13 @@ TB_AUTOWIRE(fontManager)
     }
 
     NSMutableDictionary *attrDict = [[NSMutableDictionary allocWithZone:nil] initWithCapacity:4];
-    
+
     NSString *fontName = font.familyName;
     if ([fontName isEqualToString:[_defaultFont familyName]] == NO) {
         [attrDict setObject:fontName forKey:qNameKey];
     }
 
-    NSInteger fontSize = (NSInteger)font.pointSize;
+    NSInteger fontSize = (NSInteger) font.pointSize;
     if ([_fontManager traitsOfFont:font] & NSFontBoldTrait) {
         [attrDict setObject:qTrueValue forKey:qBoldKey];
     }
@@ -96,6 +96,20 @@ TB_AUTOWIRE(fontManager)
 #pragma mark TBInitializingBean
 - (void)postConstruct {
     _defaultFont = [_settings settingForKey:qSettingDefaultFont];
+
+    NSString *fontPath = [[NSBundle bundleForClass:self.class] pathForResource:@"fontawesome-webfont" ofType:@"ttf"];
+    NSData *fontData = [[NSData alloc] initWithContentsOfFile:fontPath];
+
+    CGDataProviderRef fontDataProvider = CGDataProviderCreateWithCFData((__bridge CFDataRef) fontData);
+    CGFontRef cgFont = CGFontCreateWithDataProvider(fontDataProvider);
+    CGDataProviderRelease(fontDataProvider);
+
+    CTFontDescriptorRef fontDescriptor = CTFontDescriptorCreateWithAttributes((__bridge CFDictionaryRef) @{});
+    CTFontRef ctFont = CTFontCreateWithGraphicsFont(cgFont, 0, NULL, fontDescriptor);
+    CFRelease(fontDescriptor);
+    CGFontRelease(cgFont);
+
+    _fontawesomeFont = (__bridge_transfer NSFont *)ctFont;
 }
 
 @end
