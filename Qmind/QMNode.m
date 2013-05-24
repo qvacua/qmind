@@ -8,34 +8,35 @@
 
 #import "QMNode.h"
 
-NSString * const qNodeTextAttributeKey = @"TEXT";
-NSString * const qNodeFoldedAttributeKey = @"FOLDED";
-NSString * const qNodePositionAttributeKey = @"POSITION";
+NSString *const qNodeIdAttributeKey = @"ID";
+NSString *const qNodeTextAttributeKey = @"TEXT";
+NSString *const qNodeFoldedAttributeKey = @"FOLDED";
+NSString *const qNodePositionAttributeKey = @"POSITION";
 
-NSString * const qNodeParentArchiveKey = @"parent";
-NSString * const qNodeChildrenArchiveKey = @"children";
-NSString * const qNodeLeftChildrenArchiveKey = @"leftChildren";
-NSString * const qNodeAttributesArchiveKey = @"attributes";
-NSString * const qNodeUnsupportedChildrenArchiveKey = @"unsupportedChildren";
-NSString * const qNodeFontArchiveKey = @"font";
-NSString * const qNodeIconsArchiveKey = @"icons";
+NSString *const qNodeParentArchiveKey = @"parent";
+NSString *const qNodeChildrenArchiveKey = @"children";
+NSString *const qNodeLeftChildrenArchiveKey = @"leftChildren";
+NSString *const qNodeAttributesArchiveKey = @"attributes";
+NSString *const qNodeUnsupportedChildrenArchiveKey = @"unsupportedChildren";
+NSString *const qNodeFontArchiveKey = @"font";
+NSString *const qNodeIconsArchiveKey = @"icons";
 
-NSString * const qNodeUti = @"com.qvacua.mindmap.node";
+NSString *const qNodeUti = @"com.qvacua.mindmap.node";
 
-NSString * const qNodeStringValueKey = @"stringValue";
-NSString * const qNodeChildrenKey = @"children";
-NSString * const qNodeFontKey = @"font";
-NSString * const qNodeIconsKey = @"icons";
-NSString * const qNodeFoldingKey = @"folded";
+NSString *const qNodeStringValueKey = @"stringValue";
+NSString *const qNodeChildrenKey = @"children";
+NSString *const qNodeFontKey = @"font";
+NSString *const qNodeIconsKey = @"icons";
+NSString *const qNodeFoldingKey = @"folded";
 
-NSString * const qNonTextualNodeText = @"NON TEXTUAL NODE";
-NSString * const qTrueStringValue = @"true";
+NSString *const qNonTextualNodeText = @"NON TEXTUAL NODE";
+NSString *const qTrueStringValue = @"true";
 
 @interface QMNode ()
 
-@property (readonly) NSMutableArray *mutableChildren;
-@property (readonly) NSMutableArray *mutableIcons;
-@property (readonly) NSMutableDictionary *mutableAttributes;
+@property(readonly) NSMutableArray *mutableChildren;
+@property(readonly) NSMutableArray *mutableIcons;
+@property(readonly) NSMutableDictionary *mutableAttributes;
 
 @end
 
@@ -52,6 +53,7 @@ NSString * const qTrueStringValue = @"true";
 @dynamic allChildren;
 @dynamic root;
 @dynamic font;
+@dynamic nodeId;
 @dynamic stringValue;
 @dynamic folded;
 @dynamic leaf;
@@ -60,6 +62,7 @@ NSString * const qTrueStringValue = @"true";
 @dynamic mutableChildren;
 @dynamic mutableAttributes;
 
+#pragma mark Public
 - (NSUndoManager *)undoManager {
     @synchronized (self) {
         return _undoManager;
@@ -76,7 +79,7 @@ NSString * const qTrueStringValue = @"true";
     }
 
     // using all children here, we've covered also the root node
-    [self.allChildren enumerateObjectsUsingBlock:^(QMNode *childNode, NSUInteger index, BOOL* stop) {
+    [self.allChildren enumerateObjectsUsingBlock:^(QMNode *childNode, NSUInteger index, BOOL *stop) {
         childNode.undoManager = anUndoManager;
     }];
 }
@@ -166,6 +169,14 @@ NSString * const qTrueStringValue = @"true";
     [self.mutableIcons removeObjectAtIndex:index];
 }
 
+- (NSString *)nodeId {
+    return self.attributes[qNodeIdAttributeKey];
+}
+
+- (void)setNodeId:(NSString *)aNodeId {
+    self.mutableAttributes[qNodeIdAttributeKey] = aNodeId.copy;
+}
+
 - (NSString *)stringValue {
     return self.attributes[qNodeTextAttributeKey];
 }
@@ -216,7 +227,7 @@ NSString * const qTrueStringValue = @"true";
     if ([type isEqualToString:qNodeUti]) {
         return NSPasteboardWritingPromised;
     }
-    
+
     return 0;
 }
 
@@ -235,17 +246,17 @@ NSString * const qTrueStringValue = @"true";
 #pragma mark NSPasteboardReading
 + (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard {
     static NSArray *readableTypes = nil;
-    
-   if (readableTypes == nil) {
-       readableTypes = @[qNodeUti];
-   }
-    
-   return readableTypes;
+
+    if (readableTypes == nil) {
+        readableTypes = @[qNodeUti];
+    }
+
+    return readableTypes;
 }
 
 + (NSPasteboardReadingOptions)readingOptionsForType:(NSString *)type pasteboard:(NSPasteboard *)pasteboard {
     if ([type isEqualToString:qNodeUti]) {
-       return NSPasteboardReadingAsKeyedArchive;
+        return NSPasteboardReadingAsKeyedArchive;
     }
 
     return NSPasteboardReadingAsData;
@@ -319,7 +330,7 @@ NSString * const qTrueStringValue = @"true";
     }
 
     // using all children here, we're covered also for the root node
-    [self.allChildren enumerateObjectsUsingBlock:^(QMNode *childNode, NSUInteger index, BOOL* stop) {
+    [self.allChildren enumerateObjectsUsingBlock:^(QMNode *childNode, NSUInteger index, BOOL *stop) {
         [childNode addObserver:observer forKeyPath:keyPath];
     }];
 }
@@ -332,7 +343,7 @@ NSString * const qTrueStringValue = @"true";
     }
 
     // using all children here, we're covered also for the root node
-    [self.allChildren enumerateObjectsUsingBlock:^(QMNode *childNode, NSUInteger index, BOOL* stop) {
+    [self.allChildren enumerateObjectsUsingBlock:^(QMNode *childNode, NSUInteger index, BOOL *stop) {
         [childNode removeObserver:observer];
     }];
 }

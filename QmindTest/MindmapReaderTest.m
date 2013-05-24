@@ -12,17 +12,23 @@
 #import "QMCacaoTestCase.h"
 
 @interface MindmapReaderTest : QMCacaoTestCase
+@property(strong) QMRootNode *rootNode;
 @end
 
 @implementation MindmapReaderTest {
-    NSURL *testMindMapUrl;
+    NSURL *testMindmapUrl;
+    NSURL *testNoIdMindmapUrl;
     QMMindmapReader *reader;
+    QMRootNode *rootNode;
 }
+
+@synthesize rootNode;
 
 - (void)setUp {
     [super setUp];
 
-    testMindMapUrl = [[NSBundle bundleForClass:self.class] URLForResource:@"mindmap-reader-test" withExtension:@"mm"];
+    testMindmapUrl = [[NSBundle bundleForClass:self.class] URLForResource:@"mindmap-reader-test" withExtension:@"mm"];
+    testNoIdMindmapUrl = [[NSBundle bundleForClass:self.class] URLForResource:@"mindmap-reader-no-id-test" withExtension:@"mm"];
     reader = [self.context beanWithClass:[QMMindmapReader class]];
 }
 
@@ -30,8 +36,16 @@
     assertThat([reader rootNodeForFileUrl:[NSURL URLWithString:@"file:///fdsfds"]], is(nilValue()));
 }
 
+- (void)testReadNoId {
+    rootNode = [reader rootNodeForFileUrl:testNoIdMindmapUrl];
+
+    assertThat(rootNode.nodeId, startsWith(@"ID_"));
+    assertThat([rootNode.children[1] nodeId], startsWith(@"ID_"));
+    assertThat([rootNode.leftChildren[0] nodeId], startsWith(@"ID_"));
+}
+
 - (void)testRead {
-    QMRootNode *rootNode = [reader rootNodeForFileUrl:testMindMapUrl];
+    rootNode = [reader rootNodeForFileUrl:testMindmapUrl];
 
     assertThat(rootNode.allChildren, hasSize(8));
     assertThat(rootNode.leftChildren, hasSize(3));

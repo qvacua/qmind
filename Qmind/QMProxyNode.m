@@ -12,10 +12,12 @@
 #import "QMMindmapReader.h"
 #import "QMFontConverter.h"
 #import "QMRootNode.h"
+#import "QMIdGenerator.h"
 
 @implementation QMProxyNode {
     __weak QMFontConverter *_fontConverter;
     __weak QMMindmapReader *_reader;
+    __weak QMIdGenerator *_idGenerator;
 
     __weak QMProxyNode *_parent;
     NSMutableArray *_children;
@@ -25,12 +27,7 @@
 }
 
 #pragma mark NSXMLParserDelegate
-- (void)parser:(NSXMLParser *)parser
-        didStartElement:(NSString *)elementName
-           namespaceURI:(NSString *)namespaceURI
-          qualifiedName:(NSString *)qName
-             attributes:(NSDictionary *)anAttributeDict {
-
+- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)anAttributeDict {
     NSMutableDictionary *attributeDict = [[NSMutableDictionary alloc] initWithDictionary:anAttributeDict];
 
     if ([elementName isEqualToString:@"node"]) {
@@ -99,11 +96,7 @@
     }
 }
 
-- (void)parser:(NSXMLParser *)parser
- didEndElement:(NSString *)elementName
-  namespaceURI:(NSString *)namespaceURI
- qualifiedName:(NSString *)qName {
-
+- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName {
     if ([elementName isEqualToString:@"node"]) {
 
         /**
@@ -145,13 +138,12 @@
 #pragma mark Initializer
 - (id)initWithParent:(QMProxyNode *)parent node:(QMNode *)node {
     if ((self = [super init])) {
-        _reader = [[TBContext sharedContext] beanWithClass:[QMMindmapReader class]];
+        [self initDependencies];
+        [self ensureExistenceOfNodeId:node];
 
         _parent = parent;
         _node = node;
-
         _children = [[NSMutableArray alloc] initWithCapacity:3];
-        _fontConverter = [[TBContext sharedContext] beanWithClass:[QMFontConverter class]];
     }
 
     return self;
@@ -159,12 +151,11 @@
 
 - (id)initAsRootNode:(QMRootNode *)node {
     if ((self = [super init])) {
-        _reader = [[TBContext sharedContext] beanWithClass:[QMMindmapReader class]];
+        [self initDependencies];
+        [self ensureExistenceOfNodeId:node];
 
         _node = node;
-
         _children = [[NSMutableArray alloc] initWithCapacity:5];
-        _fontConverter = [[TBContext sharedContext] beanWithClass:[QMFontConverter class]];
     }
 
     return self;
@@ -172,14 +163,12 @@
 
 - (id)initAsUnsupportedXmlElement:(NSXMLElement *)xmlElement withParent:(QMProxyNode *)parent {
     if ((self = [super init])) {
-        _reader = [[TBContext sharedContext] beanWithClass:[QMMindmapReader class]];
+        [self initDependencies];
 
         _node = nil;
         _unsupportedXmlElement = xmlElement;
         _parent = parent;
-
         _children = [[NSMutableArray alloc] init];
-        _fontConverter = [[TBContext sharedContext] beanWithClass:[QMFontConverter class]];
     }
 
     return self;
@@ -188,6 +177,19 @@
 #pragma mark Private
 - (BOOL)isUnsupportedElement {
     return _node == nil;
+}
+
+- (void)initDependencies {
+    _reader = [[TBContext sharedContext] beanWithClass:[QMMindmapReader class]];
+    _fontConverter = [[TBContext sharedContext] beanWithClass:[QMFontConverter class]];
+    _idGenerator = [[TBContext sharedContext] beanWithClass:[QMIdGenerator class]];
+}
+
+- (void)ensureExistenceOfNodeId:(QMNode *)node {
+    NSString *nodeId = node.nodeId;
+    if (nodeId == nil || nodeId.length == 0) {
+        node.nodeId = [_idGenerator nodeId];
+    }
 }
 
 @end

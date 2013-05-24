@@ -37,6 +37,7 @@
 		4B03B24E1628725900E5ECA2 /* TBCacao.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4B03B2481628724000E5ECA2 /* TBCacao.framework */; };
 		4B03B2511628726500E5ECA2 /* TBCacao.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B03B2481628724000E5ECA2 /* TBCacao.framework */; };
 		4B03B2521628726E00E5ECA2 /* TBCacao.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4B03B2481628724000E5ECA2 /* TBCacao.framework */; };
+		4B10DDA2174F96E000B58F6E /* mindmap-reader-no-id-test.mm in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1929B0345B0EF35021CB20DF /* mindmap-reader-no-id-test.mm */; };
 		4B12E236168CC34900D972BE /* IconTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929BC2901D96DABE95AE4BB /* IconTest.m */; };
 		4B15777416A2EFFE0048480E /* QTestKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B15777116A2EFEF0048480E /* QTestKit.framework */; };
 		4B15777516A2F0000048480E /* Qkit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B15776F16A2EFEF0048480E /* Qkit.framework */; };
@@ -334,6 +335,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 7;
 			files = (
+				4B10DDA2174F96E000B58F6E /* mindmap-reader-no-id-test.mm in CopyFiles */,
 				4B2A00F2159F489C00582EA5 /* document-test-fail-open.mm in CopyFiles */,
 				4BA52C2B14FA52F5000EB8E5 /* cell-population-test.mm in CopyFiles */,
 				4BE9D5C014F5A76A00FC8248 /* cell-layout-test.mm in CopyFiles */,
@@ -345,6 +347,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1929B0345B0EF35021CB20DF /* mindmap-reader-no-id-test.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "mindmap-reader-no-id-test.mm"; sourceTree = "<group>"; };
 		1929B03F77F02BDFB060054E /* QMCacaoTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMCacaoTestCase.m; sourceTree = "<group>"; };
 		1929B0594A00B0CBF7573BD1 /* MindmapViewDraggingTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MindmapViewDraggingTest.m; sourceTree = "<group>"; };
 		1929B06F15A6BFDDAEF39EE7 /* QMIdGeneratorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMIdGeneratorTest.m; sourceTree = "<group>"; };
@@ -780,6 +783,7 @@
 				4BFCD7AC14F3E32A0085092D /* cell-layout-test.mm */,
 				4B39306914EC2E1500A9D541 /* mindmap-writer-test.mm */,
 				4B85653514E46D6800C6FF1C /* mindmap-reader-test.mm */,
+				1929B0345B0EF35021CB20DF /* mindmap-reader-no-id-test.mm */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
