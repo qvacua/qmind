@@ -29,7 +29,7 @@ TB_AUTOWIRE(settings)
     NSUInteger countOfIcons = cell.countOfIcons;
     BOOL trivialStringValue = [cell.stringValue length] == 0;
     if (countOfIcons > 0) {
-        result.width += iconSize.width + (trivialStringValue ? 0 : [_settings floatForKey:qSettingIconTextDistance]);
+        result.width += iconSize.width + (trivialStringValue ? 0 : [self.settings floatForKey:qSettingIconTextDistance]);
 
         if (iconSize.height > result.height) {
             result.height = iconSize.height;
@@ -37,14 +37,14 @@ TB_AUTOWIRE(settings)
     }
 
     if (trivialStringValue && countOfIcons == 0) {
-        result.width = [_settings floatForKey:qSettingNodeMinWidth];
-        result.height = [_settings floatForKey:qSettingNodeMinHeight];
+        result.width = [self.settings floatForKey:qSettingNodeMinWidth];
+        result.height = [self.settings floatForKey:qSettingNodeMinHeight];
     }
 
-    result.width += 2 * [_settings floatForKey:qSettingCellHorizontalPadding];
-    result.height += 2 * [_settings floatForKey:qSettingCellVerticalPadding];
+    result.width += 2 * [self.settings floatForKey:qSettingCellHorizontalPadding];
+    result.height += 2 * [self.settings floatForKey:qSettingCellVerticalPadding];
 
-    if (cell.isRoot) {
+    if (cell.root) {
         return [self sizeOfRootEllipse:result];
     }
 
@@ -57,8 +57,8 @@ TB_AUTOWIRE(settings)
         return NewSize(0, 0);
     }
 
-    const CGFloat iconDrawSize = [_settings floatForKey:qSettingIconDrawSize];
-    const CGFloat interIconDist = [_settings floatForKey:qSettingInterIconDistance];
+    const CGFloat iconDrawSize = [self.settings floatForKey:qSettingIconDrawSize];
+    const CGFloat interIconDist = [self.settings floatForKey:qSettingInterIconDistance];
 
     CGFloat iconWidth = countOfIcons * (iconDrawSize + interIconDist) - interIconDist;
 
@@ -67,10 +67,10 @@ TB_AUTOWIRE(settings)
 
 - (NSSize)sizeOfTextOfCell:(QMCell *)cell {
     if ([cell isRoot]) {
-        return [_textLayoutManager sizeOfAttributedString:cell.attributedString maxWidth:[_settings floatForKey:qSettingMaxRootCellTextWidth]];
+        return [self.textLayoutManager sizeOfAttributedString:cell.attributedString maxWidth:[self.settings floatForKey:qSettingMaxRootCellTextWidth]];
     }
 
-    return [_textLayoutManager sizeOfAttributedString:cell.attributedString maxWidth:[_settings floatForKey:qSettingMaxTextNodeWidth]];
+    return [self.textLayoutManager sizeOfAttributedString:cell.attributedString maxWidth:[self.settings floatForKey:qSettingMaxTextNodeWidth]];
 }
 
 - (NSSize)sizeOfChildrenFamily:(NSArray *)children {
@@ -78,7 +78,7 @@ TB_AUTOWIRE(settings)
         return NewSize(0, 0);
     }
 
-    CGFloat vertDistance = [_settings floatForKey:qSettingInternodeVerticalDistance];
+    CGFloat vertDistance = [self.settings floatForKey:qSettingInternodeVerticalDistance];
     NSSize result = NewSize(0, (children.count - 1) * vertDistance);
 
     for (QMCell *child in children) {
@@ -99,7 +99,7 @@ TB_AUTOWIRE(settings)
     }
 
     // RIGHT CHILDREN
-    CGFloat interNodeHorDistance = [_settings floatForKey:qSettingInternodeHorizontalDistance];
+    CGFloat interNodeHorDistance = [self.settings floatForKey:qSettingInternodeHorizontalDistance];
 
     CGFloat familyWidth = size.width;
     CGFloat familyHeight = 0.0;

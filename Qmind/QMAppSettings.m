@@ -7,24 +7,29 @@
  */
 
 #import <TBCacao/TBCacao.h>
-#import <Qkit/Qkit.h>
 #import "QMAppSettings.h"
 
-#define SINGLE_KEY_CHARSET(x) [NSCharacterSet characterSetWithRange:NSMakeRange((NSUInteger) x, 1)]
-
-@implementation QMAppSettings {
-    NSMutableDictionary *_settingsDict;
+static inline NSCharacterSet *single_key_charset(NSUInteger charCode) {
+    return [NSCharacterSet characterSetWithRange:NSMakeRange(charCode, 1)];
 }
+
+@interface QMAppSettings ()
+
+@property NSMutableDictionary *settingsDict;
+
+@end
+
+@implementation QMAppSettings
 
 TB_BEAN
 
 #pragma mark Public
 - (id)settingForKey:(NSString *)key {
-    return _settingsDict[key];
+    return self.settingsDict[key];
 }
 
 - (CGFloat)floatForKey:(NSString *)key {
-    return (CGFloat) [_settingsDict[key] floatValue];
+    return (CGFloat) [self.settingsDict[key] floatValue];
 }
 
 #pragma mark NSObject
@@ -47,8 +52,8 @@ TB_BEAN
     [style setAlignment:NSLeftTextAlignment];
     [style setLineBreakMode:NSLineBreakByWordWrapping];
 
-    [attrDict setObject:style forKey:NSParagraphStyleAttributeName];
-    [attrDict setObject:defaultFont forKey:NSFontAttributeName];
+    attrDict[NSParagraphStyleAttributeName] = style;
+    attrDict[NSFontAttributeName] = defaultFont;
 
     _settingsDict = [[NSMutableDictionary alloc] initWithDictionary:@{
             qSettingDefaultFont : defaultFont,
@@ -92,13 +97,13 @@ TB_BEAN
             qSettingIconDrawSize : @16,
 
 
-            qSettingNewChildNodeChars : SINGLE_KEY_CHARSET(NSTabCharacter),
-            qSettingNewLeftChildNodeChars : SINGLE_KEY_CHARSET(NSBackTabCharacter),
-            qSettingEditSelectedNodeChars : SINGLE_KEY_CHARSET(NSCarriageReturnCharacter),
-            qSettingNewSiblingNodeChars : SINGLE_KEY_CHARSET(NSCarriageReturnCharacter),
-            qSettingDeleteNodeChars : SINGLE_KEY_CHARSET(NSDeleteFunctionKey),
-            qSettingDeselectCell : SINGLE_KEY_CHARSET(27 /* ESC */),
-            qSettingFoldingChars : SINGLE_KEY_CHARSET(0x20 /* SPACE */),
+            qSettingNewChildNodeChars : single_key_charset(NSTabCharacter),
+            qSettingNewLeftChildNodeChars : single_key_charset(NSBackTabCharacter),
+            qSettingEditSelectedNodeChars : single_key_charset(NSCarriageReturnCharacter),
+            qSettingNewSiblingNodeChars : single_key_charset(NSCarriageReturnCharacter),
+            qSettingDeleteNodeChars : single_key_charset(NSDeleteFunctionKey),
+            qSettingDeselectCell : single_key_charset(27 /* ESC */),
+            qSettingFoldingChars : single_key_charset(0x20 /* SPACE */),
     }];
 }
 
