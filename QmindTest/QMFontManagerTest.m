@@ -7,14 +7,14 @@
  */
 
 #import "QMBaseTestCase.h"
-#import "QMFontConverter.h"
+#import "QMFontManager.h"
 #import "QMAppSettings.h"
 #import "QMCacaoTestCase.h"
 
-@interface FontConverterTest : QMCacaoTestCase @end
+@interface QMFontManagerTest : QMCacaoTestCase @end
 
-@implementation FontConverterTest {
-    QMFontConverter *fontConverter;
+@implementation QMFontManagerTest {
+    QMFontManager *fontConverter;
     NSFont *defaultFont;
 
     NSFontManager *fontManager;
@@ -23,7 +23,7 @@
 - (void)setUp {
     [super setUp];
 
-    fontConverter = [self.context beanWithClass:[QMFontConverter class]];
+    fontConverter = [self.context beanWithClass:[QMFontManager class]];
     defaultFont = [[self.context beanWithClass:[QMAppSettings class]] settingForKey:qSettingDefaultFont];
     fontManager = [NSFontManager sharedFontManager];
 }

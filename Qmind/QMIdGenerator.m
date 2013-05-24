@@ -11,8 +11,6 @@
 
 @implementation QMIdGenerator
 
-TB_BEAN
-
 #pragma mark Public
 - (NSString *)nodeId {
     return [NSString stringWithFormat:@"ID_%@", [self uuid]];

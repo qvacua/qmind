@@ -10,7 +10,7 @@
 #import "QMMindmapWriter.h"
 #import "QMNode.h"
 #import "QMDocument.h"
-#import "QMFontConverter.h"
+#import "QMFontManager.h"
 #import "QMRootNode.h"
 
 @implementation QMMindmapWriter

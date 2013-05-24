@@ -7,7 +7,7 @@
  */
 
 #import <TBCacao/TBCacao.h>
-#import "QMFontConverter.h"
+#import "QMFontManager.h"
 #import <Qkit/Qkit.h>
 #import "QMAppSettings.h"
 
@@ -20,11 +20,10 @@ static NSString * const qDefaultSansSerifFontName = @"SansSerif";
 static NSString * const qDefaultSerifFondName = @"Serif";
 static NSString * const qTimesFontName = @"Times";
 
-@implementation QMFontConverter {
+@implementation QMFontManager {
     NSFont *_defaultFont;
 }
 
-TB_BEAN
 TB_AUTOWIRE(settings)
 TB_AUTOWIRE(fontManager)
 

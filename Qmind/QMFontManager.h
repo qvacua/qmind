@@ -9,13 +9,14 @@
 #import <Cocoa/Cocoa.h>
 
 @class QMAppSettings;
+@protocol TBBean;
 @protocol TBInitializingBean;
 
 /**
 * Converts the attributes of <font> element to NSFont and vice versa. If we have the default font at hand,
 * we do nothing.
 */
-@interface QMFontConverter : NSObject <TBInitializingBean>
+@interface QMFontManager : NSObject <TBBean, TBInitializingBean>
 
 @property (weak) QMAppSettings *settings;
 @property (unsafe_unretained) NSFontManager *fontManager;

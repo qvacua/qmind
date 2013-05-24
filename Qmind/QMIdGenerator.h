@@ -8,7 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface QMIdGenerator : NSObject
+@protocol TBBean;
+
+@interface QMIdGenerator : NSObject <TBBean>
 
 - (NSString *)nodeId;
 

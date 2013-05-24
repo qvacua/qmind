@@ -38,6 +38,7 @@
 		4B03B2511628726500E5ECA2 /* TBCacao.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B03B2481628724000E5ECA2 /* TBCacao.framework */; };
 		4B03B2521628726E00E5ECA2 /* TBCacao.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4B03B2481628724000E5ECA2 /* TBCacao.framework */; };
 		4B10DDA2174F96E000B58F6E /* mindmap-reader-no-id-test.mm in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1929B0345B0EF35021CB20DF /* mindmap-reader-no-id-test.mm */; };
+		4B10DDAA174FA0DB00B58F6E /* QMIdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929BB6573724B1C6F3E369C /* QMIdGenerator.m */; };
 		4B12E236168CC34900D972BE /* IconTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929BC2901D96DABE95AE4BB /* IconTest.m */; };
 		4B15777416A2EFFE0048480E /* QTestKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B15777116A2EFEF0048480E /* QTestKit.framework */; };
 		4B15777516A2F0000048480E /* Qkit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B15776F16A2EFEF0048480E /* Qkit.framework */; };
@@ -65,7 +66,7 @@
 		4B5CB61715E1187500E05BD7 /* QMRootNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFCD7AC14F3E32A00850953 /* QMRootNode.m */; };
 		4B5CB61815E1187500E05BD7 /* QMNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B8564F414E4643A00C6FF0A /* QMNode.m */; };
 		4B5CB61A15E1187500E05BD7 /* QMDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B8564D814E461DC00C6FF0A /* QMDocument.m */; };
-		4B5CB61B15E1187500E05BD7 /* QMFontConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFCD7AC14F3E32A00850944 /* QMFontConverter.m */; };
+		4B5CB61B15E1187500E05BD7 /* QMFontManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFCD7AC14F3E32A00850944 /* QMFontManager.m */; };
 		4B5CB61C15E1187500E05BD7 /* QMProxyNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B85653514E46D6800C6FF15 /* QMProxyNode.m */; };
 		4B5CB61D15E1187500E05BD7 /* QMMindmapWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B85653514E46D6800C6FF11 /* QMMindmapWriter.m */; };
 		4B5CB61E15E1187500E05BD7 /* QMMindmapReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B85653514E46D6800C6FF0D /* QMMindmapReader.m */; };
@@ -77,7 +78,7 @@
 		4B5CB64F15E11AA500E05BD7 /* IconManagerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFCD7AC14F3E32A00850941 /* IconManagerTest.m */; };
 		4B5CB65015E11B2200E05BD7 /* QMMindmapViewDataSourceImplTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFCD7AC14F3E32A008509AB /* QMMindmapViewDataSourceImplTest.m */; };
 		4B5CB65115E11B2E00E05BD7 /* DocumentWindowControllerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B85653514E46D6800C6FF5B /* DocumentWindowControllerTest.m */; };
-		4B5CB65215E11B3D00E05BD7 /* FontConverterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFCD7AC14F3E32A00850949 /* FontConverterTest.m */; };
+		4B5CB65215E11B3D00E05BD7 /* QMFontManagerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFCD7AC14F3E32A00850949 /* QMFontManagerTest.m */; };
 		4B5CB65615E11B6200E05BD7 /* DocumentTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B85653514E46D6800C6FF34 /* DocumentTest.m */; };
 		4B5CB65715E11B6B00E05BD7 /* MindmapWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B85653514E46D6800C6FF1F /* MindmapWriterTest.m */; };
 		4B5CB65815E11C1000E05BD7 /* RootNodeTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFCD7AC14F3E32A00850958 /* RootNodeTest.m */; };
@@ -148,7 +149,7 @@
 		4BB45FEF1736976F00B2B15D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B8564C514E461DC00C6FF0A /* Cocoa.framework */; };
 		4BB45FF21736978D00B2B15D /* Qkit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B15776F16A2EFEF0048480E /* Qkit.framework */; };
 		4BB45FF31736979900B2B15D /* Qkit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4B15776F16A2EFEF0048480E /* Qkit.framework */; };
-		4BB45FF4173697B500B2B15D /* QMFontConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFCD7AC14F3E32A00850944 /* QMFontConverter.m */; };
+		4BB45FF4173697B500B2B15D /* QMFontManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFCD7AC14F3E32A00850944 /* QMFontManager.m */; };
 		4BB45FF5173697B500B2B15D /* QMIconManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFCD7AC14F3E32A0085093C /* QMIconManager.m */; };
 		4BB45FF81736989100B2B15D /* QMManualBeanProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929B43F698543362E51BAB9 /* QMManualBeanProvider.m */; };
 		4BB460031736A01100B2B15D /* QMDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B8564D814E461DC00C6FF0A /* QMDocument.m */; };
@@ -180,7 +181,7 @@
 		4BFCD7AC14F3E32A00850939 /* IconsFreeMindToQmind.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4BFCD7AC14F3E32A00850938 /* IconsFreeMindToQmind.plist */; };
 		4BFCD7AC14F3E32A0085093B /* IconsFreeMindToQmind.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4BFCD7AC14F3E32A00850938 /* IconsFreeMindToQmind.plist */; };
 		4BFCD7AC14F3E32A0085093D /* QMIconManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFCD7AC14F3E32A0085093C /* QMIconManager.m */; };
-		4BFCD7AC14F3E32A00850945 /* QMFontConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFCD7AC14F3E32A00850944 /* QMFontConverter.m */; };
+		4BFCD7AC14F3E32A00850945 /* QMFontManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFCD7AC14F3E32A00850944 /* QMFontManager.m */; };
 		4BFCD7AC14F3E32A00850954 /* QMRootNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFCD7AC14F3E32A00850953 /* QMRootNode.m */; };
 		4BFCD7AC14F3E32A0085095C /* QMRootCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFCD7AC14F3E32A0085095B /* QMRootCell.m */; };
 		4BFCD7AC14F3E32A00850969 /* QMCellStateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFCD7AC14F3E32A00850968 /* QMCellStateManager.m */; };
@@ -475,9 +476,9 @@
 		4BFCD7AC14F3E32A0085093C /* QMIconManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMIconManager.m; sourceTree = "<group>"; };
 		4BFCD7AC14F3E32A00850940 /* QMIconManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMIconManager.h; sourceTree = "<group>"; };
 		4BFCD7AC14F3E32A00850941 /* IconManagerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IconManagerTest.m; sourceTree = "<group>"; };
-		4BFCD7AC14F3E32A00850944 /* QMFontConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMFontConverter.m; sourceTree = "<group>"; };
-		4BFCD7AC14F3E32A00850948 /* QMFontConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMFontConverter.h; sourceTree = "<group>"; };
-		4BFCD7AC14F3E32A00850949 /* FontConverterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FontConverterTest.m; sourceTree = "<group>"; };
+		4BFCD7AC14F3E32A00850944 /* QMFontManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMFontManager.m; sourceTree = "<group>"; };
+		4BFCD7AC14F3E32A00850948 /* QMFontManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMFontManager.h; sourceTree = "<group>"; };
+		4BFCD7AC14F3E32A00850949 /* QMFontManagerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMFontManagerTest.m; sourceTree = "<group>"; };
 		4BFCD7AC14F3E32A0085094F /* QMMindmapViewComponentTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMMindmapViewComponentTest.m; sourceTree = "<group>"; };
 		4BFCD7AC14F3E32A00850952 /* cell-population-test.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "cell-population-test.mm"; sourceTree = "<group>"; };
 		4BFCD7AC14F3E32A00850953 /* QMRootNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMRootNode.m; sourceTree = "<group>"; };
@@ -767,7 +768,7 @@
 		4B85653514E46D6800C6FF18 /* Document */ = {
 			isa = PBXGroup;
 			children = (
-				4BFCD7AC14F3E32A00850949 /* FontConverterTest.m */,
+				4BFCD7AC14F3E32A00850949 /* QMFontManagerTest.m */,
 				4B85653514E46D6800C6FF34 /* DocumentTest.m */,
 				4B85653514E46D6800C6FF1F /* MindmapWriterTest.m */,
 				4B85653514E46D6800C6FF19 /* MindmapReaderTest.m */,
@@ -816,8 +817,8 @@
 		4B85653514E46D6800C6FF2F /* Internal */ = {
 			isa = PBXGroup;
 			children = (
-				4BFCD7AC14F3E32A00850948 /* QMFontConverter.h */,
-				4BFCD7AC14F3E32A00850944 /* QMFontConverter.m */,
+				4BFCD7AC14F3E32A00850948 /* QMFontManager.h */,
+				4BFCD7AC14F3E32A00850944 /* QMFontManager.m */,
 				4B85653514E46D6800C6FF15 /* QMProxyNode.m */,
 				4B85653514E46D6800C6FF14 /* QMProxyNode.h */,
 				4B85653514E46D6800C6FF11 /* QMMindmapWriter.m */,
@@ -1203,7 +1204,7 @@
 				4BFCD74F14F3D33600850924 /* QMAppDelegate.m in Sources */,
 				4BFCD7AC14F3E32A00850926 /* QMCellDrawer.m in Sources */,
 				4BFCD7AC14F3E32A0085093D /* QMIconManager.m in Sources */,
-				4BFCD7AC14F3E32A00850945 /* QMFontConverter.m in Sources */,
+				4BFCD7AC14F3E32A00850945 /* QMFontManager.m in Sources */,
 				4BFCD7AC14F3E32A00850954 /* QMRootNode.m in Sources */,
 				4BFCD7AC14F3E32A0085095C /* QMRootCell.m in Sources */,
 				4BFCD7AC14F3E32A00850969 /* QMCellStateManager.m in Sources */,
@@ -1226,13 +1227,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B10DDAA174FA0DB00B58F6E /* QMIdGenerator.m in Sources */,
 				4BB460061736A03F00B2B15D /* QMProxyNode.m in Sources */,
 				4BB460071736A03F00B2B15D /* QMMindmapReader.m in Sources */,
 				4BB460081736A03F00B2B15D /* QMMindmapViewDataSourceImpl.m in Sources */,
 				4BB460091736A03F00B2B15D /* QMDocumentWindowController.m in Sources */,
 				4BB460031736A01100B2B15D /* QMDocument.m in Sources */,
 				4BB45FF81736989100B2B15D /* QMManualBeanProvider.m in Sources */,
-				4BB45FF4173697B500B2B15D /* QMFontConverter.m in Sources */,
+				4BB45FF4173697B500B2B15D /* QMFontManager.m in Sources */,
 				4BB45FF5173697B500B2B15D /* QMIconManager.m in Sources */,
 				4BB45FDF173647C400B2B15D /* QMAppSettings.m in Sources */,
 				4BB45FE0173647C400B2B15D /* QMTextLayoutManager.m in Sources */,
@@ -1277,7 +1279,7 @@
 				4B5CB65915E11C1000E05BD7 /* NodeTest.m in Sources */,
 				4B5CB65715E11B6B00E05BD7 /* MindmapWriterTest.m in Sources */,
 				4B5CB65615E11B6200E05BD7 /* DocumentTest.m in Sources */,
-				4B5CB65215E11B3D00E05BD7 /* FontConverterTest.m in Sources */,
+				4B5CB65215E11B3D00E05BD7 /* QMFontManagerTest.m in Sources */,
 				4B5CB65115E11B2E00E05BD7 /* DocumentWindowControllerTest.m in Sources */,
 				4B5CB65015E11B2200E05BD7 /* QMMindmapViewDataSourceImplTest.m in Sources */,
 				4B5CB64D15E11AA500E05BD7 /* QMBaseTestCase.m in Sources */,
@@ -1299,7 +1301,7 @@
 				4B5CB61715E1187500E05BD7 /* QMRootNode.m in Sources */,
 				4B5CB61815E1187500E05BD7 /* QMNode.m in Sources */,
 				4B5CB61A15E1187500E05BD7 /* QMDocument.m in Sources */,
-				4B5CB61B15E1187500E05BD7 /* QMFontConverter.m in Sources */,
+				4B5CB61B15E1187500E05BD7 /* QMFontManager.m in Sources */,
 				4B5CB61C15E1187500E05BD7 /* QMProxyNode.m in Sources */,
 				4B5CB61D15E1187500E05BD7 /* QMMindmapWriter.m in Sources */,
 				4B5CB61E15E1187500E05BD7 /* QMMindmapReader.m in Sources */,

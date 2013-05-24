@@ -11,7 +11,7 @@
 @class QMNode;
 @class QMMindmapReader;
 @class QMRootNode;
-@class QMFontConverter;
+@class QMFontManager;
 
 /**
 * Helper class to build up the mindmap internally using event-driven xml reading and the class QMNode.

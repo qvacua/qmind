@@ -10,12 +10,12 @@
 #import "QMProxyNode.h"
 #import "QMNode.h"
 #import "QMMindmapReader.h"
-#import "QMFontConverter.h"
+#import "QMFontManager.h"
 #import "QMRootNode.h"
 #import "QMIdGenerator.h"
 
 @implementation QMProxyNode {
-    __weak QMFontConverter *_fontConverter;
+    __weak QMFontManager *_fontConverter;
     __weak QMMindmapReader *_reader;
     __weak QMIdGenerator *_idGenerator;
 
@@ -181,7 +181,7 @@
 
 - (void)initDependencies {
     _reader = [[TBContext sharedContext] beanWithClass:[QMMindmapReader class]];
-    _fontConverter = [[TBContext sharedContext] beanWithClass:[QMFontConverter class]];
+    _fontConverter = [[TBContext sharedContext] beanWithClass:[QMFontManager class]];
     _idGenerator = [[TBContext sharedContext] beanWithClass:[QMIdGenerator class]];
 }
 
