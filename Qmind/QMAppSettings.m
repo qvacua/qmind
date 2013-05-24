@@ -31,6 +31,7 @@ NSString * const qSettingNewSiblingNodeChars = @"AppendNewSiblingNodeChars";
 NSString * const qSettingDeleteNodeChars = @"DeleteNodeChars";
 NSString * const qSettingDeselectCell = @"DeselectCellChars";
 NSString * const qSettingInterIconDistance = @"IntericonDistance";
+NSString * const qSettingLinkIconDrawSize = @"IconDrawSize";
 NSString * const qSettingIconDrawSize = @"IconDrawSize";
 NSString * const qSettingIconFont = @"IconFont";
 NSString * const qSettingNodeEditMinWidth = @"NodeEditMinWidth";
@@ -46,6 +47,9 @@ NSString * const qSettingFoldingMarkerLineWidth = @"FoldingMarkerLindWidth";
 
 NSString * const qSettingCellHorizontalPadding = @"CellHorizontalPadding";
 NSString * const qSettingCellVerticalPadding = @"CellVerticalPadding";
+
+static const NSUInteger qEscCharacter = 27;
+static const NSUInteger qSpaceCharacter = 0x20;
 
 static inline NSCharacterSet *single_key_charset(NSUInteger charCode) {
     return [NSCharacterSet characterSetWithRange:NSMakeRange(charCode, 1)];
@@ -134,14 +138,15 @@ TB_BEAN
             qSettingInterIconDistance : @3,
             qSettingIconDrawSize : @16,
 
+            qSettingLinkIconDrawSize: @16,
 
             qSettingNewChildNodeChars : single_key_charset(NSTabCharacter),
             qSettingNewLeftChildNodeChars : single_key_charset(NSBackTabCharacter),
             qSettingEditSelectedNodeChars : single_key_charset(NSCarriageReturnCharacter),
             qSettingNewSiblingNodeChars : single_key_charset(NSCarriageReturnCharacter),
             qSettingDeleteNodeChars : single_key_charset(NSDeleteFunctionKey),
-            qSettingDeselectCell : single_key_charset(27 /* ESC */),
-            qSettingFoldingChars : single_key_charset(0x20 /* SPACE */),
+            qSettingDeselectCell : single_key_charset(qEscCharacter),
+            qSettingFoldingChars : single_key_charset(qSpaceCharacter),
     }];
 }
 

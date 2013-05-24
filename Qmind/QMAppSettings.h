@@ -30,6 +30,7 @@ extern NSString * const qSettingNewSiblingNodeChars;
 extern NSString * const qSettingDeleteNodeChars;
 extern NSString * const qSettingDeselectCell;
 extern NSString * const qSettingInterIconDistance;
+extern NSString * const qSettingLinkIconDrawSize;
 extern NSString * const qSettingIconDrawSize;
 extern NSString * const qSettingIconFont;
 extern NSString * const qSettingNodeEditMinWidth;
