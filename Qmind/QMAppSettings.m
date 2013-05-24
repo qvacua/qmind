@@ -9,6 +9,44 @@
 #import <TBCacao/TBCacao.h>
 #import "QMAppSettings.h"
 
+NSString * const qSettingInternodeHorizontalDistance = @"InternodeHorizontalDistance";
+NSString * const qSettingInternodeVerticalDistance = @"InternodeVerticalDistance";
+NSString * const qSettingInternodeLineWidth = @"InterNodeLineWidth";
+NSString * const qSettingBezierControlPoint1 = @"BezierControlPoint1";
+NSString * const qSettingBezierControlPoint2 = @"BezierControlPoint2";
+NSString * const qSettingMaxTextNodeWidth = @"MaxTextNodeWidth";
+NSString * const qSettingMaxRootCellTextWidth = @"MaxRootCellTextWidth";
+NSString * const qSettingMindMapViewMargin = @"MindMapViewMargin";
+NSString * const qSettingNodeFocusRingMargin = @"NodeFocusRingMargin";
+NSString * const qSettingNodeFocusRingBorderRadius = @"NodeFocusRingBorderRadius";
+NSString * const qSettingBackgroundColor = @"BackgroundColor";
+NSString * const qSettingDefaultNewNodeWidth = @"DefaultNewNodeWidth";
+NSString * const qSettingDefaultFont = @"DefaultFont";
+NSString * const qSettingDefaultStringAttributeDict = @"DefaultStringAttributeDict";
+NSString * const qSettingDefaultParagraphStyle = @"DefaultParagraphStyle";
+NSString * const qSettingEditSelectedNodeChars = @"EditSelectedNodeChars";
+NSString * const qSettingNewChildNodeChars = @"AppendNewChildNodeChars";
+NSString * const qSettingNewLeftChildNodeChars = @"AppendNewLeftChildNodeChars";
+NSString * const qSettingNewSiblingNodeChars = @"AppendNewSiblingNodeChars";
+NSString * const qSettingDeleteNodeChars = @"DeleteNodeChars";
+NSString * const qSettingDeselectCell = @"DeselectCellChars";
+NSString * const qSettingInterIconDistance = @"IntericonDistance";
+NSString * const qSettingIconDrawSize = @"IconDrawSize";
+NSString * const qSettingIconFont = @"IconFont";
+NSString * const qSettingNodeEditMinWidth = @"NodeEditMinWidth";
+NSString * const qSettingNodeEditMinHeight = @"NodeEditMinHeight";
+NSString * const qSettingNodeEditMaxWidth = @"NodeEditMaxWidth";
+NSString * const qSettingNodeMinWidth = @"NodeMinWidth";
+NSString * const qSettingNodeMinHeight = @"NodeMinHeight";
+NSString * const qSettingFoldingChars = @"FoldingChars";
+NSString * const qSettingIconTextDistance = @"IconTextDistance";
+
+NSString * const qSettingFoldingMarkerRadius = @"FoldingMarkerRadius";
+NSString * const qSettingFoldingMarkerLineWidth = @"FoldingMarkerLindWidth";
+
+NSString * const qSettingCellHorizontalPadding = @"CellHorizontalPadding";
+NSString * const qSettingCellVerticalPadding = @"CellVerticalPadding";
+
 static inline NSCharacterSet *single_key_charset(NSUInteger charCode) {
     return [NSCharacterSet characterSetWithRange:NSMakeRange(charCode, 1)];
 }

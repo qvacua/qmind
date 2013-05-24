@@ -8,43 +8,43 @@
 
 #import <Cocoa/Cocoa.h>
 
-static NSString * const qSettingInternodeHorizontalDistance = @"InternodeHorizontalDistance";
-static NSString * const qSettingInternodeVerticalDistance = @"InternodeVerticalDistance";
-static NSString * const qSettingInternodeLineWidth = @"InterNodeLineWidth";
-static NSString * const qSettingBezierControlPoint1 = @"BezierControlPoint1";
-static NSString * const qSettingBezierControlPoint2 = @"BezierControlPoint2";
-static NSString * const qSettingMaxTextNodeWidth = @"MaxTextNodeWidth";
-static NSString * const qSettingMaxRootCellTextWidth = @"MaxRootCellTextWidth";
-static NSString * const qSettingMindMapViewMargin = @"MindMapViewMargin";
-static NSString * const qSettingNodeFocusRingMargin = @"NodeFocusRingMargin";
-static NSString * const qSettingNodeFocusRingBorderRadius = @"NodeFocusRingBorderRadius";
-static NSString * const qSettingBackgroundColor = @"BackgroundColor";
-static NSString * const qSettingDefaultNewNodeWidth = @"DefaultNewNodeWidth";
-static NSString * const qSettingDefaultFont = @"DefaultFont";
-static NSString * const qSettingDefaultStringAttributeDict = @"DefaultStringAttributeDict";
-static NSString * const qSettingDefaultParagraphStyle = @"DefaultParagraphStyle";
-static NSString * const qSettingEditSelectedNodeChars = @"EditSelectedNodeChars";
-static NSString * const qSettingNewChildNodeChars = @"AppendNewChildNodeChars";
-static NSString * const qSettingNewLeftChildNodeChars = @"AppendNewLeftChildNodeChars";
-static NSString * const qSettingNewSiblingNodeChars = @"AppendNewSiblingNodeChars";
-static NSString * const qSettingDeleteNodeChars = @"DeleteNodeChars";
-static NSString * const qSettingDeselectCell = @"DeselectCellChars";
-static NSString * const qSettingInterIconDistance = @"IntericonDistance";
-static NSString * const qSettingIconDrawSize = @"IconDrawSize";
-static NSString * const qSettingIconFont = @"IconFont";
-static NSString * const qSettingNodeEditMinWidth = @"NodeEditMinWidth";
-static NSString * const qSettingNodeEditMinHeight = @"NodeEditMinHeight";
-static NSString * const qSettingNodeEditMaxWidth = @"NodeEditMaxWidth";
-static NSString * const qSettingNodeMinWidth = @"NodeMinWidth";
-static NSString * const qSettingNodeMinHeight = @"NodeMinHeight";
-static NSString * const qSettingFoldingChars = @"FoldingChars";
-static NSString * const qSettingIconTextDistance = @"IconTextDistance";
+extern NSString * const qSettingInternodeHorizontalDistance;
+extern NSString * const qSettingInternodeVerticalDistance;
+extern NSString * const qSettingInternodeLineWidth;
+extern NSString * const qSettingBezierControlPoint1;
+extern NSString * const qSettingBezierControlPoint2;
+extern NSString * const qSettingMaxTextNodeWidth;
+extern NSString * const qSettingMaxRootCellTextWidth;
+extern NSString * const qSettingMindMapViewMargin;
+extern NSString * const qSettingNodeFocusRingMargin;
+extern NSString * const qSettingNodeFocusRingBorderRadius;
+extern NSString * const qSettingBackgroundColor;
+extern NSString * const qSettingDefaultNewNodeWidth;
+extern NSString * const qSettingDefaultFont;
+extern NSString * const qSettingDefaultStringAttributeDict;
+extern NSString * const qSettingDefaultParagraphStyle;
+extern NSString * const qSettingEditSelectedNodeChars;
+extern NSString * const qSettingNewChildNodeChars;
+extern NSString * const qSettingNewLeftChildNodeChars;
+extern NSString * const qSettingNewSiblingNodeChars;
+extern NSString * const qSettingDeleteNodeChars;
+extern NSString * const qSettingDeselectCell;
+extern NSString * const qSettingInterIconDistance;
+extern NSString * const qSettingIconDrawSize;
+extern NSString * const qSettingIconFont;
+extern NSString * const qSettingNodeEditMinWidth;
+extern NSString * const qSettingNodeEditMinHeight;
+extern NSString * const qSettingNodeEditMaxWidth;
+extern NSString * const qSettingNodeMinWidth;
+extern NSString * const qSettingNodeMinHeight;
+extern NSString * const qSettingFoldingChars;
+extern NSString * const qSettingIconTextDistance;
 
-static NSString * const qSettingFoldingMarkerRadius = @"FoldingMarkerRadius";
-static NSString * const qSettingFoldingMarkerLineWidth = @"FoldingMarkerLindWidth";
+extern NSString * const qSettingFoldingMarkerRadius;
+extern NSString * const qSettingFoldingMarkerLineWidth;
 
-static NSString * const qSettingCellHorizontalPadding = @"CellHorizontalPadding";
-static NSString * const qSettingCellVerticalPadding = @"CellVerticalPadding";
+extern NSString * const qSettingCellHorizontalPadding;
+extern NSString * const qSettingCellVerticalPadding;
 
 /**
 * Application-wide settings for Qmind, eg constatns for drawing. These settings are not persistent for now. They'll be
