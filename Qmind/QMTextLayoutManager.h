@@ -9,8 +9,9 @@
 #import <Cocoa/Cocoa.h>
 
 @class QMAppSettings;
+@protocol TBBean;
 
-@interface QMTextLayoutManager : NSObject
+@interface QMTextLayoutManager : NSObject <TBBean>
 
 @property (weak) QMAppSettings *settings;
 

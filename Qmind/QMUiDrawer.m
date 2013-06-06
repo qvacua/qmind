@@ -6,15 +6,13 @@
  * See LICENSE
  */
 
-#import "QMUiDrawer.h"
 #import <Qkit/Qkit.h>
 #import <TBCacao/TBCacao.h>
+#import "QMUiDrawer.h"
 
 static const NSSize qSizeOfBadgeCircle = {20., 20.};
 
 @implementation QMUiDrawer
-
-TB_BEAN
 
 - (void)drawBadgeWithNumber:(NSUInteger)number atPoint:(NSPoint)location {
     NSColor *red = [NSColor redColor];

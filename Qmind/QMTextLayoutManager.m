@@ -6,10 +6,10 @@
  * See LICENSE
  */
 
-#import "QMTextLayoutManager.h"
-#import "QMAppSettings.h"
 #import <Qkit/Qkit.h>
 #import <TBCacao/TBCacao.h>
+#import "QMTextLayoutManager.h"
+#import "QMAppSettings.h"
 
 @implementation QMTextLayoutManager {
     NSLayoutManager *_layoutManager;
@@ -17,7 +17,6 @@
     NSTextContainer *_textContainer;
 }
 
-TB_BEAN
 TB_AUTOWIRE(settings)
 
 #pragma mark Public

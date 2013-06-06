@@ -8,7 +8,9 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface QMUiDrawer : NSObject
+@protocol TBBean;
+
+@interface QMUiDrawer : NSObject <TBBean>
 
 - (void)drawBadgeWithNumber:(NSUInteger)number atPoint:(NSPoint)location;
 

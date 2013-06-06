@@ -8,7 +8,9 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface QMTextDrawer : NSObject
+@protocol TBBean;
+
+@interface QMTextDrawer : NSObject <TBBean>
 
 - (void)drawAttributedString:(NSAttributedString *)attrStr inRect:(NSRect)frame range:(NSRange)range;
 

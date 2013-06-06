@@ -7,6 +7,7 @@
  */
 
 #import <Qkit/Qkit.h>
+#import <TBCacao/TBCacao.h>
 #import "QMCellSizeManager.h"
 #import "QMCell.h"
 #import "QMTextLayoutManager.h"
@@ -15,7 +16,6 @@
 
 @implementation QMCellSizeManager
 
-TB_BEAN
 TB_AUTOWIRE(textLayoutManager)
 TB_AUTOWIRE(settings)
 

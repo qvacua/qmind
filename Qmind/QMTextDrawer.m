@@ -8,15 +8,12 @@
 
 #import <TBCacao/TBCacao.h>
 #import "QMTextDrawer.h"
-#import "QMAppSettings.h"
 
 @implementation QMTextDrawer {
     NSLayoutManager *_layoutManager;
     NSTextStorage *_textStorage;
     NSTextContainer *_textContainer;
 }
-
-TB_BEAN
 
 #pragma mark Public
 - (void)drawAttributedString:(NSAttributedString *)attrStr inRect:(NSRect)frame range:(NSRange)range {
