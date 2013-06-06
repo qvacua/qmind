@@ -12,8 +12,9 @@
 @class QMCell;
 @class QMTextLayoutManager;
 @class QMAppSettings;
+@protocol TBBean;
 
-@interface QMCellLayoutManager : NSObject
+@interface QMCellLayoutManager : NSObject <TBBean>
 
 @property (weak) QMAppSettings *settings;
 

@@ -7,6 +7,7 @@
  */
 
 #import <Cocoa/Cocoa.h>
+#import <TBCacao/TBCacao.h>
 
 extern NSString * const qSettingInternodeHorizontalDistance;
 extern NSString * const qSettingInternodeVerticalDistance;
@@ -51,7 +52,7 @@ extern NSString * const qSettingCellVerticalPadding;
 * Application-wide settings for Qmind, eg constatns for drawing. These settings are not persistent for now. They'll be
 * eventually persisted.
 */
-@interface QMAppSettings : NSObject
+@interface QMAppSettings : NSObject <TBBean>
 
 /**
 * General getter for a setting. When the result is a number, an NSNumber is returned.

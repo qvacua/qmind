@@ -10,11 +10,12 @@
 
 @class QMRootNode;
 @class QMFontManager;
+@protocol TBBean;
 
 /**
 * Converts the internal node structure to NSData such that you can write it down. The result will be a mm file.
 */
-@interface QMMindmapWriter : NSObject
+@interface QMMindmapWriter : NSObject <TBBean>
 
 @property (weak) QMFontManager *fontConverter;
 

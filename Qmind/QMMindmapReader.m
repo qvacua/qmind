@@ -23,8 +23,6 @@ static NSString * const qNodeKey = @"node";
     QMProxyNode *_proxyRoot;
 }
 
-TB_BEAN
-
 #pragma mark Public
 - (QMRootNode *)rootNodeForFileUrl:(NSURL *)fileUrl {
     _fileUrl = fileUrl;

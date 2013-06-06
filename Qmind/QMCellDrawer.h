@@ -13,8 +13,9 @@
 @class QMTextLayoutManager;
 @class QMCellLayoutManager;
 @class QMTextDrawer;
+@protocol TBBean;
 
-@interface QMCellDrawer : NSObject
+@interface QMCellDrawer : NSObject <TBBean>
 
 @property (weak) QMAppSettings *settings;
 @property (weak) QMTextLayoutManager *textLayoutManager;

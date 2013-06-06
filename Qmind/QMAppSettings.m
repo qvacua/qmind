@@ -63,8 +63,6 @@ static inline NSCharacterSet *single_key_charset(NSUInteger charCode) {
 
 @implementation QMAppSettings
 
-TB_BEAN
-
 #pragma mark Public
 - (id)settingForKey:(NSString *)key {
     return self.settingsDict[key];

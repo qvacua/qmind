@@ -9,8 +9,9 @@
 #import <Cocoa/Cocoa.h>
 
 @class QMCell;
+@protocol TBBean;
 
-@interface QMCellSelector : NSObject
+@interface QMCellSelector : NSObject <TBBean>
 
 - (QMCell *)cellWithIdentifier:(id)identifier fromParentCell:(QMCell *)parentCell;
 

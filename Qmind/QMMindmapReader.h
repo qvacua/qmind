@@ -11,6 +11,7 @@
 @class QMProxyNode;
 @class QMDocument;
 @class QMRootNode;
+@protocol TBBean;
 
 /**
 * A mindmap document model which uses the Node class to internally represent the mindmap node. Reads the mindmap XML file
@@ -18,7 +19,7 @@
 *
 * @implements NSXMLParserDelegate
 */
-@interface QMMindmapReader : NSObject <NSXMLParserDelegate>
+@interface QMMindmapReader : NSObject <TBBean, NSXMLParserDelegate>
 
 - (QMRootNode *)rootNodeForFileUrl:(NSURL *)fileUrl;
 

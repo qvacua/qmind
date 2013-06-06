@@ -6,15 +6,14 @@
  * See LICENSE
  */
 
+#import <Qkit/Qkit.h>
 #import "QMCellLayoutManager.h"
 #import "QMAppSettings.h"
 #import "QMRootCell.h"
 #import "QMIcon.h"
-#import <Qkit/Qkit.h>
 
 @implementation QMCellLayoutManager
 
-TB_BEAN
 TB_AUTOWIRE(settings)
 
 #pragma mark Public

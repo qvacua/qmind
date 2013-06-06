@@ -15,7 +15,6 @@
 
 @implementation QMMindmapWriter
 
-TB_BEAN
 TB_AUTOWIRE(fontConverter)
 
 #pragma mark Public

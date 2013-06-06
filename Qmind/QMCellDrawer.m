@@ -6,19 +6,17 @@
  * See LICENSE
  */
 
+#import <Qkit/Qkit.h>
+#import <TBCacao/TBCacao.h>
 #import "QMCellDrawer.h"
 #import "QMTextDrawer.h"
 #import "QMCell.h"
 #import "QMAppSettings.h"
-#import <Qkit/Qkit.h>
-#import "QMTextLayoutManager.h"
 #import "QMMindmapView.h"
 #import "QMCellLayoutManager.h"
 #import "QMIcon.h"
 
 @implementation QMCellDrawer
-
-TB_BEAN
 
 TB_AUTOWIRE(textLayoutManager)
 TB_AUTOWIRE(cellLayoutManager)
