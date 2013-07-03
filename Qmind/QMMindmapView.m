@@ -725,7 +725,7 @@ we only test the begin edit part... We are being to lazy here...
                 break;
 
             case NSLeftMouseUp:
-                [[self enclosingScrollView] setDocumentCursor:[NSCursor arrowCursor]];
+                [[NSCursor arrowCursor] set];
                 [self doMouseUp:currentEvent];
 
                 [self clearMouseTrackLoopFlags];
@@ -980,7 +980,7 @@ we only test the begin edit part... We are being to lazy here...
 
     if (mouseDownHitCell == nil) {
         log4Debug(@"starting to drag scroll");
-        [[self enclosingScrollView] setDocumentCursor:[NSCursor closedHandCursor]];
+        [[NSCursor closedHandCursor] set];
         [self dragScrollViewWithEvent:event];
 
         return;
