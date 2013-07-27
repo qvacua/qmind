@@ -11,6 +11,7 @@
 
 extern NSString *const qNodeIdAttributeKey;
 extern NSString *const qNodeTextAttributeKey;
+extern NSString *const qNodeLinkAttributeKey;
 extern NSString *const qNodeFoldedAttributeKey;
 extern NSString *const qNodePositionAttributeKey;
 
@@ -93,6 +94,8 @@ extern NSString *const qNodeFoldingKey;
 * an array containing the FreeMind icon codes as NSString.
 */
 @property(readonly) NSArray *icons;
+
+@property(copy) NSString *link;
 
 /**
 * The initializer used to create a new node

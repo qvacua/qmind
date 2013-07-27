@@ -70,23 +70,25 @@
 - (void)checkLeftChildren:(QMRootNode *)rootNode {
     NSArray *leftChildren = rootNode.leftChildren;
 
-    QMNode *firstChild = [leftChildren objectAtIndex:0];
+    QMNode *firstChild = leftChildren[0];
     assertThat(firstChild.stringValue, is(@"A"));
     assertThat(firstChild.children, hasSize(2));
 
     NSArray *childrenOfA = firstChild.children;
-    QMNode *firstGrand = [childrenOfA objectAtIndex:0];
+    QMNode *firstGrand = childrenOfA[0];
     assertThat(firstGrand.stringValue, is(@"A1"));
     assertThat(firstGrand.children, hasSize(3));
 
-    assertThat([[childrenOfA objectAtIndex:1] stringValue], is(@"A2"));
+    assertThat([childrenOfA[1] stringValue], is(@"A2"));
 
-    QMNode *secondChild = [leftChildren objectAtIndex:1];
-    assertThat([secondChild stringValue], is(@"B"));
+    QMNode *secondChild = leftChildren[1];
+    assertThat(firstChild.link, is([NSString stringWithFormat:@"#%@", secondChild.nodeId]));
+    assertThat(secondChild.stringValue, is(@"B"));
 
-    QMNode *thirdChild = [leftChildren objectAtIndex:2];
-    assertThat([thirdChild stringValue], is(@"C"));
-    assertThat([thirdChild children], hasSize(2));
+    QMNode *thirdChild = leftChildren[2];
+    assertThat(thirdChild.stringValue, is(@"C"));
+    assertThat(thirdChild.link, is(nilValue()));
+    assertThat(thirdChild.children, hasSize(2));
 }
 
 - (void)checkRightChildren:(QMRootNode *)rootNode {
@@ -95,6 +97,7 @@
     // first child of the root
     QMNode *firstChild = [rightChildren objectAtIndex:0];
     assertThat(firstChild.stringValue, is(@"a"));
+    assertThat(firstChild.link, is(@"http://google.de"));
 
     NSFont *firstFont = firstChild.font;
     assertThat(firstFont, notNilValue());
@@ -110,6 +113,7 @@
     // children of the first child
     QMNode *childOfA = [firstChild objectInChildrenAtIndex:0];
     QMNode *grandChildOfA = [childOfA objectInChildrenAtIndex:0];
+    assertThat(childOfA.link, is(nilValue()));
     assertThat(grandChildOfA.stringValue, is(@"a1a"));
 
     // second child of the root

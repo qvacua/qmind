@@ -12,10 +12,10 @@
 
 #define INITIAL_STRING_VALUE @"initial value"
 
-@interface NodeTest : QMBaseTestCase
+@interface QMNodeTest : QMBaseTestCase
 @end
 
-@implementation NodeTest {
+@implementation QMNodeTest {
     QMNode *node;
 
     NSUndoManager *undoManager;
@@ -75,6 +75,16 @@
 
 - (void)testIsRoot {
     assertThat(@([node isRoot]), isNo);
+}
+
+- (void)testLink {
+    QMNode *node = [[QMNode alloc] init];
+
+    node.link = @"http://link";
+    assertThat(node.link, is(@"http://link"));
+
+    node.link = @"#ID_...";
+    assertThat(node.link, is(@"#ID_..."));
 }
 
 - (void)testAttributes {

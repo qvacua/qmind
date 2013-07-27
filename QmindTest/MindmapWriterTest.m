@@ -96,6 +96,7 @@
     assertThat([[childrenOfA objectAtIndex:1] stringValue], is(@"A2"));
 
     QMNode *secondChild = [leftChildren objectAtIndex:1];
+    assertThat(firstChild.link, is([NSString stringWithFormat:@"#%@", secondChild.nodeId]));
     assertThat([secondChild stringValue], is(@"B"));
 
     QMNode *thirdChild = [leftChildren objectAtIndex:2];

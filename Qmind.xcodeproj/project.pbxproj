@@ -85,7 +85,7 @@
 		4B5CB65615E11B6200E05BD7 /* DocumentTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B85653514E46D6800C6FF34 /* DocumentTest.m */; };
 		4B5CB65715E11B6B00E05BD7 /* MindmapWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B85653514E46D6800C6FF1F /* MindmapWriterTest.m */; };
 		4B5CB65815E11C1000E05BD7 /* RootNodeTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFCD7AC14F3E32A00850958 /* RootNodeTest.m */; };
-		4B5CB65915E11C1000E05BD7 /* NodeTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B85651514E468C100C6FF1A /* NodeTest.m */; };
+		4B5CB65915E11C1000E05BD7 /* QMNodeTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B85651514E468C100C6FF1A /* QMNodeTest.m */; };
 		4B5CB65A15E11C2F00E05BD7 /* DummyObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B5CB56E15E10F5D00E05BD7 /* DummyObserver.m */; };
 		4B5CB65C15E11C9600E05BD7 /* MindmapViewDraggingTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929B0594A00B0CBF7573BD1 /* MindmapViewDraggingTest.m */; };
 		4B5CB65D15E11C9600E05BD7 /* CellEditorTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFCD7AC14F3E32A00850997 /* CellEditorTest.m */; };
@@ -417,7 +417,7 @@
 		4B8564F414E4643A00C6FF0A /* QMNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMNode.m; sourceTree = "<group>"; };
 		4B8564FF14E4688900C6FF0A /* QmindTest-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "QmindTest-Info.plist"; sourceTree = "<group>"; };
 		4B85650114E4688900C6FF0A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		4B85651514E468C100C6FF1A /* NodeTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NodeTest.m; sourceTree = "<group>"; };
+		4B85651514E468C100C6FF1A /* QMNodeTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMNodeTest.m; sourceTree = "<group>"; };
 		4B85653514E46D6800C6FF0C /* QMMindmapReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMMindmapReader.h; sourceTree = "<group>"; };
 		4B85653514E46D6800C6FF0D /* QMMindmapReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMMindmapReader.m; sourceTree = "<group>"; };
 		4B85653514E46D6800C6FF10 /* QMMindmapWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMMindmapWriter.h; sourceTree = "<group>"; };
@@ -754,7 +754,7 @@
 			isa = PBXGroup;
 			children = (
 				4BFCD7AC14F3E32A00850958 /* RootNodeTest.m */,
-				4B85651514E468C100C6FF1A /* NodeTest.m */,
+				4B85651514E468C100C6FF1A /* QMNodeTest.m */,
 				1929B06F15A6BFDDAEF39EE7 /* QMIdGeneratorTest.m */,
 			);
 			name = Models;
@@ -1284,7 +1284,7 @@
 				4B5CB66715E11C9600E05BD7 /* TextLayoutManagerTest.m in Sources */,
 				4B5CB65A15E11C2F00E05BD7 /* DummyObserver.m in Sources */,
 				4B5CB65815E11C1000E05BD7 /* RootNodeTest.m in Sources */,
-				4B5CB65915E11C1000E05BD7 /* NodeTest.m in Sources */,
+				4B5CB65915E11C1000E05BD7 /* QMNodeTest.m in Sources */,
 				4B5CB65715E11B6B00E05BD7 /* MindmapWriterTest.m in Sources */,
 				4B5CB65615E11B6200E05BD7 /* DocumentTest.m in Sources */,
 				4B5CB65215E11B3D00E05BD7 /* QMFontManagerTest.m in Sources */,
