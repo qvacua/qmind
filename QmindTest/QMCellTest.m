@@ -16,9 +16,9 @@
 #import "QMBaseTestCase.h"
 #import "QMIcon.h"
 
-@interface CellTest : QMBaseTestCase @end
+@interface QMCellTest : QMBaseTestCase @end
 
-@implementation CellTest {
+@implementation QMCellTest {
     QMMindmapView *view;
 
     QMCell *parentCell;

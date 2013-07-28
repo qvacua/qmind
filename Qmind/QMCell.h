@@ -68,6 +68,11 @@ typedef enum {
 @property (weak) NSString *stringValue;
 
 /**
+* A hyperlink (http://...) or internal link (#ID_...)
+*/
+@property (copy) NSURL *link;
+
+/**
 * The string enriched with the font information
 */
 @property (readonly) NSAttributedString *attributedString;
