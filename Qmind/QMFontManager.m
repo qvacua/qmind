@@ -115,6 +115,7 @@ TB_AUTOWIRE(fontManager)
     CGFontRelease(cgFont);
 
     _fontawesomeFont = (__bridge_transfer NSFont *)ctFont;
+
 }
 
 @end

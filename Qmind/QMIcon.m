@@ -13,6 +13,8 @@
 #import "QMAppSettings.h"
 #import "QMTextDrawer.h"
 #import "QMTextLayoutManager.h"
+#import "QMFontManager.h"
+
 
 @implementation QMIcon {
 
@@ -38,12 +40,7 @@
 - (id)initWithCode:(NSString *)aCode {
     self = [super init];
     if (self) {
-        TBContext *context = [TBContext sharedContext];
-
-        _iconManager = [context beanWithClass:[QMIconManager class]];
-        _settings = [context beanWithClass:[QMAppSettings class]];
-        _textDrawer = [context beanWithClass:[QMTextDrawer class]];
-        _textLayoutManager = [context beanWithClass:[QMTextLayoutManager class]];
+        [self initBeans];
 
         _code = aCode;
         _kind = [_iconManager kindForCode:_code];
@@ -62,6 +59,21 @@
     return self;
 }
 
+- (id)initAsLink {
+    self = [super init];
+    if (self) {
+        [self initBeans];
+
+        _unicode = @"\\u%f023";
+        _kind = QMIconKindFontawesome;
+
+        CGFloat iconSize = [_settings floatForKey:qSettingLinkIconDrawSize];
+        _size = NewSize(iconSize, iconSize);
+    }
+
+    return self;
+}
+
 - (void)drawRect:(NSRect)dirtyRect {
     NSRect frame = NewRectWithOriginAndSize(self.origin, self.size);
     if (!NSIntersectsRect(dirtyRect, frame)) {
@@ -70,16 +82,42 @@
 
     if (self.kind == QMIconKindString) {
         [self drawStringIconInRect:frame];
-
         return;
     }
 
     if (self.kind == QMIconKindImage) {
         [self.image drawInRect:frame fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1];
+        return;
+    }
+
+    if (self.kind == QMIconKindFontawesome) {
+        [self drawFontawesomeInRect:frame];
+        return;
     }
 }
 
 #pragma mark Private
+- (void)drawFontawesomeInRect:(NSRect)rect {
+    NSFont *fontawesome = [[self.fontManager fontawesomeFont] copy];
+    // TODO: we should set the font for links in app settings and use it here
+    [self.systemFontManager convertFont:fontawesome toSize:16];
+    NSDictionary *attrDict = [self.textLayoutManager stringAttributesDictWithFont:fontawesome];
+    NSAttributedString *attrStr = [[NSAttributedString alloc] initWithString:self.unicode attributes:attrDict];
+
+    [self.textDrawer drawAttributedString:attrStr inRect:rect range:NSMakeRange(0, 1)];
+}
+
+- (void)initBeans {
+    TBContext *context = [TBContext sharedContext];
+
+    _iconManager = [context beanWithClass:[QMIconManager class]];
+    _settings = [context beanWithClass:[QMAppSettings class]];
+    _textDrawer = [context beanWithClass:[QMTextDrawer class]];
+    _textLayoutManager = [context beanWithClass:[QMTextLayoutManager class]];
+    _fontManager = [context beanWithClass:[QMFontManager class]];
+    _systemFontManager = [context beanWithClass:[NSFontManager class]];
+}
+
 - (void)drawStringIconInRect:(NSRect)frame {
     NSFont *iconFont = [self.settings settingForKey:qSettingIconFont];
     NSDictionary *attrDict = [self.textLayoutManager stringAttributesDictWithFont:iconFont];
