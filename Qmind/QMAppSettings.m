@@ -33,6 +33,7 @@ NSString * const qSettingDeselectCell = @"DeselectCellChars";
 NSString * const qSettingInterIconDistance = @"IntericonDistance";
 NSString * const qSettingLinkIconDrawSize = @"LinkIconDrawSize";
 NSString * const qSettingLinkIconFont = @"LinkIconFont";
+NSString * const qSettingLinkIconHorizontalMargin = @"LinkIconHorizontalMargin";
 NSString * const qSettingIconDrawSize = @"IconDrawSize";
 NSString * const qSettingIconFont = @"IconFont";
 NSString * const qSettingNodeEditMinWidth = @"NodeEditMinWidth";
@@ -138,6 +139,7 @@ static inline NSCharacterSet *single_key_charset(NSUInteger charCode) {
             qSettingIconDrawSize : @16,
 
             qSettingLinkIconDrawSize: @16,
+            qSettingLinkIconHorizontalMargin: @3,
 
             qSettingNewChildNodeChars : single_key_charset(NSTabCharacter),
             qSettingNewLeftChildNodeChars : single_key_charset(NSBackTabCharacter),

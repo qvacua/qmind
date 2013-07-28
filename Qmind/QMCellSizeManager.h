@@ -35,5 +35,6 @@
 
 - (NSSize)sizeOfChildrenFamily:(NSArray *)children;
 
--(NSSize)sizeOfFamilyOfCell:(QMCell *)cell;
+- (NSSize)sizeOfFamilyOfCell:(QMCell *)cell;
+
 @end
