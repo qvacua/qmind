@@ -16,8 +16,14 @@
 #import "QMFontManager.h"
 
 
-@implementation QMIcon {
+@interface QMIcon ()
 
+@property NSAttributedString *attrStr;
+
+@end
+
+
+@implementation QMIcon {
 }
 
 @dynamic frame;
@@ -47,6 +53,10 @@
 
         if (_kind == QMIconKindString) {
             _unicode = [_iconManager iconRepresentationForCode:_code];
+
+            NSFont *iconFont = [self.settings settingForKey:qSettingIconFont];
+            NSDictionary *attrDict = [self.textLayoutManager stringAttributesDictWithFont:iconFont];
+            _attrStr = [[NSAttributedString alloc] initWithString:self.unicode attributes:attrDict];
         } else if (_kind == QMIconKindImage) {
             _image = [_iconManager iconRepresentationForCode:_code];
             [self initFlippedImage];
@@ -66,6 +76,12 @@
 
         _unicode = @"\\u%f023";
         _kind = QMIconKindFontawesome;
+
+        NSFont *fontawesome = [[self.fontManager fontawesomeFont] copy];
+        // TODO: we should set the font for links in app settings and use it here
+        [self.systemFontManager convertFont:fontawesome toSize:16];
+        NSDictionary *attrDict = [self.textLayoutManager stringAttributesDictWithFont:fontawesome];
+        _attrStr = [[NSAttributedString alloc] initWithString:self.unicode attributes:attrDict];
 
         CGFloat iconSize = [_settings floatForKey:qSettingLinkIconDrawSize];
         _size = NewSize(iconSize, iconSize);
@@ -98,13 +114,7 @@
 
 #pragma mark Private
 - (void)drawFontawesomeInRect:(NSRect)rect {
-    NSFont *fontawesome = [[self.fontManager fontawesomeFont] copy];
-    // TODO: we should set the font for links in app settings and use it here
-    [self.systemFontManager convertFont:fontawesome toSize:16];
-    NSDictionary *attrDict = [self.textLayoutManager stringAttributesDictWithFont:fontawesome];
-    NSAttributedString *attrStr = [[NSAttributedString alloc] initWithString:self.unicode attributes:attrDict];
-
-    [self.textDrawer drawAttributedString:attrStr inRect:rect range:NSMakeRange(0, 1)];
+    [self.textDrawer drawAttributedString:self.attrStr inRect:rect range:NSMakeRange(0, 1)];
 }
 
 - (void)initBeans {
@@ -119,13 +129,10 @@
 }
 
 - (void)drawStringIconInRect:(NSRect)frame {
-    NSFont *iconFont = [self.settings settingForKey:qSettingIconFont];
-    NSDictionary *attrDict = [self.textLayoutManager stringAttributesDictWithFont:iconFont];
-    NSAttributedString *attrStr = [[NSAttributedString alloc] initWithString:self.unicode attributes:attrDict];
-
     NSRect tempRect = frame;
     tempRect.origin.y -= 4;
-    [self.textDrawer drawAttributedString:attrStr inRect:tempRect range:NSMakeRange(0, 1)];
+
+    [self.textDrawer drawAttributedString:self.attrStr inRect:tempRect range:NSMakeRange(0, 1)];
 }
 
 - (void)initFlippedImage {
