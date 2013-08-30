@@ -200,7 +200,7 @@
 
     cell.link = [NSURL URLWithString:@"http://qvacua.com"];
 
-    assertThatSize([manager sizeOfCell:cell], equalToSize(NewSize(1 * sizeOfLinkIcon + 1 * linkIconMargin + 4 * sizeOfIcon + 3 * interIconDist + iconTextDist + 2 * horPadding + 5, MAX(sizeOfIcon, sizeOfLinkIcon) + 2 * vertPadding)));
+    assertThatSize([manager sizeOfCell:cell], equalToSize(NewSize(1 * sizeOfLinkIcon + 1 * linkIconMargin + 4 * sizeOfIcon + 3 * interIconDist + iconTextDist + 2 * horPadding + 5, 50 + 2 * vertPadding)));
 }
 
 - (void)testSize9 {

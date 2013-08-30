@@ -36,6 +36,12 @@ TB_AUTOWIRE(settings)
         }
     }
 
+    if (cell.link != nil) {
+        CGFloat linkDrawSize = [self.settings floatForKey:qSettingLinkIconDrawSize] + [self.settings floatForKey:qSettingLinkIconHorizontalMargin];
+        result.width += linkDrawSize;
+        result.height = MAX(linkDrawSize, result.height);
+    }
+
     if (trivialStringValue && countOfIcons == 0) {
         result.width = [self.settings floatForKey:qSettingNodeMinWidth];
         result.height = [self.settings floatForKey:qSettingNodeMinHeight];
