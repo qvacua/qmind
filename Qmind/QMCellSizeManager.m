@@ -14,6 +14,7 @@
 #import "QMAppSettings.h"
 #import "QMRootCell.h"
 
+
 @implementation QMCellSizeManager
 
 TB_AUTOWIRE(textLayoutManager)
@@ -37,9 +38,9 @@ TB_AUTOWIRE(settings)
     }
 
     if (cell.link != nil) {
-        CGFloat linkDrawSize = [self.settings floatForKey:qSettingLinkIconDrawSize] + [self.settings floatForKey:qSettingLinkIconHorizontalMargin];
-        result.width += linkDrawSize;
-        result.height = MAX(linkDrawSize, result.height);
+        CGFloat linkIconSize = [self.settings floatForKey:qSettingLinkIconDrawSize];
+        result.width += linkIconSize + [self.settings floatForKey:qSettingLinkIconHorizontalMargin];
+        result.height = MAX(linkIconSize, result.height);
     }
 
     if (trivialStringValue && countOfIcons == 0) {
