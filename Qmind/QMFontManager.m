@@ -100,21 +100,7 @@ TB_AUTOWIRE(fontManager)
 #pragma mark TBInitializingBean
 - (void)postConstruct {
     _defaultFont = [self.settings settingForKey:qSettingDefaultFont];
-
-    NSString *fontPath = [[NSBundle bundleForClass:self.class] pathForResource:@"fontawesome-webfont" ofType:@"ttf"];
-    NSData *fontData = [[NSData alloc] initWithContentsOfFile:fontPath];
-
-    CGDataProviderRef fontDataProvider = CGDataProviderCreateWithCFData((__bridge CFDataRef) fontData);
-    CGFontRef cgFont = CGFontCreateWithDataProvider(fontDataProvider);
-    CGDataProviderRelease(fontDataProvider);
-
-    // if we pass NULL for attributes, we crash when releasing the font descriptor
-    CTFontDescriptorRef fontDescriptor = CTFontDescriptorCreateWithAttributes((__bridge CFDictionaryRef) @{});
-    CTFontRef ctFont = CTFontCreateWithGraphicsFont(cgFont, 0, NULL, fontDescriptor);
-    CFRelease(fontDescriptor);
-    CGFontRelease(cgFont);
-
-    _fontawesomeFont = (__bridge_transfer NSFont *)ctFont;
+    _fontawesomeFont = [self.settings settingForKey:qSettingLinkIconFont];
 
 }
 

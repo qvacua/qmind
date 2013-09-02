@@ -9,46 +9,47 @@
 #import <TBCacao/TBCacao.h>
 #import "QMAppSettings.h"
 
-NSString * const qSettingInternodeHorizontalDistance = @"InternodeHorizontalDistance";
-NSString * const qSettingInternodeVerticalDistance = @"InternodeVerticalDistance";
-NSString * const qSettingInternodeLineWidth = @"InterNodeLineWidth";
-NSString * const qSettingBezierControlPoint1 = @"BezierControlPoint1";
-NSString * const qSettingBezierControlPoint2 = @"BezierControlPoint2";
-NSString * const qSettingMaxTextNodeWidth = @"MaxTextNodeWidth";
-NSString * const qSettingMaxRootCellTextWidth = @"MaxRootCellTextWidth";
-NSString * const qSettingMindMapViewMargin = @"MindMapViewMargin";
-NSString * const qSettingNodeFocusRingMargin = @"NodeFocusRingMargin";
-NSString * const qSettingNodeFocusRingBorderRadius = @"NodeFocusRingBorderRadius";
-NSString * const qSettingBackgroundColor = @"BackgroundColor";
-NSString * const qSettingDefaultNewNodeWidth = @"DefaultNewNodeWidth";
-NSString * const qSettingDefaultFont = @"DefaultFont";
-NSString * const qSettingDefaultStringAttributeDict = @"DefaultStringAttributeDict";
-NSString * const qSettingDefaultParagraphStyle = @"DefaultParagraphStyle";
-NSString * const qSettingEditSelectedNodeChars = @"EditSelectedNodeChars";
-NSString * const qSettingNewChildNodeChars = @"AppendNewChildNodeChars";
-NSString * const qSettingNewLeftChildNodeChars = @"AppendNewLeftChildNodeChars";
-NSString * const qSettingNewSiblingNodeChars = @"AppendNewSiblingNodeChars";
-NSString * const qSettingDeleteNodeChars = @"DeleteNodeChars";
-NSString * const qSettingDeselectCell = @"DeselectCellChars";
-NSString * const qSettingInterIconDistance = @"IntericonDistance";
-NSString * const qSettingLinkIconDrawSize = @"LinkIconDrawSize";
-NSString * const qSettingLinkIconFont = @"LinkIconFont";
-NSString * const qSettingLinkIconHorizontalMargin = @"LinkIconHorizontalMargin";
-NSString * const qSettingIconDrawSize = @"IconDrawSize";
-NSString * const qSettingIconFont = @"IconFont";
-NSString * const qSettingNodeEditMinWidth = @"NodeEditMinWidth";
-NSString * const qSettingNodeEditMinHeight = @"NodeEditMinHeight";
-NSString * const qSettingNodeEditMaxWidth = @"NodeEditMaxWidth";
-NSString * const qSettingNodeMinWidth = @"NodeMinWidth";
-NSString * const qSettingNodeMinHeight = @"NodeMinHeight";
-NSString * const qSettingFoldingChars = @"FoldingChars";
-NSString * const qSettingIconTextDistance = @"IconTextDistance";
 
-NSString * const qSettingFoldingMarkerRadius = @"FoldingMarkerRadius";
-NSString * const qSettingFoldingMarkerLineWidth = @"FoldingMarkerLindWidth";
+NSString *const qSettingInternodeHorizontalDistance = @"InternodeHorizontalDistance";
+NSString *const qSettingInternodeVerticalDistance = @"InternodeVerticalDistance";
+NSString *const qSettingInternodeLineWidth = @"InterNodeLineWidth";
+NSString *const qSettingBezierControlPoint1 = @"BezierControlPoint1";
+NSString *const qSettingBezierControlPoint2 = @"BezierControlPoint2";
+NSString *const qSettingMaxTextNodeWidth = @"MaxTextNodeWidth";
+NSString *const qSettingMaxRootCellTextWidth = @"MaxRootCellTextWidth";
+NSString *const qSettingMindMapViewMargin = @"MindMapViewMargin";
+NSString *const qSettingNodeFocusRingMargin = @"NodeFocusRingMargin";
+NSString *const qSettingNodeFocusRingBorderRadius = @"NodeFocusRingBorderRadius";
+NSString *const qSettingBackgroundColor = @"BackgroundColor";
+NSString *const qSettingDefaultNewNodeWidth = @"DefaultNewNodeWidth";
+NSString *const qSettingDefaultFont = @"DefaultFont";
+NSString *const qSettingDefaultStringAttributeDict = @"DefaultStringAttributeDict";
+NSString *const qSettingDefaultParagraphStyle = @"DefaultParagraphStyle";
+NSString *const qSettingEditSelectedNodeChars = @"EditSelectedNodeChars";
+NSString *const qSettingNewChildNodeChars = @"AppendNewChildNodeChars";
+NSString *const qSettingNewLeftChildNodeChars = @"AppendNewLeftChildNodeChars";
+NSString *const qSettingNewSiblingNodeChars = @"AppendNewSiblingNodeChars";
+NSString *const qSettingDeleteNodeChars = @"DeleteNodeChars";
+NSString *const qSettingDeselectCell = @"DeselectCellChars";
+NSString *const qSettingInterIconDistance = @"IntericonDistance";
+NSString *const qSettingLinkIconDrawSize = @"LinkIconDrawSize";
+NSString *const qSettingLinkIconFont = @"LinkIconFont";
+NSString *const qSettingLinkIconHorizontalMargin = @"LinkIconHorizontalMargin";
+NSString *const qSettingIconDrawSize = @"IconDrawSize";
+NSString *const qSettingIconFont = @"IconFont";
+NSString *const qSettingNodeEditMinWidth = @"NodeEditMinWidth";
+NSString *const qSettingNodeEditMinHeight = @"NodeEditMinHeight";
+NSString *const qSettingNodeEditMaxWidth = @"NodeEditMaxWidth";
+NSString *const qSettingNodeMinWidth = @"NodeMinWidth";
+NSString *const qSettingNodeMinHeight = @"NodeMinHeight";
+NSString *const qSettingFoldingChars = @"FoldingChars";
+NSString *const qSettingIconTextDistance = @"IconTextDistance";
 
-NSString * const qSettingCellHorizontalPadding = @"CellHorizontalPadding";
-NSString * const qSettingCellVerticalPadding = @"CellVerticalPadding";
+NSString *const qSettingFoldingMarkerRadius = @"FoldingMarkerRadius";
+NSString *const qSettingFoldingMarkerLineWidth = @"FoldingMarkerLindWidth";
+
+NSString *const qSettingCellHorizontalPadding = @"CellHorizontalPadding";
+NSString *const qSettingCellVerticalPadding = @"CellVerticalPadding";
 
 static const NSUInteger qEscCharacter = 27;
 static const NSUInteger qSpaceCharacter = 0x20;
@@ -57,11 +58,13 @@ static inline NSCharacterSet *single_key_charset(NSUInteger charCode) {
     return [NSCharacterSet characterSetWithRange:NSMakeRange(charCode, 1)];
 }
 
+
 @interface QMAppSettings ()
 
 @property NSMutableDictionary *settingsDict;
 
 @end
+
 
 @implementation QMAppSettings
 
@@ -89,6 +92,8 @@ static inline NSCharacterSet *single_key_charset(NSUInteger charCode) {
     NSFont *defaultFont = [NSFont fontWithName:@"Helvetica" size:12.0];
     NSMutableDictionary *attrDict = [[NSMutableDictionary alloc] initWithCapacity:2];
     NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
+
+    NSFont *fontawesomeFont = [self fontawesomeFont];
 
     [style setParagraphStyle:[NSParagraphStyle defaultParagraphStyle]];
     [style setAlignment:NSLeftTextAlignment];
@@ -138,8 +143,9 @@ static inline NSCharacterSet *single_key_charset(NSUInteger charCode) {
             qSettingInterIconDistance : @3,
             qSettingIconDrawSize : @16,
 
-            qSettingLinkIconDrawSize: @16,
-            qSettingLinkIconHorizontalMargin: @3,
+            qSettingLinkIconFont: fontawesomeFont,
+            qSettingLinkIconDrawSize : @16,
+            qSettingLinkIconHorizontalMargin : @3,
 
             qSettingNewChildNodeChars : single_key_charset(NSTabCharacter),
             qSettingNewLeftChildNodeChars : single_key_charset(NSBackTabCharacter),
@@ -149,6 +155,24 @@ static inline NSCharacterSet *single_key_charset(NSUInteger charCode) {
             qSettingDeselectCell : single_key_charset(qEscCharacter),
             qSettingFoldingChars : single_key_charset(qSpaceCharacter),
     }];
+}
+
+- (NSFont *)fontawesomeFont {
+    NSString *fontPath = [[NSBundle bundleForClass:self.class] pathForResource:@"fontawesome-webfont" ofType:@"ttf"];
+    NSData *fontData = [[NSData alloc] initWithContentsOfFile:fontPath];
+
+    CGDataProviderRef fontDataProvider = CGDataProviderCreateWithCFData((__bridge CFDataRef) fontData);
+    CGFontRef cgFont = CGFontCreateWithDataProvider(fontDataProvider);
+    CGDataProviderRelease(fontDataProvider);
+
+    // if we pass NULL for attributes, we crash when releasing the font descriptor
+    CTFontDescriptorRef fontDescriptor = CTFontDescriptorCreateWithAttributes((__bridge CFDictionaryRef) @{});
+    CTFontRef ctFont = CTFontCreateWithGraphicsFont(cgFont, 0, NULL, fontDescriptor);
+    CFRelease(fontDescriptor);
+    CGFontRelease(cgFont);
+
+    NSFont *fontawesomeFont = (__bridge_transfer NSFont *) ctFont;
+    return fontawesomeFont;
 }
 
 @end
