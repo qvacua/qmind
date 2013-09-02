@@ -17,7 +17,7 @@ static NSString *const qBoldKey = @"BOLD";
 static NSString *const qItalicKey = @"ITALIC";
 static NSString *const qTrueValue = @"true";
 static NSString *const qDefaultSansSerifFontName = @"SansSerif";
-static NSString *const qDefaultSerifFondName = @"Serif";
+static NSString *const qDefaultSerifFontName = @"Serif";
 static NSString *const qTimesFontName = @"Times";
 
 @interface QMFontManager ()
@@ -44,7 +44,7 @@ TB_AUTOWIRE(fontManager)
         fontName = self.defaultFont.familyName;
     }
 
-    if ([fontName isEqualToString:qDefaultSerifFondName]) {
+    if ([fontName isEqualToString:qDefaultSerifFontName]) {
         fontName = qTimesFontName;
     }
 
