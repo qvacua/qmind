@@ -67,8 +67,8 @@
     [self checkLeftChildren:rootNode];
 }
 
-- (void)checkLeftChildren:(QMRootNode *)rootNode {
-    NSArray *leftChildren = rootNode.leftChildren;
+- (void)checkLeftChildren:(QMRootNode *)aRootNode {
+    NSArray *leftChildren = aRootNode.leftChildren;
 
     QMNode *firstChild = leftChildren[0];
     assertThat(firstChild.stringValue, is(@"A"));
@@ -91,8 +91,8 @@
     assertThat(thirdChild.children, hasSize(2));
 }
 
-- (void)checkRightChildren:(QMRootNode *)rootNode {
-    NSArray *rightChildren = rootNode.children;;
+- (void)checkRightChildren:(QMRootNode *)aRootNode {
+    NSArray *rightChildren = aRootNode.children;;
 
     // first child of the root
     QMNode *firstChild = [rightChildren objectAtIndex:0];
@@ -125,14 +125,14 @@
 
     assertThat(@([secondChild countOfChildren]), is(@(4)));
 
-    QMNode *thirdChild = [rootNode objectInChildrenAtIndex:2];
+    QMNode *thirdChild = [aRootNode objectInChildrenAtIndex:2];
     assertThat(thirdChild.children, hasSize(3));
     assertThat(@([thirdChild isLeaf]), isNo);
     assertThat([[thirdChild objectInChildrenAtIndex:1] icons], consistsOf(@"kmail"));
 
-    assertThat(@([[rootNode objectInChildrenAtIndex:3] isLeaf]), isYes);
+    assertThat(@([[aRootNode objectInChildrenAtIndex:3] isLeaf]), isYes);
 
-    QMNode *fifthChild = [rootNode objectInChildrenAtIndex:4];
+    QMNode *fifthChild = [aRootNode objectInChildrenAtIndex:4];
     assertThat(@([fifthChild isLeaf]), isNo);
     assertThat(@([fifthChild isFolded]), isYes);
     assertThat(fifthChild.children, hasSize(2));

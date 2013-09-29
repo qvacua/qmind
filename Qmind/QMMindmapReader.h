@@ -7,11 +7,11 @@
  */
 
 #import <Foundation/Foundation.h>
+#import <TBCacao/TBCacao.h>
 
 @class QMProxyNode;
 @class QMDocument;
 @class QMRootNode;
-@protocol TBBean;
 
 /**
 * A mindmap document model which uses the Node class to internally represent the mindmap node. Reads the mindmap XML file

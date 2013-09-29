@@ -7,13 +7,13 @@
  */
 
 #import <Cocoa/Cocoa.h>
+#import <TBCacao/TBCacao.h>
 
 @class QMCell;
 @class QMAppSettings;
 @class QMTextLayoutManager;
 @class QMCellLayoutManager;
 @class QMTextDrawer;
-@protocol TBBean;
 
 @interface QMCellDrawer : NSObject <TBBean>
 

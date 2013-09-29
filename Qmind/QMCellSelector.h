@@ -7,16 +7,14 @@
  */
 
 #import <Cocoa/Cocoa.h>
+#import <TBCacao/TBCacao.h>
 
 @class QMCell;
-@protocol TBBean;
 
 @interface QMCellSelector : NSObject <TBBean>
 
 - (QMCell *)cellWithIdentifier:(id)identifier fromParentCell:(QMCell *)parentCell;
-
 - (QMCell *)traverseCell:(QMCell *)parentCell usingBlock:(void (^)(QMCell *, BOOL *))block;
-
 - (QMCell *)cellContainingPoint:(NSPoint)point inCell:(QMCell *)startingCell;
 
 @end

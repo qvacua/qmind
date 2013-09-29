@@ -7,8 +7,7 @@
  */
 
 #import <Foundation/Foundation.h>
-
-@protocol TBBean;
+#import <TBCacao/TBCacao.h>
 
 @interface QMIdGenerator : NSObject <TBBean>
 

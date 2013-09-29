@@ -7,11 +7,11 @@
  */
 
 #import <Foundation/Foundation.h>
+#import <TBCacao/TBCacao.h>
 
 @class QMCell;
 @class QMTextLayoutManager;
 @class QMAppSettings;
-@protocol TBBean;
 
 @interface QMCellSizeManager : NSObject <TBBean>
 
