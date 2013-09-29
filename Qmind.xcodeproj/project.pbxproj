@@ -133,6 +133,7 @@
 		4B992F1E173545DD00C5844E /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4B992F1A173545CD00C5844E /* Sparkle.framework */; };
 		4B9D981016878B0F00222D03 /* QMCellSizeManagerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929B209E6C81B9C03DE0505 /* QMCellSizeManagerTest.m */; };
 		4B9DE3341569367500AAF5C1 /* QmindIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4B9DE3331569367500AAF5C1 /* QmindIcon.icns */; };
+		4BA3F92817F8265C00EB5A81 /* fontawesome-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4B521D9B17A54EB600153278 /* fontawesome-webfont.ttf */; };
 		4BA52C2B14FA52F5000EB8E5 /* cell-population-test.mm in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4BFCD7AC14F3E32A00850952 /* cell-population-test.mm */; };
 		4BB45FDF173647C400B2B15D /* QMAppSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B85653514E46D6800C6FF26 /* QMAppSettings.m */; };
 		4BB45FE0173647C400B2B15D /* QMTextLayoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B85653514E46D6800C6FF41 /* QMTextLayoutManager.m */; };
@@ -1154,6 +1155,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B396DD614F7E446000C7B36 /* dummy.pdf in Resources */,
+				4BA3F92817F8265C00EB5A81 /* fontawesome-webfont.ttf in Resources */,
 				4BFCD7AC14F3E32A0085093B /* IconsFreeMindToQmind.plist in Resources */,
 				4BDC9D921524EEAD008CEB8E /* Localizable.strings in Resources */,
 			);
