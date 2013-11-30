@@ -98,8 +98,6 @@ TB_MANUALWIRE(settings)
     }
 
     NSSize textViewSize = [self textViewSizeForCell:cellToEdit];
-    [_textView setMinSize:textViewSize];
-
     NSSize scrollViewSize = [NSScrollView frameSizeForContentSize:textViewSize hasHorizontalScroller:NO hasVerticalScroller:NO borderType:NSNoBorder];
 
     [_scrollView setFrame:NewRectWithSize(0, 0, scrollViewSize)];
