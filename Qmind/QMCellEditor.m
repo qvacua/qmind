@@ -12,21 +12,6 @@
 #import <Qkit/Qkit.h>
 #import "QMAppSettings.h"
 
-/**
-* FIXME: The following is an evil hack! See
-* http://weblog.hataewon.com/2013/02/adding-child-view-to-zoomed-parent-view.html
-*
-* This hack fixes the issue #7, but it's awful.
-*/
-@interface QShadowedView (Bug) @end
-
-@implementation QShadowedView (Bug)
-
-- (void)setFrame:(NSRect)frameRect {
-    log4Debug(@"current rect: %@\tfuture rect: %@", [NSValue valueWithRect:[self frame]], [NSValue valueWithRect:frameRect]);
-}
-
-@end
 
 static NSInteger const qEscUnicode = 27;
 
@@ -44,7 +29,6 @@ static NSInteger const qEscUnicode = 27;
     NSTextContainer *_textContainer;
     NSTextView *_textView;
     NSScrollView *_scrollView;
-    QShadowedView *_containerView;
 }
 
 TB_MANUALWIRE(settings)
@@ -98,18 +82,17 @@ TB_MANUALWIRE(settings)
     }
 
     NSSize textViewSize = [self textViewSizeForCell:cellToEdit];
-    NSSize scrollViewSize = [NSScrollView frameSizeForContentSize:textViewSize hasHorizontalScroller:NO hasVerticalScroller:NO borderType:NSNoBorder];
+    NSSize scrollViewSize = [NSScrollView frameSizeForContentSize:textViewSize hasHorizontalScroller:NO hasVerticalScroller:NO borderType:NSBezelBorder];
 
     [_scrollView setFrame:NewRectWithSize(0, 0, scrollViewSize)];
 
     NSPoint textOrigin = cellToEdit.textOrigin;
     NSPoint containerOrigin = NewPoint(textOrigin.x - CONTAINER_BORDER_WIDTH, textOrigin.y - CONTAINER_BORDER_WIDTH);
 
-    [_containerView setFrameOrigin:containerOrigin];
-    [_containerView addOnlySubview:_scrollView];
+    [_scrollView setFrameOrigin:containerOrigin];
 
-    [_view addSubview:_containerView];
-    [_view scrollRectToVisible:_containerView.frame];
+    [_view addSubview:_scrollView];
+    [_view scrollRectToVisible:_scrollView.frame];
     [_view.window makeFirstResponder:_textView];
 
     [_view setNeedsDisplay:YES];
@@ -136,7 +119,6 @@ TB_MANUALWIRE(settings)
     _editingCanceled = NO;
     _currentlyEditedCell = nil;
 
-    [_containerView removeFromSuperview];
     [_scrollView removeFromSuperview];
 
     [_undoManager removeAllActions];
@@ -195,7 +177,6 @@ TB_MANUALWIRE(settings)
 
         _textView = [[NSTextView alloc] initWithFrame:NewRect(0, 0, 100, 24) textContainer:_textContainer];
         _scrollView = [[NSScrollView alloc] initWithFrame:NewRect(0, 0, 150, 40)];
-        _containerView = [[QShadowedView alloc] initWithFrame:NewRect(0, 0, 200, 100)];
 
         [_textView setDelegate:self];
         [_textView setAllowsUndo:YES];
@@ -210,11 +191,9 @@ TB_MANUALWIRE(settings)
         [_textView setMaxSize:NSMakeSize(CGFLOAT_MAX, CGFLOAT_MAX)];
 
         [_scrollView setDocumentView:_textView];
-        [_scrollView setBorderType:NSNoBorder];
+        [_scrollView setBorderType:NSBezelBorder];
         [_scrollView setHasHorizontalScroller:NO];
         [_scrollView setHasVerticalScroller:NO];
-
-        [_containerView addOnlySubview:_scrollView];
     }
 
     return self;
