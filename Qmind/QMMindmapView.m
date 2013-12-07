@@ -44,7 +44,8 @@ static inline BOOL modifier_check(NSUInteger value, NSUInteger modifier) {
 
 @interface QMMindmapView ()
 
-#pragma mark Private Instance Variables
+@property (readwrite) NSSize currentScale;
+
 @property QMCellPropertiesManager *cellPropertiesManager;
 @property QMCellStateManager *cellStateManager;
 @property QMCellEditor *cellEditor;
@@ -452,6 +453,7 @@ we only test the begin edit part... We are being to lazy here...
 }
 
 - (void)initMindmapViewWithDataSource:(id <QMMindmapViewDataSource>)aDataSource {
+    _currentScale = NewSize(1, 1);
     _dataSource = aDataSource;
     _cellPropertiesManager = [[QMCellPropertiesManager alloc] initWithMindmapView:self];
 
@@ -1187,6 +1189,7 @@ we only test the begin edit part... We are being to lazy here...
 
     [self resetScaling];
     [self scaleUnitSquareToSize:newScale];
+    self.currentScale = newScale;
 
     NSSize newParentSize = [self convertSize:clipViewFrameSize fromView:clipView];
     NSPoint newMapOrigin = [self rootCellOriginForParentSize:newParentSize];
