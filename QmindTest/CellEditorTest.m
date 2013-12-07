@@ -42,7 +42,7 @@
     [editor beginEditStringValueForCell:CELL(4)];
     assertThat(editor.currentlyEditedCell, is(CELL(4)));
 
-    [verify(view) addSubview:instanceOf([QShadowedView class])];
+    [verify(view) addSubview:instanceOf([NSScrollView class])];
     [verify(window) makeFirstResponder:instanceOf([NSTextView class])];
 }
 

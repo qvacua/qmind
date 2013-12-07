@@ -15,38 +15,36 @@
 
 static NSInteger const qEscUnicode = 27;
 
-@implementation QMCellEditor {
-    __weak QMMindmapView *_view;
-    __weak id <QMCellEditorDelegate> _delegate;
-    __weak QMCell *_currentlyEditedCell;
+@interface QMCellEditor ()
 
-    BOOL _editingCanceled;
+@property (readwrite, weak) QMCell *currentlyEditedCell;
 
-    NSUndoManager *_undoManager;
+@property NSUndoManager *undoManager;
+@property BOOL editingCanceled;
 
-    NSLayoutManager *_layoutManager;
-    NSTextStorage *_textStorage;
-    NSTextContainer *_textContainer;
-    NSTextView *_textView;
-    NSScrollView *_scrollView;
-}
+@property NSLayoutManager *layoutManager;
+@property NSTextStorage *textStorage;
+@property NSTextContainer *textContainer;
+@property NSTextView *textView;
+@property NSScrollView *scrollView;
+
+@end
+
+
+@implementation QMCellEditor
 
 TB_MANUALWIRE(settings)
 
-@synthesize view = _view;
-@synthesize delegate = _delegate;
-@synthesize currentlyEditedCell = _currentlyEditedCell;
-
 - (BOOL)isEditing {
-    return _currentlyEditedCell != nil;
+    return self.currentlyEditedCell != nil;
 }
 
 - (NSSize)textViewSizeForCell:(QMCell *)cell {
     const NSSize textSize = cell.textSize;
 
-    CGFloat defaultCellWidth = [_settings floatForKey:qSettingNodeEditMinWidth];
+    CGFloat defaultCellWidth = [self.settings floatForKey:qSettingNodeEditMinWidth];
     CGFloat widthForTextView = MAX(defaultCellWidth, textSize.width);
-    CGFloat maxWidth = [_settings floatForKey:qSettingNodeEditMaxWidth];
+    CGFloat maxWidth = [self.settings floatForKey:qSettingNodeEditMaxWidth];
     widthForTextView = MIN(maxWidth, widthForTextView);
 
     /**
@@ -55,7 +53,7 @@ TB_MANUALWIRE(settings)
     CGFloat heightForTextView = textSize.height + 2;
 
     if ([cell.stringValue length] == 0) {
-        NSFont *font = [_settings settingForKey:qSettingDefaultFont];
+        NSFont *font = [self.settings settingForKey:qSettingDefaultFont];
         if (cell.font != nil) {
             font = cell.font;
         }
@@ -67,42 +65,42 @@ TB_MANUALWIRE(settings)
 }
 
 - (void)beginEditStringValueForCell:(QMCell *)cellToEdit {
-    _currentlyEditedCell = cellToEdit;
+    self.currentlyEditedCell = cellToEdit;
 
-    [_textStorage setAttributedString:cellToEdit.attributedString];
+    [self.textStorage setAttributedString:cellToEdit.attributedString];
 
-    if (_textStorage.length == 0) {
-        NSFont *font = [_settings settingForKey:qSettingDefaultFont];
+    if (self.textStorage.length == 0) {
+        NSFont *font = [self.settings settingForKey:qSettingDefaultFont];
 
         if (cellToEdit.font != nil) {
             font = cellToEdit.font;
         }
 
-        [_textView setFont:font];
+        [self.textView setFont:font];
     }
 
     NSSize textViewSize = [self textViewSizeForCell:cellToEdit];
     NSSize scrollViewSize = [NSScrollView frameSizeForContentSize:textViewSize hasHorizontalScroller:NO hasVerticalScroller:NO borderType:NSBezelBorder];
 
-    [_scrollView setFrame:NewRectWithSize(0, 0, scrollViewSize)];
+    [self.scrollView setFrame:NewRectWithSize(0, 0, scrollViewSize)];
 
     NSPoint textOrigin = cellToEdit.textOrigin;
     NSPoint containerOrigin = NewPoint(textOrigin.x - CONTAINER_BORDER_WIDTH, textOrigin.y - CONTAINER_BORDER_WIDTH);
 
-    [_scrollView setFrameOrigin:containerOrigin];
+    [self.scrollView setFrameOrigin:containerOrigin];
 
-    [_view addSubview:_scrollView];
-    [_view scrollRectToVisible:_scrollView.frame];
-    [_view.window makeFirstResponder:_textView];
+    [self.view addSubview:self.scrollView];
+    [self.view scrollRectToVisible:self.scrollView.frame];
+    [self.view.window makeFirstResponder:self.textView];
 
-    [_view setNeedsDisplay:YES];
+    [self.view setNeedsDisplay:YES];
 }
 
 - (void)textDidEndEditing:(NSNotification *)notification {
-    NSAttributedString *const attrString = [[NSAttributedString alloc] initWithAttributedString:_textStorage];
+    NSAttributedString *const attrString = [[NSAttributedString alloc] initWithAttributedString:self.textStorage];
 
-    if (_editingCanceled) {
-        [_delegate editingCancelledWithString:attrString forCell:_currentlyEditedCell];
+    if (self.editingCanceled) {
+        [self.delegate editingCancelledWithString:attrString forCell:self.currentlyEditedCell];
     } else {
         NSEventType eventType = [[NSApp currentEvent] type];
 
@@ -113,18 +111,18 @@ TB_MANUALWIRE(settings)
             character = NSCarriageReturnCharacter;
         }
 
-        [_delegate editingEndedWithString:attrString forCell:_currentlyEditedCell byChar:character];
+        [self.delegate editingEndedWithString:attrString forCell:self.currentlyEditedCell byChar:character];
     }
 
-    _editingCanceled = NO;
-    _currentlyEditedCell = nil;
+    self.editingCanceled = NO;
+    self.currentlyEditedCell = nil;
 
-    [_scrollView removeFromSuperview];
+    [self.scrollView removeFromSuperview];
 
-    [_undoManager removeAllActions];
+    [self.undoManager removeAllActions];
 
-    [_view.window makeFirstResponder:_view];
-    [_view setNeedsDisplay:YES];
+    [self.view.window makeFirstResponder:self.view];
+    [self.view setNeedsDisplay:YES];
 }
 
 - (NSArray *)textView:(NSTextView *)textView
@@ -135,8 +133,8 @@ TB_MANUALWIRE(settings)
     unichar character = [[[NSApp currentEvent] characters] characterAtIndex:0];
 
     if (character == qEscUnicode) {
-        _editingCanceled = YES;
-        [_view.window makeFirstResponder:_view];
+        self.editingCanceled = YES;
+        [self.view.window makeFirstResponder:self.view];
 
         return nil;
     }
@@ -153,7 +151,7 @@ TB_MANUALWIRE(settings)
 }
 
 - (NSUndoManager *)undoManagerForTextView:(NSTextView *)view {
-    return _undoManager;
+    return self.undoManager;
 }
 
 - (id)init {
@@ -200,7 +198,7 @@ TB_MANUALWIRE(settings)
 }
 
 - (void)endEditing {
-    [_view.window makeFirstResponder:_view];
+    [self.view.window makeFirstResponder:self.view];
 }
 
 @end
