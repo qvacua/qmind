@@ -300,7 +300,6 @@ TB_MANUALWIRE(uiDrawer)
 }
 
 - (void)updateCellFamilyForRemovalWithIdentifier:(id)identifier {
-    log4Debug(@"jo");
     NSArray *idArray = [self allChildrenIdentifierOfIdentifier:identifier];
 
     QMCell *parentCell = [self.cellSelector cellWithIdentifier:identifier fromParentCell:self.rootCell];
@@ -323,7 +322,6 @@ TB_MANUALWIRE(uiDrawer)
 }
 
 - (void)updateLeftCellFamilyForRemovalWithIdentifier:(id)identifier {
-    log4Debug(@"jo");
     NSArray *idArray = [self leftChildrenIdentifierOfRootCell];
 
     QMCell *cellToDel;
