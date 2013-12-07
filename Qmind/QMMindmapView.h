@@ -29,6 +29,8 @@ static const int qDeleteAllIconsMenuItemTag = 1100;
 
 @interface QMMindmapView : NSView <QMCellEditorDelegate, NSDraggingSource, NSDraggingDestination>
 
+@property (readonly) NSSize currentScale;
+
 @property (weak) QMUiDrawer *uiDrawer;
 @property (weak) QMCellSelector *cellSelector;
 @property (weak) QMCellLayoutManager *cellLayoutManager;
