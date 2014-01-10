@@ -160,6 +160,10 @@
 		4BB460071736A03F00B2B15D /* QMMindmapReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B85653514E46D6800C6FF0D /* QMMindmapReader.m */; };
 		4BB460081736A03F00B2B15D /* QMMindmapViewDataSourceImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFCD7AC14F3E32A008509A6 /* QMMindmapViewDataSourceImpl.m */; };
 		4BB460091736A03F00B2B15D /* QMDocumentWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B85653514E46D6800C6FF22 /* QMDocumentWindowController.m */; };
+		4BBFA3CE1880278700DAE6B8 /* OCHamcrest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BBFA3CC1880278700DAE6B8 /* OCHamcrest.framework */; };
+		4BBFA3CF1880278700DAE6B8 /* OCMockito.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BBFA3CD1880278700DAE6B8 /* OCMockito.framework */; };
+		4BBFA3D1188027B300DAE6B8 /* OCHamcrest.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4BBFA3CC1880278700DAE6B8 /* OCHamcrest.framework */; };
+		4BBFA3D2188027B300DAE6B8 /* OCMockito.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4BBFA3CD1880278700DAE6B8 /* OCMockito.framework */; };
 		4BD8C1291736F43200DC4B6F /* IconsFreeMindToQmind.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4BFCD7AC14F3E32A00850938 /* IconsFreeMindToQmind.plist */; };
 		4BDA7813170F80F5000AB84A /* sparkle-pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 4BDA7812170F80F5000AB84A /* sparkle-pub.pem */; };
 		4BDC9D901524EEAD008CEB8E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4BDC9D8E1524EEAD008CEB8E /* Localizable.strings */; };
@@ -173,8 +177,6 @@
 		4BF11362173836DF0029C032 /* dummy.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 4BFCD7AC14F3E32A00850936 /* dummy.pdf */; };
 		4BFCD74F14F3D33600850924 /* QMAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFCD74E14F3D33600850924 /* QMAppDelegate.m */; };
 		4BFCD75814F3D34700850924 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B8564C514E461DC00C6FF0A /* Cocoa.framework */; };
-		4BFCD76E14F3D53300850924 /* OCMockito.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B85653514E46D6800C6FF5D /* OCMockito.framework */; };
-		4BFCD76F14F3D53300850924 /* OCHamcrest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B85653514E46D6800C6FF1D /* OCHamcrest.framework */; };
 		4BFCD7AB14F3E32A00850924 /* mindmap-writer-test.mm in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4B39306914EC2E1500A9D541 /* mindmap-writer-test.mm */; };
 		4BFCD7AC14F3E32A00850924 /* mindmap-reader-test.mm in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4B85653514E46D6800C6FF1C /* mindmap-reader-test.mm */; };
 		4BFCD7AC14F3E32A00850926 /* QMCellDrawer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFCD7AC14F3E32A00850925 /* QMCellDrawer.m */; };
@@ -332,6 +334,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4BBFA3D0188027A800DAE6B8 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 16;
+			files = (
+				4BBFA3D1188027B300DAE6B8 /* OCHamcrest.framework in CopyFiles */,
+				4BBFA3D2188027B300DAE6B8 /* OCMockito.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4BFCD7AA14F3E31F00850924 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -423,7 +436,6 @@
 		4B85653514E46D6800C6FF15 /* QMProxyNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMProxyNode.m; sourceTree = "<group>"; };
 		4B85653514E46D6800C6FF19 /* MindmapReaderTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MindmapReaderTest.m; sourceTree = "<group>"; };
 		4B85653514E46D6800C6FF1C /* mindmap-reader-test.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "mindmap-reader-test.mm"; sourceTree = "<group>"; };
-		4B85653514E46D6800C6FF1D /* OCHamcrest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCHamcrest.framework; path = /Library/Frameworks/OCHamcrest.framework; sourceTree = "<absolute>"; };
 		4B85653514E46D6800C6FF1F /* MindmapWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MindmapWriterTest.m; sourceTree = "<group>"; };
 		4B85653514E46D6800C6FF22 /* QMDocumentWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMDocumentWindowController.m; sourceTree = "<group>"; };
 		4B85653514E46D6800C6FF25 /* QMDocumentWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMDocumentWindowController.h; sourceTree = "<group>"; };
@@ -437,7 +449,6 @@
 		4B85653514E46D6800C6FF44 /* QMTextLayoutManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMTextLayoutManager.h; sourceTree = "<group>"; };
 		4B85653514E46D6800C6FF4A /* TextLayoutManagerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextLayoutManagerTest.m; sourceTree = "<group>"; };
 		4B85653514E46D6800C6FF5B /* DocumentWindowControllerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocumentWindowControllerTest.m; sourceTree = "<group>"; };
-		4B85653514E46D6800C6FF5D /* OCMockito.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCMockito.framework; path = /Library/Frameworks/OCMockito.framework; sourceTree = "<absolute>"; };
 		4B85653514E46D6800C6FF5F /* QMTextDrawer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMTextDrawer.m; sourceTree = "<group>"; };
 		4B85653514E46D6800C6FF62 /* QMTextDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMTextDrawer.h; sourceTree = "<group>"; };
 		4B85653514E46D6800C6FF65 /* QMCellTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMCellTest.m; sourceTree = "<group>"; };
@@ -457,6 +468,8 @@
 		4B992F071735176D00C5844E /* QmindLook-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "QmindLook-Prefix.pch"; sourceTree = "<group>"; };
 		4B992F1A173545CD00C5844E /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Frameworks/Sparkle.framework; sourceTree = "<group>"; };
 		4B9DE3331569367500AAF5C1 /* QmindIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = QmindIcon.icns; path = Resources/QmindIcon.icns; sourceTree = "<group>"; };
+		4BBFA3CC1880278700DAE6B8 /* OCHamcrest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCHamcrest.framework; path = Frameworks/OCHamcrest.framework; sourceTree = "<group>"; };
+		4BBFA3CD1880278700DAE6B8 /* OCMockito.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCMockito.framework; path = Frameworks/OCMockito.framework; sourceTree = "<group>"; };
 		4BDA7812170F80F5000AB84A /* sparkle-pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "sparkle-pub.pem"; path = "Resources/sparkle-pub.pem"; sourceTree = "<group>"; };
 		4BDC9D8F1524EEAD008CEB8E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4BE684AA16922E9000789892 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/IconCollectionViewItem.xib; sourceTree = "<group>"; };
@@ -538,12 +551,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B15777516A2F0000048480E /* Qkit.framework in Frameworks */,
+				4BBFA3CF1880278700DAE6B8 /* OCMockito.framework in Frameworks */,
 				4B15777416A2EFFE0048480E /* QTestKit.framework in Frameworks */,
 				4B03B2511628726500E5ECA2 /* TBCacao.framework in Frameworks */,
 				4BFCD75814F3D34700850924 /* Cocoa.framework in Frameworks */,
-				4BFCD76E14F3D53300850924 /* OCMockito.framework in Frameworks */,
-				4BFCD76F14F3D53300850924 /* OCHamcrest.framework in Frameworks */,
 				1929B0840D140F224C35878C /* XCTest.framework in Frameworks */,
+				4BBFA3CE1880278700DAE6B8 /* OCHamcrest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -554,7 +567,7 @@
 			isa = PBXGroup;
 			children = (
 				4B03B2481628724000E5ECA2 /* TBCacao.framework */,
-				4B03B24A1628724000E5ECA2 /* TBCacaoTests.octest */,
+				4B03B24A1628724000E5ECA2 /* TBCacaoTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -657,9 +670,9 @@
 		4B8564C414E461DC00C6FF0A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4BBFA3CC1880278700DAE6B8 /* OCHamcrest.framework */,
+				4BBFA3CD1880278700DAE6B8 /* OCMockito.framework */,
 				4B992F1A173545CD00C5844E /* Sparkle.framework */,
-				4B85653514E46D6800C6FF5D /* OCMockito.framework */,
-				4B85653514E46D6800C6FF1D /* OCHamcrest.framework */,
 				4B8564C514E461DC00C6FF0A /* Cocoa.framework */,
 				4B992EF31735176D00C5844E /* QuickLook.framework */,
 				4B992EF51735176D00C5844E /* ApplicationServices.framework */,
@@ -1008,6 +1021,7 @@
 				4BFCD75314F3D34700850924 /* Resources */,
 				4B5CB44115E0E88300E05BD7 /* CopyFiles */,
 				4BFCD75414F3D34700850924 /* ShellScript */,
+				4BBFA3D0188027A800DAE6B8 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -1066,10 +1080,10 @@
 			remoteRef = 4B03B2471628724000E5ECA2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		4B03B24A1628724000E5ECA2 /* TBCacaoTests.octest */ = {
+		4B03B24A1628724000E5ECA2 /* TBCacaoTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = TBCacaoTests.octest;
+			path = TBCacaoTests.xctest;
 			remoteRef = 4B03B2491628724000E5ECA2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -1581,6 +1595,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					/Library/Frameworks,
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+					/Users/hat/Projects/qmind/Frameworks,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
@@ -1597,6 +1613,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					/Library/Frameworks,
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+					/Users/hat/Projects/qmind/Frameworks,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
