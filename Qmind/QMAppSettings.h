@@ -60,6 +60,7 @@ extern NSString * const qSettingCellVerticalPadding;
 * General getter for a setting. When the result is a number, an NSNumber is returned.
 */
 - (id)settingForKey:(NSString *)key;
+- (id)objectForKeyedSubscript:(id)key;
 
 /**
 * If you want to access CGFloat values, for example folding marker radius, use this method.

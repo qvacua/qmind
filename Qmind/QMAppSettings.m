@@ -55,7 +55,7 @@ static const NSUInteger qEscCharacter = 27;
 static const NSUInteger qSpaceCharacter = 0x20;
 
 static inline NSCharacterSet *single_key_charset(NSUInteger charCode) {
-    return [NSCharacterSet characterSetWithRange:NSMakeRange(charCode, 1)];
+  return [NSCharacterSet characterSetWithRange:NSMakeRange(charCode, 1)];
 }
 
 
@@ -70,109 +70,114 @@ static inline NSCharacterSet *single_key_charset(NSUInteger charCode) {
 
 #pragma mark Public
 - (id)settingForKey:(NSString *)key {
-    return self.settingsDict[key];
+  return self.settingsDict[key];
 }
 
+- (id)objectForKeyedSubscript:(id)key {
+  return [self settingForKey:key];
+}
+
+
 - (CGFloat)floatForKey:(NSString *)key {
-    return (CGFloat) [self.settingsDict[key] floatValue];
+  return (CGFloat) [self.settingsDict[key] floatValue];
 }
 
 #pragma mark NSObject
 - (id)init {
-    self = [super init];
-    if (self) {
-        [self initSettingsDict];
-    }
+  self = [super init];
+  if (self) {
+    [self initSettingsDict];
+  }
 
-    return self;
+  return self;
 }
 
 #pragma mark Private
 - (void)initSettingsDict {
-    NSFont *defaultFont = [NSFont fontWithName:@"Helvetica" size:12.0];
-    NSMutableDictionary *attrDict = [[NSMutableDictionary alloc] initWithCapacity:2];
-    NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
+  NSFont *defaultFont = [NSFont fontWithName:@"Helvetica" size:12.0];
+  NSMutableDictionary *attrDict = [[NSMutableDictionary alloc] initWithCapacity:2];
+  NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
 
-    NSFont *fontawesomeFont = [self fontawesomeFont];
+  NSFont *fontawesomeFont = [self fontawesomeFont];
 
-    [style setParagraphStyle:[NSParagraphStyle defaultParagraphStyle]];
-    [style setAlignment:NSLeftTextAlignment];
-    [style setLineBreakMode:NSLineBreakByWordWrapping];
+  [style setParagraphStyle:[NSParagraphStyle defaultParagraphStyle]];
+  [style setAlignment:NSLeftTextAlignment];
+  [style setLineBreakMode:NSLineBreakByWordWrapping];
 
-    attrDict[NSParagraphStyleAttributeName] = style;
-    attrDict[NSFontAttributeName] = defaultFont;
+  attrDict[NSParagraphStyleAttributeName] = style;
+  attrDict[NSFontAttributeName] = defaultFont;
 
-    _settingsDict = [[NSMutableDictionary alloc] initWithDictionary:@{
-            qSettingDefaultFont : defaultFont,
-            qSettingDefaultParagraphStyle : style,
-            qSettingDefaultStringAttributeDict : attrDict,
-            qSettingIconFont : [NSFont fontWithName:@"Apple Color Emoji" size:14],
-            qSettingBackgroundColor : [NSColor whiteColor],
+  _settingsDict = [[NSMutableDictionary alloc] initWithDictionary:@{
+      qSettingDefaultFont : defaultFont,
+      qSettingDefaultParagraphStyle : style,
+      qSettingDefaultStringAttributeDict : attrDict,
+      qSettingIconFont : [NSFont fontWithName:@"Apple Color Emoji" size:14],
+      qSettingBackgroundColor : [NSColor whiteColor],
 
-            qSettingInternodeHorizontalDistance : @30,
-            qSettingInternodeVerticalDistance : @7.5,
-            qSettingInternodeLineWidth : @1,
+      qSettingInternodeHorizontalDistance : @30,
+      qSettingInternodeVerticalDistance : @7.5,
+      qSettingInternodeLineWidth : @1,
 
-            qSettingNodeEditMinWidth : @200,
-            qSettingNodeEditMinHeight : @9,
-            qSettingNodeEditMaxWidth : @640,
+      qSettingNodeEditMinWidth : @200,
+      qSettingNodeEditMinHeight : @9,
+      qSettingNodeEditMaxWidth : @640,
 
-            qSettingNodeMinWidth : @100,
-            qSettingNodeMinHeight : @14,
+      qSettingNodeMinWidth : @100,
+      qSettingNodeMinHeight : @14,
 
-            qSettingFoldingMarkerRadius : @6,
-            qSettingFoldingMarkerLineWidth : @1,
+      qSettingFoldingMarkerRadius : @6,
+      qSettingFoldingMarkerLineWidth : @1,
 
-            qSettingMaxTextNodeWidth : @640,
-            qSettingMaxRootCellTextWidth : @400,
+      qSettingMaxTextNodeWidth : @640,
+      qSettingMaxRootCellTextWidth : @400,
 
-            qSettingMindMapViewMargin : @20,
+      qSettingMindMapViewMargin : @20,
 
-            qSettingNodeFocusRingMargin : @0,
-            qSettingNodeFocusRingBorderRadius : @2,
+      qSettingNodeFocusRingMargin : @0,
+      qSettingNodeFocusRingBorderRadius : @2,
 
-            qSettingBezierControlPoint1 : @20,
-            qSettingBezierControlPoint2 : @15,
+      qSettingBezierControlPoint1 : @20,
+      qSettingBezierControlPoint2 : @15,
 
-            qSettingDefaultNewNodeWidth : @100,
+      qSettingDefaultNewNodeWidth : @100,
 
-            qSettingCellHorizontalPadding : @3,
-            qSettingCellVerticalPadding : @3,
+      qSettingCellHorizontalPadding : @3,
+      qSettingCellVerticalPadding : @3,
 
-            qSettingIconTextDistance : @5,
-            qSettingInterIconDistance : @3,
-            qSettingIconDrawSize : @16,
+      qSettingIconTextDistance : @5,
+      qSettingInterIconDistance : @3,
+      qSettingIconDrawSize : @16,
 
-            qSettingLinkIconFont: fontawesomeFont,
-            qSettingLinkIconDrawSize : @16,
-            qSettingLinkIconHorizontalMargin : @3,
+      qSettingLinkIconFont : fontawesomeFont,
+      qSettingLinkIconDrawSize : @16,
+      qSettingLinkIconHorizontalMargin : @3,
 
-            qSettingNewChildNodeChars : single_key_charset(NSTabCharacter),
-            qSettingNewLeftChildNodeChars : single_key_charset(NSBackTabCharacter),
-            qSettingEditSelectedNodeChars : single_key_charset(NSCarriageReturnCharacter),
-            qSettingNewSiblingNodeChars : single_key_charset(NSCarriageReturnCharacter),
-            qSettingDeleteNodeChars : single_key_charset(NSDeleteFunctionKey),
-            qSettingDeselectCell : single_key_charset(qEscCharacter),
-            qSettingFoldingChars : single_key_charset(qSpaceCharacter),
-    }];
+      qSettingNewChildNodeChars : single_key_charset(NSTabCharacter),
+      qSettingNewLeftChildNodeChars : single_key_charset(NSBackTabCharacter),
+      qSettingEditSelectedNodeChars : single_key_charset(NSCarriageReturnCharacter),
+      qSettingNewSiblingNodeChars : single_key_charset(NSCarriageReturnCharacter),
+      qSettingDeleteNodeChars : single_key_charset(NSDeleteFunctionKey),
+      qSettingDeselectCell : single_key_charset(qEscCharacter),
+      qSettingFoldingChars : single_key_charset(qSpaceCharacter),
+  }];
 }
 
 - (NSFont *)fontawesomeFont {
-    NSString *fontPath = [[NSBundle bundleForClass:self.class] pathForResource:@"fontawesome-webfont" ofType:@"ttf"];
-    NSData *fontData = [[NSData alloc] initWithContentsOfFile:fontPath];
+  NSString *fontPath = [[NSBundle bundleForClass:self.class] pathForResource:@"fontawesome-webfont" ofType:@"ttf"];
+  NSData *fontData = [[NSData alloc] initWithContentsOfFile:fontPath];
 
-    CGDataProviderRef fontDataProvider = CGDataProviderCreateWithCFData((__bridge CFDataRef) fontData);
-    CGFontRef cgFont = CGFontCreateWithDataProvider(fontDataProvider);
-    CGDataProviderRelease(fontDataProvider);
+  CGDataProviderRef fontDataProvider = CGDataProviderCreateWithCFData((__bridge CFDataRef) fontData);
+  CGFontRef cgFont = CGFontCreateWithDataProvider(fontDataProvider);
+  CGDataProviderRelease(fontDataProvider);
 
-    // if we pass NULL for attributes, we crash when releasing the font descriptor
-    CTFontDescriptorRef fontDescriptor = CTFontDescriptorCreateWithAttributes((__bridge CFDictionaryRef) @{});
-    CTFontRef ctFont = CTFontCreateWithGraphicsFont(cgFont, 0, NULL, fontDescriptor);
-    CFRelease(fontDescriptor);
-    CGFontRelease(cgFont);
+  // if we pass NULL for attributes, we crash when releasing the font descriptor
+  CTFontDescriptorRef fontDescriptor = CTFontDescriptorCreateWithAttributes((__bridge CFDictionaryRef) @{});
+  CTFontRef ctFont = CTFontCreateWithGraphicsFont(cgFont, 0, NULL, fontDescriptor);
+  CFRelease(fontDescriptor);
+  CGFontRelease(cgFont);
 
-    NSFont *fontawesomeFont = (__bridge_transfer NSFont *) ctFont;
-    return fontawesomeFont;
+  NSFont *fontawesomeFont = (__bridge_transfer NSFont *) ctFont;
+  return fontawesomeFont;
 }
 
 @end

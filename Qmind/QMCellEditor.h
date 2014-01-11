@@ -1,7 +1,8 @@
 /**
- * Tae Won Ha
+ * Tae Won Ha — @hataewon
+ *
+ * http://taewon.de
  * http://qvacua.com
- * https://github.com/qvacua
  *
  * See LICENSE
  */
@@ -12,17 +13,20 @@
 @class QMCell;
 @class QMAppSettings;
 @protocol QMCellEditorDelegate;
+@class QMBorderedView;
 
-@interface QMCellEditor : NSObject <NSTextViewDelegate>
+@interface QMCellEditor : NSObject <NSTextFieldDelegate>
 
 @property (weak) QMAppSettings *settings;
 
-@property (weak) QMMindmapView *view;
 @property (weak) id<QMCellEditorDelegate> delegate;
 @property (readonly, weak) QMCell *currentlyEditedCell;
+@property (readonly, getter=isEditing) BOOL editing;
+
+@property (weak) QMMindmapView *view;
+@property (readonly) QMBorderedView *editorView;
 
 - (void)beginEditStringValueForCell:(QMCell *)cellToEdit;
-- (BOOL)isEditing;
 - (void)endEditing;
 
 @end
