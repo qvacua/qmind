@@ -10,6 +10,7 @@
 
 NSString *const qNodeIdAttributeKey = @"ID";
 NSString *const qNodeTextAttributeKey = @"TEXT";
+NSString *const qNodeLinkAttributeKey = @"LINK";
 NSString *const qNodeFoldedAttributeKey = @"FOLDED";
 NSString *const qNodePositionAttributeKey = @"POSITION";
 
@@ -61,6 +62,7 @@ NSString *const qTrueStringValue = @"true";
 @dynamic mutableIcons;
 @dynamic mutableChildren;
 @dynamic mutableAttributes;
+@dynamic link;
 
 #pragma mark Public
 - (NSUndoManager *)undoManager {
@@ -82,6 +84,14 @@ NSString *const qTrueStringValue = @"true";
     [self.allChildren enumerateObjectsUsingBlock:^(QMNode *childNode, NSUInteger index, BOOL *stop) {
         childNode.undoManager = anUndoManager;
     }];
+}
+
+- (NSString *)link {
+    return self.attributes[qNodeLinkAttributeKey];
+}
+
+- (void)setLink:(NSString *)aLink {
+    self.mutableAttributes[qNodeLinkAttributeKey] = [aLink copy];
 }
 
 - (BOOL)isRoot {

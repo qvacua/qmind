@@ -1,7 +1,8 @@
 /**
- * Tae Won Ha
+ * Tae Won Ha — @hataewon
+ *
+ * http://taewon.de
  * http://qvacua.com
- * https://github.com/qvacua
  *
  * See LICENSE
  */
@@ -16,6 +17,7 @@
 #import "QMCellLayoutManager.h"
 #import "QMIcon.h"
 
+
 @implementation QMCellDrawer
 
 TB_AUTOWIRE(textLayoutManager)
@@ -25,147 +27,147 @@ TB_AUTOWIRE(settings)
 
 #pragma mark Public
 - (void)drawContentForCell:(QMCell *)cell rect:(NSRect)dirtyRect {
-    if ([cell isRoot]) {
-        [self drawRootEllipseForFrame:cell.frame];
-    }
+  if (cell.root) {
+    [self drawRootEllipseForFrame:cell.frame];
+  }
 
-    [_textDrawer drawAttributedString:cell.attributedString inRect:cell.textFrame range:cell.rangeOfStringValue];
-    [self drawIconsForCell:cell rect:dirtyRect];
+  [self.textDrawer drawAttributedString:cell.attributedString inRect:cell.textFrame range:cell.rangeOfStringValue];
+  [self drawIconsForCell:cell rect:dirtyRect];
 }
 
 - (void)drawCell:(QMCell *)cell rect:(NSRect)dirtyRect {
-    [self drawLineForCell:cell dirtyRect:dirtyRect];
+  [self drawLineForCell:cell dirtyRect:dirtyRect];
 
-    [self drawRegionForCell:cell];
+  [self drawRegionForCell:cell];
 
-    if (!NSIntersectsRect(dirtyRect, cell.frame)) {
-        return;
-    }
+  if (!NSIntersectsRect(dirtyRect, cell.frame)) {
+    return;
+  }
 
-    [self drawContentForCell:cell rect:dirtyRect];
+  [self drawContentForCell:cell rect:dirtyRect];
 
-    if ([cell.view cellIsCurrentlyEdited:cell]) {
-        return;
-    }
+  if ([cell.view cellIsCurrentlyEdited:cell]) {
+    return;
+  }
 
-    [self drawMetaInfoForCell:cell];
+  [self drawMetaInfoForCell:cell];
 }
 
 #pragma mark Private
 - (void)drawRegionForCell:(QMCell *)cell {
-    if (cell.dragRegion == QMCellRegionNone) {
-        return;
-    }
+  if (cell.dragRegion == QMCellRegionNone) {
+    return;
+  }
 
-    // TODO: beautify
-    [[NSColor grayColor] set];
-    NSRectFill([_cellLayoutManager regionFrameOfCell:cell ofRegion:cell.dragRegion]);
+  // TODO: beautify
+  [[NSColor grayColor] set];
+  NSRectFill([self.cellLayoutManager regionFrameOfCell:cell ofRegion:cell.dragRegion]);
 }
 
 - (void)drawFoldingMarkerOfCell:(QMCell *)cell {
-    if ([cell isLeaf]) {
-        return;
-    }
+  if (cell.leaf) {
+    return;
+  }
 
-    NSPoint origin = cell.origin;
-    NSSize size = cell.size;
+  NSPoint origin = cell.origin;
+  NSSize size = cell.size;
 
-    CGFloat foldingMarkerRadius = [_settings floatForKey:qSettingFoldingMarkerRadius];
-    NSBezierPath *path;
+  CGFloat foldingMarkerRadius = [self.settings floatForKey:qSettingFoldingMarkerRadius];
+  NSBezierPath *path;
 
-    if (cell.isLeft) {
-        path = [NSBezierPath bezierPathWithOvalInRect:NewRect(
-                origin.x - foldingMarkerRadius / 2,
-                origin.y + size.height - foldingMarkerRadius / 2,
-                foldingMarkerRadius,
-                foldingMarkerRadius
-        )];
-    } else {
-        path = [NSBezierPath bezierPathWithOvalInRect:NewRect(
-                origin.x + size.width - foldingMarkerRadius / 2,
-                origin.y + size.height - foldingMarkerRadius / 2,
-                foldingMarkerRadius,
-                foldingMarkerRadius
-        )];
-    }
+  if (cell.left) {
+    path = [NSBezierPath bezierPathWithOvalInRect:NewRect(
+        origin.x - foldingMarkerRadius / 2,
+        origin.y + size.height - foldingMarkerRadius / 2,
+        foldingMarkerRadius,
+        foldingMarkerRadius
+    )];
+  } else {
+    path = [NSBezierPath bezierPathWithOvalInRect:NewRect(
+        origin.x + size.width - foldingMarkerRadius / 2,
+        origin.y + size.height - foldingMarkerRadius / 2,
+        foldingMarkerRadius,
+        foldingMarkerRadius
+    )];
+  }
 
-    [[NSColor grayColor] set];
-    [path setFlatness:1.0];
-    [path setLineWidth:[_settings floatForKey:qSettingFoldingMarkerLineWidth]];
+  [[NSColor grayColor] set];
+  path.flatness = 1.0;
+  path.lineWidth = [self.settings floatForKey:qSettingFoldingMarkerLineWidth];
 
-    [path stroke];
+  [path stroke];
 }
 
 - (void)drawIconsForCell:(QMCell *)cell rect:(NSRect)dirtyRect {
-    [cell.icons enumerateObjectsUsingBlock:^(QMIcon *icon, NSUInteger index, BOOL *stop) {
-        [icon drawRect:dirtyRect];
-    }];
+  [cell.icons enumerateObjectsUsingBlock:^(QMIcon *icon, NSUInteger index, BOOL *stop) {
+    [icon drawRect:dirtyRect];
+  }];
 }
 
 - (void)drawRootEllipseForFrame:(NSRect)frame {
-    NSBezierPath *ellipse = [NSBezierPath bezierPathWithOvalInRect:frame];
+  NSBezierPath *ellipse = [NSBezierPath bezierPathWithOvalInRect:frame];
 
-    [ellipse setLineWidth:1];
-    [ellipse setFlatness:1];
+  ellipse.lineWidth = 1;
+  ellipse.flatness = 1;
 
-    [[NSColor whiteColor] set];
-    [ellipse fill];
+  [[NSColor whiteColor] set];
+  [ellipse fill];
 
-    [[NSColor grayColor] set];
-    [ellipse stroke];
+  [[NSColor grayColor] set];
+  [ellipse stroke];
 }
 
 - (NSBezierPath *)focusRingPathForCell:(QMCell *)cell {
-    NSRect frame = cell.frame;
+  NSRect frame = cell.frame;
 
-    if (cell.isRoot) {
-        CGFloat focusRingMargin = [_settings floatForKey:qSettingNodeFocusRingMargin];
-        NSRect outsetRect = NewRectExpanding(frame, focusRingMargin, focusRingMargin);
-
-        return [NSBezierPath bezierPathWithOvalInRect:outsetRect];
-    }
-
-    CGFloat focusRingMargin = [_settings floatForKey:qSettingNodeFocusRingMargin];
-    CGFloat borderRadius = [_settings floatForKey:qSettingNodeFocusRingBorderRadius];
+  if (cell.root) {
+    CGFloat focusRingMargin = [self.settings floatForKey:qSettingNodeFocusRingMargin];
     NSRect outsetRect = NewRectExpanding(frame, focusRingMargin, focusRingMargin);
 
-    return [NSBezierPath bezierPathWithRoundedRect:outsetRect xRadius:borderRadius yRadius:borderRadius];
+    return [NSBezierPath bezierPathWithOvalInRect:outsetRect];
+  }
+
+  CGFloat focusRingMargin = [self.settings floatForKey:qSettingNodeFocusRingMargin];
+  CGFloat borderRadius = [self.settings floatForKey:qSettingNodeFocusRingBorderRadius];
+  NSRect outsetRect = NewRectExpanding(frame, focusRingMargin, focusRingMargin);
+
+  return [NSBezierPath bezierPathWithRoundedRect:outsetRect xRadius:borderRadius yRadius:borderRadius];
 }
 
 - (void)drawFocusRingForCell:(QMCell *)cell {
-    NSBezierPath *path = [self focusRingPathForCell:cell];
+  NSBezierPath *path = [self focusRingPathForCell:cell];
 
-    [NSGraphicsContext saveGraphicsState];
+  [NSGraphicsContext saveGraphicsState];
 
-    [[NSColor selectedTextBackgroundColor] set];
-    NSSetFocusRingStyle(NSFocusRingOnly);
-    [path fill];
+  [[NSColor selectedTextBackgroundColor] set];
+  NSSetFocusRingStyle(NSFocusRingOnly);
+  [path fill];
 
-    [NSGraphicsContext restoreGraphicsState];
+  [NSGraphicsContext restoreGraphicsState];
 }
 
 - (void)drawMetaInfoForCell:(QMCell *)cell {
-    if (cell.isFolded) {
-        [self drawFoldingMarkerOfCell:cell];
-    }
+  if (cell.folded) {
+    [self drawFoldingMarkerOfCell:cell];
+  }
 
-    if ([cell.view cellIsSelected:cell]) {
-        [self drawFocusRingForCell:cell];
-    }
+  if ([cell.view cellIsSelected:cell]) {
+    [self drawFocusRingForCell:cell];
+  }
 }
 
 - (void)drawLineForCell:(QMCell *)cell dirtyRect:(NSRect)dirtyRect {
-    if (cell.line == nil) {
-        return;
-    }
+  if (cell.line == nil) {
+    return;
+  }
 
-    // if we only have a horizontal line, then the bounds has got 0 height. thus, no intersection.
-    NSRect lineRect = NewRectExpanding(cell.line.bounds, 1, 1);
+  // if we only have a horizontal line, then the bounds has got 0 height. thus, no intersection.
+  NSRect lineRect = NewRectExpanding(cell.line.bounds, 1, 1);
 
-    if (NSIntersectsRect(dirtyRect, lineRect)) {
-        [[NSColor grayColor] set];
-        [cell.line stroke];
-    }
+  if (NSIntersectsRect(dirtyRect, lineRect)) {
+    [[NSColor grayColor] set];
+    [cell.line stroke];
+  }
 }
 
 @end

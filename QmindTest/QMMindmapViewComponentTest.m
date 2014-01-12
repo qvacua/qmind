@@ -424,8 +424,15 @@
     assertThatSize([LCELL(5) familySize], biggerThanSize(oldSize));
 
     // left leaf + child
+    oldCount = [LNODE(5, 8) countOfChildren];
     oldSize = [LCELL(5, 8) familySize];
     [LNODE(5, 8) insertObject:[[QMNode alloc] init] inChildrenAtIndex:0];
+
+    // KVO here not working because doc->windowController and windowController->view are not properly set
+    [view updateCellFamilyForInsertionWithIdentifier:LNODE(5, 8)];
+    rootCell = view.rootCell;
+    assertThat([LCELL(5, 8) children], hasSize(oldCount + 1));
+    assertThatSize([LCELL(5, 8) familySize], biggerThanSize(oldSize));
 }
 
 /**

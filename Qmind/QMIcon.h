@@ -13,6 +13,7 @@
 @class QMAppSettings;
 @class QMTextDrawer;
 @class QMTextLayoutManager;
+@class QMFontManager;
 
 @interface QMIcon : NSObject <NSCopying>
 
@@ -20,6 +21,8 @@
 @property (weak) QMAppSettings *settings;
 @property (weak) QMTextDrawer *textDrawer;
 @property (weak) QMTextLayoutManager *textLayoutManager;
+@property (weak) QMFontManager *fontManager;
+@property (assign) NSFontManager *systemFontManager;    // it is not allowed to weakly reference to NSFontManager?
 
 @property (readonly) QMIconKind kind;
 @property (readonly) NSString *code;
@@ -40,6 +43,7 @@
 @property (readonly) NSRect frame;
 
 - (id)initWithCode:(NSString *)aCode;
+- (id)initAsLink;
 - (void)drawRect:(NSRect)dirtyRect;
 
 @end

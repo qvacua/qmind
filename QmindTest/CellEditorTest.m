@@ -1,7 +1,8 @@
 /**
- * Tae Won Ha
+ * Tae Won Ha — @hataewon
+ *
+ * http://taewon.de
  * http://qvacua.com
- * https://github.com/qvacua
  *
  * See LICENSE
  */
@@ -9,67 +10,64 @@
 #import "QMBaseTestCase.h"
 #import "QMCellEditor.h"
 #import "QMBaseTestCase+Util.h"
-#import <Qkit/Qkit.h>
 #import "QMMindmapView.h"
+#import "QMBorderedView.h"
+
 
 @interface CellEditorTest : QMBaseTestCase
 @end
 
 @implementation CellEditorTest {
-    QMCellEditor *editor;
+  QMCellEditor *editor;
 
-    QMMindmapView *view;
-    NSWindow *window;
+  QMMindmapView *view;
+  NSWindow *window;
 
-    QMRootCell *rootCell;
+  QMRootCell *rootCell;
 }
 
 - (void)setUp {
-    [super setUp];
+  [super setUp];
 
-    view = mock([QMMindmapView class]);
-    window = mock([NSWindow class]);
-    [given([view window]) willReturn:window];
+  view = mock([QMMindmapView class]);
+  window = mock([NSWindow class]);
+  [given([view window]) willReturn:window];
 
-    rootCell = [self rootCellForTestWithView:view];
+  rootCell = [self rootCellForTestWithView:view];
 
-    editor = [[QMCellEditor alloc] init];
-    editor.view = view;
-    editor.delegate = view;
+  editor = [[QMCellEditor alloc] init];
+  editor.view = view;
+  editor.delegate = view;
 }
 
 - (void)testBeginEditing {
-    [editor beginEditStringValueForCell:CELL(4)];
-    assertThat(editor.currentlyEditedCell, is(CELL(4)));
+  [editor beginEditStringValueForCell:CELL(4)];
+  assertThat(editor.currentlyEditedCell, is(CELL(4)));
 
-    [verify(view) addSubview:instanceOf([QShadowedView class])];
-    [verify(window) makeFirstResponder:instanceOf([NSTextView class])];
+  assertThat(@(editor.editorView.isHidden), is(@NO));
+  [verify(window) makeFirstResponder:instanceOf([NSTextField class])];
 }
 
 - (void)testEndEditing {
-    NSUndoManager *const undoManager = [editor undoManagerForTextView:nil];
-    [undoManager registerUndoWithTarget:self selector:@selector(testEndEditing) object:self];
+  [editor beginEditStringValueForCell:CELL(4)];
+  [editor controlTextDidEndEditing:nil];
 
-    [editor beginEditStringValueForCell:CELL(4)];
-    [editor textDidEndEditing:nil];
-
-    [verify(view) editingEndedWithString:instanceOf([NSAttributedString class]) forCell:CELL(4) byChar:NSCarriageReturnCharacter];
-    assertThat(editor.currentlyEditedCell, nilValue());
-    [verify(window) makeFirstResponder:view];
-
-    assertThatBool([undoManager canUndo], isFalse);
+  [verify(view) editingEndedWithString:instanceOf([NSAttributedString class]) forCell:CELL(4) byChar:NSCarriageReturnCharacter];
+  assertThat(@(editor.editorView.isHidden), is(@YES));
+  assertThat(editor.currentlyEditedCell, nilValue());
+  [verify(window) makeFirstResponder:view];
 }
 
 - (void)testIsEditing {
-    [editor beginEditStringValueForCell:CELL(4)];
-    assertThatBool([editor isEditing], isTrue);
+  [editor beginEditStringValueForCell:CELL(4)];
+  assertThat(@(editor.editing), isYes);
 
-    [editor textDidEndEditing:nil];
-    assertThatBool([editor isEditing], isFalse);
+  [editor controlTextDidEndEditing:nil];
+  assertThat(@(editor.editing), isNo);
 }
 
 - (void)testCancelEditing {
-    // TODO ?
+  // TODO ?
 }
 
 @end

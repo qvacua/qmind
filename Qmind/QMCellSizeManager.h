@@ -7,11 +7,11 @@
  */
 
 #import <Foundation/Foundation.h>
+#import <TBCacao/TBCacao.h>
 
 @class QMCell;
 @class QMTextLayoutManager;
 @class QMAppSettings;
-@protocol TBBean;
 
 @interface QMCellSizeManager : NSObject <TBBean>
 
@@ -35,5 +35,6 @@
 
 - (NSSize)sizeOfChildrenFamily:(NSArray *)children;
 
--(NSSize)sizeOfFamilyOfCell:(QMCell *)cell;
+- (NSSize)sizeOfFamilyOfCell:(QMCell *)cell;
+
 @end

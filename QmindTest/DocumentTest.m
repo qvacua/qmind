@@ -543,7 +543,7 @@ static NSString * const MINDMAP_EXTENSION = @"mm";
     [NODE(1) addObjectInIcons:@"icon3"];
 
     [doc deleteAllIconsOfItem:NODE(1)];
-    assertThat([NODE(1) icons], is(empty()));
+    assertThat([NODE(1) icons], isEmpty());
 }
 
 - (void)testItemNewlyCreated {

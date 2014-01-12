@@ -6,7 +6,7 @@
  * See LICENSE
  */
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 
 #define HC_SHORTHAND
 #import <OCHamcrest/OCHamcrest.h>
@@ -20,7 +20,7 @@
 #define consistsOf(...) contains(__VA_ARGS__, nil)
 #define consistsOfInAnyOrder(...) containsInAnyOrder(__VA_ARGS__, nil)
 
-#define FAIL STFail(@"yet to be implemented")
+#define FAIL XCTFail(@"yet to be implemented")
 
-@interface QMBaseTestCase : SenTestCase @end
+@interface QMBaseTestCase : XCTestCase @end
 

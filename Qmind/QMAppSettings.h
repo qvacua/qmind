@@ -32,6 +32,8 @@ extern NSString * const qSettingDeleteNodeChars;
 extern NSString * const qSettingDeselectCell;
 extern NSString * const qSettingInterIconDistance;
 extern NSString * const qSettingLinkIconDrawSize;
+extern NSString * const qSettingLinkIconFont;
+extern NSString * const qSettingLinkIconHorizontalMargin;
 extern NSString * const qSettingIconDrawSize;
 extern NSString * const qSettingIconFont;
 extern NSString * const qSettingNodeEditMinWidth;
@@ -58,6 +60,7 @@ extern NSString * const qSettingCellVerticalPadding;
 * General getter for a setting. When the result is a number, an NSNumber is returned.
 */
 - (id)settingForKey:(NSString *)key;
+- (id)objectForKeyedSubscript:(id)key;
 
 /**
 * If you want to access CGFloat values, for example folding marker radius, use this method.

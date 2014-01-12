@@ -17,7 +17,7 @@ static NSString *const qBoldKey = @"BOLD";
 static NSString *const qItalicKey = @"ITALIC";
 static NSString *const qTrueValue = @"true";
 static NSString *const qDefaultSansSerifFontName = @"SansSerif";
-static NSString *const qDefaultSerifFondName = @"Serif";
+static NSString *const qDefaultSerifFontName = @"Serif";
 static NSString *const qTimesFontName = @"Times";
 
 @interface QMFontManager ()
@@ -44,7 +44,7 @@ TB_AUTOWIRE(fontManager)
         fontName = self.defaultFont.familyName;
     }
 
-    if ([fontName isEqualToString:qDefaultSerifFondName]) {
+    if ([fontName isEqualToString:qDefaultSerifFontName]) {
         fontName = qTimesFontName;
     }
 
@@ -100,21 +100,8 @@ TB_AUTOWIRE(fontManager)
 #pragma mark TBInitializingBean
 - (void)postConstruct {
     _defaultFont = [self.settings settingForKey:qSettingDefaultFont];
+    _fontawesomeFont = [self.settings settingForKey:qSettingLinkIconFont];
 
-    NSString *fontPath = [[NSBundle bundleForClass:self.class] pathForResource:@"fontawesome-webfont" ofType:@"ttf"];
-    NSData *fontData = [[NSData alloc] initWithContentsOfFile:fontPath];
-
-    CGDataProviderRef fontDataProvider = CGDataProviderCreateWithCFData((__bridge CFDataRef) fontData);
-    CGFontRef cgFont = CGFontCreateWithDataProvider(fontDataProvider);
-    CGDataProviderRelease(fontDataProvider);
-
-    // if we pass NULL for attributes, we crash when releasing the font descriptor
-    CTFontDescriptorRef fontDescriptor = CTFontDescriptorCreateWithAttributes((__bridge CFDictionaryRef) @{});
-    CTFontRef ctFont = CTFontCreateWithGraphicsFont(cgFont, 0, NULL, fontDescriptor);
-    CFRelease(fontDescriptor);
-    CGFontRelease(cgFont);
-
-    _fontawesomeFont = (__bridge_transfer NSFont *)ctFont;
 }
 
 @end

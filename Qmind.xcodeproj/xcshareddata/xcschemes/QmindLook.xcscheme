@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0460"
+   LastUpgradeVersion = "0500"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4BFCD75514F3D34700850924"
-               BuildableName = "QmindSenTesting.octest"
-               BlueprintName = "QmindSenTesting"
+               BlueprintIdentifier = "4B992EF11735176D00C5844E"
+               BuildableName = "QmindLook.qlgenerator"
+               BlueprintName = "QmindLook"
                ReferencedContainer = "container:Qmind.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -28,16 +28,6 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       buildConfiguration = "Debug">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4BFCD75514F3D34700850924"
-               BuildableName = "QmindSenTesting.octest"
-               BlueprintName = "QmindSenTesting"
-               ReferencedContainer = "container:Qmind.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

@@ -13,50 +13,31 @@
 #import "QMAppSettings.h"
 #import "QMTextDrawer.h"
 #import "QMTextLayoutManager.h"
+#import "QMFontManager.h"
+
+
+@interface QMIcon ()
+
+@property NSAttributedString *attrStr;
+
+@end
+
 
 @implementation QMIcon {
-    __weak QMIconManager *_iconManager;
-    __weak QMAppSettings *_settings;
-    __weak QMTextDrawer *_textDrawer;
-    __weak QMTextLayoutManager *_textLayoutManager;
-
-    QMIconKind _kind;
-
-    NSPoint _origin;
-    NSSize _size;
-
-    NSString *_code;
-
-    NSString *_unicode;
-    NSImage *_image;
-    NSImage *_flippedImage;
 }
 
 @dynamic frame;
 
-@synthesize iconManager = _iconManager;
-@synthesize settings = _settings;
-@synthesize textDrawer = _textDrawer;
-@synthesize textLayoutManager = _textLayoutManager;
-
-@synthesize kind = _kind;
-@synthesize origin = _origin;
-@synthesize size = _size;
-@synthesize code = _code;
-@synthesize unicode = _unicode;
-@synthesize image = _image;
-@synthesize flippedImage = _flippedImage;
-
 #pragma mark Public
 - (NSRect)frame {
-    return NewRectWithOriginAndSize(_origin, _size);
+    return NewRectWithOriginAndSize(self.origin, self.size);
 }
 
 #pragma mark NSCopying
 - (id)copyWithZone:(NSZone *)zone {
-    QMIcon *copy = [[QMIcon alloc] initWithCode:_code];
-    copy.origin = _origin;
-    copy.size = _size;
+    QMIcon *copy = [[QMIcon alloc] initWithCode:self.code];
+    copy.origin = self.origin;
+    copy.size = self.size;
 
     return copy;
 }
@@ -65,18 +46,17 @@
 - (id)initWithCode:(NSString *)aCode {
     self = [super init];
     if (self) {
-        TBContext *context = [TBContext sharedContext];
-
-        _iconManager = [context beanWithClass:[QMIconManager class]];
-        _settings = [context beanWithClass:[QMAppSettings class]];
-        _textDrawer = [context beanWithClass:[QMTextDrawer class]];
-        _textLayoutManager = [context beanWithClass:[QMTextLayoutManager class]];
+        [self initBeans];
 
         _code = aCode;
         _kind = [_iconManager kindForCode:_code];
 
         if (_kind == QMIconKindString) {
             _unicode = [_iconManager iconRepresentationForCode:_code];
+
+            NSFont *iconFont = [self.settings settingForKey:qSettingIconFont];
+            NSDictionary *attrDict = [self.textLayoutManager stringAttributesDictWithFont:iconFont];
+            _attrStr = [[NSAttributedString alloc] initWithString:self.unicode attributes:attrDict];
         } else if (_kind == QMIconKindImage) {
             _image = [_iconManager iconRepresentationForCode:_code];
             [self initFlippedImage];
@@ -89,32 +69,70 @@
     return self;
 }
 
+- (id)initAsLink {
+    self = [super init];
+    if (self) {
+        [self initBeans];
+
+        _unicode = @"\\u%f023";
+        _kind = QMIconKindFontawesome;
+
+        NSFont *fontawesome = [[self.fontManager fontawesomeFont] copy];
+        // TODO: we should set the font for links in app settings and use it here
+        [self.systemFontManager convertFont:fontawesome toSize:16];
+        NSDictionary *attrDict = [self.textLayoutManager stringAttributesDictWithFont:fontawesome];
+        _attrStr = [[NSAttributedString alloc] initWithString:self.unicode attributes:attrDict];
+
+        CGFloat iconSize = [_settings floatForKey:qSettingLinkIconDrawSize];
+        _size = NewSize(iconSize, iconSize);
+    }
+
+    return self;
+}
+
 - (void)drawRect:(NSRect)dirtyRect {
     NSRect frame = NewRectWithOriginAndSize(self.origin, self.size);
     if (!NSIntersectsRect(dirtyRect, frame)) {
         return;
     }
 
-    if (_kind == QMIconKindString) {
+    if (self.kind == QMIconKindString) {
         [self drawStringIconInRect:frame];
-
         return;
     }
 
-    if (_kind == QMIconKindImage) {
-        [_image drawInRect:frame fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1];
+    if (self.kind == QMIconKindImage) {
+        [self.image drawInRect:frame fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1];
+        return;
+    }
+
+    if (self.kind == QMIconKindFontawesome) {
+        [self drawFontawesomeInRect:frame];
+        return;
     }
 }
 
 #pragma mark Private
-- (void)drawStringIconInRect:(NSRect)frame {
-    NSFont *iconFont = [_settings settingForKey:qSettingIconFont];
-    NSDictionary *attrDict = [_textLayoutManager stringAttributesDictWithFont:iconFont];
-    NSAttributedString *attrStr = [[NSAttributedString alloc] initWithString:_unicode attributes:attrDict];
+- (void)drawFontawesomeInRect:(NSRect)rect {
+    [self.textDrawer drawAttributedString:self.attrStr inRect:rect range:NSMakeRange(0, 1)];
+}
 
+- (void)initBeans {
+    TBContext *context = [TBContext sharedContext];
+
+    _iconManager = [context beanWithClass:[QMIconManager class]];
+    _settings = [context beanWithClass:[QMAppSettings class]];
+    _textDrawer = [context beanWithClass:[QMTextDrawer class]];
+    _textLayoutManager = [context beanWithClass:[QMTextLayoutManager class]];
+    _fontManager = [context beanWithClass:[QMFontManager class]];
+    _systemFontManager = [context beanWithClass:[NSFontManager class]];
+}
+
+- (void)drawStringIconInRect:(NSRect)frame {
     NSRect tempRect = frame;
     tempRect.origin.y -= 4;
-    [_textDrawer drawAttributedString:attrStr inRect:tempRect range:NSMakeRange(0, 1)];
+
+    [self.textDrawer drawAttributedString:self.attrStr inRect:tempRect range:NSMakeRange(0, 1)];
 }
 
 - (void)initFlippedImage {

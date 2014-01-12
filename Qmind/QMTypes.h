@@ -18,4 +18,5 @@ typedef enum {
     QMIconKindNone = 0,
     QMIconKindString,
     QMIconKindImage,
+    QMIconKindFontawesome,
 } QMIconKind;

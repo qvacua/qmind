@@ -16,9 +16,9 @@
 #import "QMBaseTestCase.h"
 #import "QMIcon.h"
 
-@interface CellTest : QMBaseTestCase @end
+@interface QMCellTest : QMBaseTestCase @end
 
-@implementation CellTest {
+@implementation QMCellTest {
     QMMindmapView *view;
 
     QMCell *parentCell;
@@ -315,7 +315,7 @@
     assertThat(cell.view, is(view));
     assertThat(cell.parent, is(parentCell));
     assertThat(cell.children, isNot(nilValue()));
-    assertThat(cell.children, is(empty()));
+    assertThat(cell.children, isEmpty());
     assertThat(cell.stringValue, is(@"test"));
     assertThat(@(cell.isLeaf), isYes);
     assertThat(@(cell.isFolded), isYes);
@@ -337,7 +337,7 @@
     assertThat(cell.view, is(view));
     assertThat(cell.parent, is(parentCell));
     assertThat(cell.children, isNot(nilValue()));
-    assertThat(cell.children, is(empty()));
+    assertThat(cell.children, isEmpty());
     assertThat(cell.stringValue, is(@"test"));
     assertThat(@(cell.isLeaf), isYes);
     assertThat(@(cell.isFolded), isYes);

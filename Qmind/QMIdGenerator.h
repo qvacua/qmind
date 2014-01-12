@@ -1,14 +1,14 @@
 /**
- * Tae Won Ha
+ * Tae Won Ha — @hataewon
+ *
+ * http://taewon.de
  * http://qvacua.com
- * https://github.com/qvacua
  *
  * See LICENSE
  */
 
 #import <Foundation/Foundation.h>
-
-@protocol TBBean;
+#import <TBCacao/TBCacao.h>
 
 @interface QMIdGenerator : NSObject <TBBean>
 

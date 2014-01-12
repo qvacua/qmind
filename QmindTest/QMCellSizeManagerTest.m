@@ -16,10 +16,10 @@
 #import "QMRootCell.h"
 #import "QMIcon.h"
 
-@interface CellSizeManagerTest : QMBaseTestCase
+@interface QMCellSizeManagerTest : QMBaseTestCase
 @end
 
-@implementation CellSizeManagerTest {
+@implementation QMCellSizeManagerTest {
     QMCellSizeManager *manager;
     QMTextLayoutManager *textLayoutManager;
     QMAppSettings *settings;
@@ -34,9 +34,11 @@
 
     CGFloat maxWidth;
     CGFloat sizeOfIcon;
+    CGFloat sizeOfLinkIcon;
     CGFloat horPadding;
     CGFloat vertPadding;
     CGFloat interIconDist;
+    CGFloat linkIconMargin;
     CGFloat minHeight;
     CGFloat minWidth;
     CGFloat iconTextDist;
@@ -78,7 +80,9 @@
     rootCellMaxWidth = [settings floatForKey:qSettingMaxRootCellTextWidth];
 
     sizeOfIcon = [settings floatForKey:qSettingIconDrawSize];
+    sizeOfLinkIcon = [settings floatForKey:qSettingLinkIconDrawSize];
     interIconDist = [settings floatForKey:qSettingInterIconDistance];
+    linkIconMargin = [settings floatForKey:qSettingLinkIconHorizontalMargin];
     iconTextDist = [settings floatForKey:qSettingIconTextDistance];
 
     horPadding = [settings floatForKey:qSettingCellHorizontalPadding];
@@ -184,6 +188,27 @@
     rootCell.size;
     // all the job is done by text layout manager
     [verify(textLayoutManager) sizeOfAttributedString:rootCell.attributedString maxWidth:rootCellMaxWidth];
+}
+
+- (void)testSize8 {
+    [given([textLayoutManager sizeOfAttributedString:cell.attributedString maxWidth:maxWidth]) willReturnSize:NewSize(5, 50)];
+
+    [cell addObjectInIcons:@"1"];
+    [cell addObjectInIcons:@"2"];
+    [cell addObjectInIcons:@"3"];
+    [cell addObjectInIcons:@"4"];
+
+    cell.link = [NSURL URLWithString:@"http://qvacua.com"];
+
+    assertThatSize([manager sizeOfCell:cell], equalToSize(NewSize(1 * sizeOfLinkIcon + 1 * linkIconMargin + 4 * sizeOfIcon + 3 * interIconDist + iconTextDist + 2 * horPadding + 5, 50 + 2 * vertPadding)));
+}
+
+- (void)testSize9 {
+    [given([textLayoutManager sizeOfAttributedString:cell.attributedString maxWidth:maxWidth]) willReturnSize:NewSize(5, 5)];
+
+    cell.link = [NSURL URLWithString:@"http://qvacua.com"];
+
+    assertThatSize([manager sizeOfCell:cell], equalToSize(NewSize(1 * sizeOfLinkIcon + 1 * linkIconMargin + 2 * horPadding + 5, sizeOfLinkIcon + 2 * vertPadding)));
 }
 
 - (void)testFamilySize1 {

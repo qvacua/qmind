@@ -1,7 +1,8 @@
 /**
- * Tae Won Ha
+ * Tae Won Ha — @hataewon
+ *
+ * http://taewon.de
  * http://qvacua.com
- * https://github.com/qvacua
  *
  * See LICENSE
  */
@@ -28,6 +29,8 @@ static const int qDeleteIconMenuItemTag = 1000;
 static const int qDeleteAllIconsMenuItemTag = 1100;
 
 @interface QMMindmapView : NSView <QMCellEditorDelegate, NSDraggingSource, NSDraggingDestination>
+
+@property (readonly) NSSize currentScale;
 
 @property (weak) QMUiDrawer *uiDrawer;
 @property (weak) QMCellSelector *cellSelector;
