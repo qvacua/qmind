@@ -1,13 +1,15 @@
 /**
- * Tae Won Ha
+ * Tae Won Ha — @hataewon
+ *
+ * http://taewon.de
  * http://qvacua.com
- * https://github.com/qvacua
  *
  * See LICENSE
  */
 
 #import <Cocoa/Cocoa.h>
 #import <TBCacao/TBCacao.h>
+
 
 @class QMCell;
 @class QMAppSettings;
@@ -23,6 +25,6 @@
 @property (weak) QMTextDrawer *textDrawer;
 
 - (void)drawCell:(QMCell *)cell rect:(NSRect)dirtyRect;
+- (void)drawContentForCell:(QMCell *)cell rect:(NSRect)dirtyRect;
 
--(void)drawContentForCell:(QMCell *)cell rect:(NSRect)dirtyRect;
 @end
