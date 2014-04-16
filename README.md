@@ -9,6 +9,13 @@
 ## About
 Qmind is a mind mapping App for OS X compatible with [FreeMind][]. Many features of FreeMind are yet to be implemented.
 
+## How to Build
+First clone the project. Then, 
+```
+$ git submodule update --init
+$ xcodebuild -scheme Qmind
+```
+
 ## Contribution
 If you want to contribute, please contact me first.
 
