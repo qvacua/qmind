@@ -1,6 +1,6 @@
 [submodule "qkit"]
 	path = qkit
-	url = git@github.com:qvacua/qkit.git
+	url = git://github.com/qvacua/qkit.git
 [submodule "tbcacao"]
 	path = tbcacao
-	url = git@github.com:qvacua/tbcacao.git
+	url = git://github.com/qvacua/tbcacao.git
